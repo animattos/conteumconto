@@ -8,7 +8,9 @@ body {
     min-height: 100vh;
     background-color: #ffe0b2; /* Default fallback background color */
     transition: background-color 1s ease; /* Smooth transition for background */
-    overflow: auto; /* Hide overflow from content positioning */
+    overflow: hidden; /* Hide overflow from content positioning */
+    /* Add touch-action to prevent default browser swipe gestures */
+    touch-action: pan-y; 
 }
 
 .container {
@@ -31,6 +33,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Add touch-action for swipe recognition */
+    touch-action: pan-y pinch-zoom;
+    cursor: grab; /* Indicate interactivity */
+}
+
+.page-content:active {
+    cursor: grabbing;
 }
 
 /* Styling for the image */
@@ -174,10 +183,9 @@ body {
         padding: 10px;
     }
 
-    .nav-btn {
-        margin: 10px 0; /* Add vertical margin */
-        width: calc(100% - 20px); /* Full width minus padding */
-        max-width: 200px; /* Limit button width */
+    /* Hide arrow buttons on small screens */
+    .container > .nav-btn {
+        display: none;
     }
 
     .page-content {

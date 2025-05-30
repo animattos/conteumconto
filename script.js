@@ -7,7 +7,7 @@ const pages = [
     { image: 'd.png', audio: '00.mp3' },
 ];
 
-const watermarkImageUrl = 'marca.png';
+const watermarkImageUrl = 'ChatGPT Image 29 de mai. de 2025, 15_01_13.png';
 const backgroundMusicUrl = '04.mp3'; // URL for the background music
 
 let currentPageIndex = 0;
@@ -39,6 +39,11 @@ const audioBtn = document.getElementById('audioBtn');
 const musicBtn = document.getElementById('musicBtn'); // Get music button element
 const pauseIcon = document.getElementById('pauseIcon');
 const playIcon = document.getElementById('playIcon');
+const pageContent = document.getElementById('pageContent'); // Get page content element
+
+// --- Swipe Navigation Variables ---
+let touchStartX = 0;
+const swipeThreshold = 50; // Minimum horizontal pixel distance for a swipe
 
 // Function to initialize or resume AudioContext on first user interaction
 const initializeAudioContext = async () => {
@@ -66,8 +71,23 @@ const initializeAudioContext = async () => {
         }
     }
     if (audioContext && audioContext.state === 'running') {
-        document.removeEventListener('click', initializeAudioContext);
-        document.removeEventListener('touchstart', initializeAudioContext);
+        // Remove event listeners once context is running
+        document.removeEventListener('click', initializeAudioContext, { once: true, capture: true });
+        document.removeEventListener('touchstart', initializeAudioContext, { once: true, capture: true, passive: true });
+        // Also attempt to resume background music if paused when context resumes
+        if (bgMusicBuffer && bgMusicState === 'paused') {
+             console.log("AudioContext resumed, attempting to resume background music.");
+             playBackgroundMusic();
+        } else if (bgMusicBuffer && bgMusicState === 'stopped' && musicBtn && !musicBtn.disabled) {
+             // If context wasn't running and music wasn't started, start it now if button is enabled
+             console.log("AudioContext resumed, attempting to start background music.");
+             // Add a small delay to prevent contention with other audio
+             setTimeout(() => {
+                if(bgMusicState === 'stopped') { // Ensure it wasn't started elsewhere
+                     playBackgroundMusic();
+                }
+             }, 100);
+        }
     }
 };
 
@@ -151,7 +171,7 @@ function stopBackgroundMusicSource() {
 
 function resetAudioState() {
     stopAudioSource();
-    if (audioStartTimeoutId) { 
+    if (audioStartTimeoutId) {
         clearTimeout(audioStartTimeoutId);
         audioStartTimeoutId = null;
         console.log("Resetting page audio state, cleared pending auto-play timeout.");
@@ -160,13 +180,13 @@ function resetAudioState() {
     audioState = 'stopped';
     playbackTime = 0;
     startTime = 0;
-    audioBtn.disabled = true; 
+    audioBtn.disabled = true;
     updateAudioButtonIcon();
     console.log("Page audio state fully reset.");
 }
 
 async function fetchAndDecodeAudioForPage(audioUrl) {
-    resetAudioState(); 
+    resetAudioState();
 
     if (!audioUrl) {
         console.log("No audio URL for this page.");
@@ -174,7 +194,7 @@ async function fetchAndDecodeAudioForPage(audioUrl) {
     }
 
     try {
-        await initializeAudioContext(); 
+        await initializeAudioContext();
         if (!audioContext || audioContext.state !== 'running') {
             console.error("AudioContext not running after initialization attempt. Cannot fetch page audio.");
             audioBtn.disabled = true;
@@ -214,23 +234,27 @@ async function fetchAndDecodeAudioForPage(audioUrl) {
 async function fetchAndDecodeBackgroundMusic(audioUrl) {
     if (bgMusicBuffer) {
         console.log("Background music already loaded.");
+        // Don't start playing here, wait for user interaction or page load logic
         updateBackgroundMusicButtonIcon();
+        musicBtn.disabled = false; // Ensure button is enabled if buffer exists
         return;
     }
     if (!audioUrl) {
         console.log("No URL for background music.");
-        musicBtn.disabled = true; 
+        musicBtn.disabled = true;
         return;
     }
 
     try {
-        await initializeAudioContext(); 
+        await initializeAudioContext();
         if (!audioContext || audioContext.state !== 'running') {
             console.error("AudioContext not running after initialization attempt. Cannot fetch background music.");
+            musicBtn.disabled = true;
             return;
         }
     } catch (e) {
         console.error("Failed to initialize AudioContext before fetching background music:", e);
+        musicBtn.disabled = true;
         return;
     }
 
@@ -245,14 +269,15 @@ async function fetchAndDecodeBackgroundMusic(audioUrl) {
         bgMusicBuffer = await audioContext.decodeAudioData(arrayBuffer);
         console.log("Background music data decoded successfully.");
 
-        bgMusicState = 'stopped'; 
+        bgMusicState = 'stopped';
         bgMusicPlaybackTime = 0;
         bgMusicStartTime = 0;
+        musicBtn.disabled = false; // Enable the button
         updateBackgroundMusicButtonIcon();
     } catch (error) {
         console.error('Error fetching or decoding background music:', audioUrl, error);
         bgMusicBuffer = null;
-        musicBtn.disabled = true; 
+        musicBtn.disabled = true;
         bgMusicState = 'stopped';
         updateBackgroundMusicButtonIcon();
     }
@@ -265,14 +290,14 @@ async function playAudio() {
             await initializeAudioContext();
             if (!audioContext || audioContext.state !== 'running') {
                 console.error("AudioContext still not running after attempted resume. Cannot play page audio.");
-                audioState = 'stopped'; 
+                audioState = 'stopped';
                 updateAudioButtonIcon();
                 audioBtn.disabled = true;
                 return;
             }
         } catch (e) {
             console.error("Failed to initialize/resume AudioContext before page audio playback:", e);
-            audioState = 'stopped'; 
+            audioState = 'stopped';
             updateAudioButtonIcon();
             audioBtn.disabled = true;
             return;
@@ -286,7 +311,7 @@ async function playAudio() {
         return;
     }
 
-    stopAudioSource(); 
+    stopAudioSource();
 
     currentSource = audioContext.createBufferSource();
     currentSource.buffer = audioBuffer;
@@ -318,13 +343,13 @@ async function playBackgroundMusic() {
             await initializeAudioContext();
             if (!audioContext || audioContext.state !== 'running') {
                 console.error("AudioContext still not running after attempted resume. Cannot play BG music.");
-                bgMusicState = 'stopped'; 
+                bgMusicState = 'stopped';
                 updateBackgroundMusicButtonIcon();
                 return;
             }
         } catch (e) {
             console.error("Failed to initialize/resume AudioContext before BG music playback:", e);
-            bgMusicState = 'stopped'; 
+            bgMusicState = 'stopped';
             updateBackgroundMusicButtonIcon();
             return;
         }
@@ -333,14 +358,18 @@ async function playBackgroundMusic() {
         console.log("No BG music buffer available to play.");
         bgMusicState = 'stopped';
         updateBackgroundMusicButtonIcon();
+        musicBtn.disabled = true; // Disable button if buffer is missing
         return;
     }
 
-    stopBackgroundMusicSource(); 
+    // Only stop if currently playing to allow resume from paused state
+    if (bgMusicState === 'playing') {
+        stopBackgroundMusicSource();
+    }
 
     bgMusicSource = audioContext.createBufferSource();
     bgMusicSource.buffer = bgMusicBuffer;
-    bgMusicSource.loop = true; 
+    bgMusicSource.loop = true;
     bgMusicSource.connect(audioContext.destination);
 
     const startOffset = bgMusicPlaybackTime % bgMusicBuffer.duration;
@@ -355,7 +384,7 @@ async function playBackgroundMusic() {
 
     bgMusicSource.onended = () => {
         console.log("BG music playback ended (should loop).");
-        if (bgMusicSource && !bgMusicSource.loop) { 
+        if (bgMusicSource && !bgMusicSource.loop) {
             stopBackgroundMusicSource();
             bgMusicState = 'stopped';
             bgMusicPlaybackTime = 0;
@@ -367,38 +396,36 @@ async function playBackgroundMusic() {
 function pauseBackgroundMusic() {
     if (bgMusicState === 'playing') {
         console.log("Pausing background music.");
-        stopBackgroundMusicSource(); 
-        bgMusicState = 'paused'; 
+        stopBackgroundMusicSource();
+        bgMusicState = 'paused';
         updateBackgroundMusicButtonIcon();
     }
 }
 
 function toggleBackgroundMusic() {
-    if (musicBtn.disabled) {
-         console.log("Music button clicked but is disabled.");
+    if (musicBtn.disabled || !bgMusicBuffer) {
+         console.log("Music button clicked but is disabled or buffer is not loaded.");
          return;
-    }
-    if (!bgMusicBuffer) {
-        console.log("Music button clicked but music buffer is not yet loaded.");
-        return;
     }
 
     console.log(`Music button clicked. Page audio state: ${audioState}, BG music state: ${bgMusicState}`);
 
+    // The rule is: BG music only plays when Page audio is NOT playing.
     if (audioState === 'playing') {
+        // If page audio is playing, we can only STOP BG music if it's playing.
         if (bgMusicState === 'playing') {
             pauseBackgroundMusic();
         } else {
-            console.log("Page audio is playing. Cannot start background music.");
+            // If page audio is playing and BG music is not playing (stopped or paused),
+            // clicking the music button does nothing.
+            console.log("Page audio is playing. Cannot change background music state.");
         }
     } else {
+        // If page audio is NOT playing, we can toggle BG music.
         if (bgMusicState === 'playing') {
             pauseBackgroundMusic();
-        } else if (bgMusicState === 'paused') {
-            console.log("Resuming background music.");
-            playBackgroundMusic();
-        } else { 
-            console.log("Starting background music.");
+        } else { // Includes 'stopped' and 'paused' states
+            console.log("Page audio is stopped. Attempting to start/resume background music.");
             playBackgroundMusic();
         }
     }
@@ -486,7 +513,19 @@ function updatePage() {
         console.log("Cleared pending audio start timeout.");
     }
 
-    resetAudioState();
+    resetAudioState(); // Stop and reset page audio state
+
+    // Check if background music should be paused based on page audio presence
+    const nextPageHasAudio = pages[currentPageIndex] && pages[currentPageIndex].audio;
+    if (nextPageHasAudio && bgMusicState === 'playing') {
+         console.log("Next page has audio, pausing background music.");
+         pauseBackgroundMusic();
+    } else if (!nextPageHasAudio && bgMusicState === 'paused' && musicBtn && !musicBtn.disabled) {
+        // If the next page *doesn't* have audio AND BG music was paused due to page audio, resume it.
+        console.log("Next page has no audio, background music was paused, attempting resume.");
+         playBackgroundMusic();
+    }
+
 
     if (currentPageIndex < 0 || currentPageIndex >= pages.length) {
         console.error("Page index out of bounds:", currentPageIndex);
@@ -497,6 +536,7 @@ function updatePage() {
     const mainImageUrl = page.image;
     const audioAssetName = page.audio;
 
+    // Fetch audio but don't play it immediately, it will be started by the timeout after image load
     fetchAndDecodeAudioForPage(audioAssetName);
 
     pageImage.classList.remove('visible');
@@ -516,13 +556,13 @@ function updatePage() {
         return new Promise((resolve, reject) => {
             if (!src) {
                 console.warn("loadImage called with empty src:", src);
-                resolve(); 
+                resolve();
                 return;
             }
             img.onload = () => resolve();
             img.onerror = (e) => {
                 console.error(`Failed to load image ${src}:`, e);
-                resolve(); 
+                resolve();
             };
             img.src = src;
         });
@@ -543,6 +583,11 @@ function updatePage() {
             downloadBtn.disabled = true;
             document.body.style.backgroundColor = '#ffe0b2';
             resetAudioState(); 
+             // Also attempt to resume background music if it was paused for page audio that failed to load
+            if (bgMusicState === 'paused' && musicBtn && !musicBtn.disabled) {
+                 console.log("Page image failed to load, attempting to resume background music.");
+                 playBackgroundMusic();
+            }
             return;
         }
 
@@ -566,10 +611,16 @@ function updatePage() {
                 requestAnimationFrame(() => {
                      pageImage.classList.add('visible'); 
 
+                     // Start page audio after a 2-second delay IF there is audio
                      if (audioBuffer && audioContext && audioContext.state !== 'closed') {
                         audioStartTimeoutId = setTimeout(() => {
                             console.log("2-second delay finished, attempting auto-play.");
-                            if (audioState === 'stopped') {
+                            if (audioState === 'stopped') { // Only auto-play if user hasn't clicked the button
+                                // Pause background music immediately before playing page audio
+                                if (bgMusicState === 'playing') {
+                                    console.log("Auto-playing page audio, pausing background music.");
+                                    pauseBackgroundMusic();
+                                }
                                 playAudio();
                             } else {
                                 console.log(`Auto-play skipped, page audio state is ${audioState}.`);
