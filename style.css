@@ -1,77 +1,218 @@
+/* Basic styling for the body and container */
 body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #ffe0b2;
-  transition: background-color 1s ease;
-  overflow: hidden;
-  touch-action: pan-y;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffe0b2; /* Default fallback background color */
+    transition: background-color 1s ease; /* Smooth transition for background */
+    overflow: hidden; /* Hide overflow from content positioning */
+    /* Add touch-action to prevent default browser swipe gestures */
+    touch-action: pan-y;
 }
+
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
-  box-sizing: border-box;
-  position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px; /* Adjust as needed */
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; /* Needed for absolute positioning of content/buttons */
 }
+
+/* Styling for the main page content area */
 .page-content {
-  position: relative;
-  max-width: 100%;
-  max-height: calc(100vh - 40px);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: relative; /* Needed for absolute positioning of buttons */
+    max-width: 100%; /* Ensure it fits within the container */
+    max-height: calc(100vh - 40px); /* Prevent content from exceeding viewport height */
+    overflow: hidden; /* Hide any content that overflows */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Add touch-action for swipe recognition */
+    touch-action: pan-y pinch-zoom;
+    cursor: grab; /* Indicate interactivity */
 }
+
+.page-content:active {
+    cursor: grabbing;
+}
+
+/* Styling for the image */
 #pageImage {
-  display: block;
-  max-width: 100%;
-  max-height: calc(100vh - 40px);
-  height: auto;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+    display: block; /* Removes extra space below image */
+    max-width: 100%; /* Image should not exceed container width */
+    max-height: calc(100vh - 40px); /* Image should not exceed container height */
+    height: auto; /* Maintain aspect ratio */
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.5s ease-in-out; /* Smooth fade-in */
 }
+
 #pageImage.visible {
-  opacity: 1;
+    opacity: 1; /* Fade in when visible class is added */
 }
+
+
+/* Styling for navigation buttons */
 .nav-btn {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  font-size: 24px;
-  margin: 0 10px;
-  cursor: pointer;
-  border-radius: 8px;
-  line-height: 1;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-size: 24px; /* Larger font for arrows */
+    line-height: 1; /* Center arrow vertically */
 }
+
 .nav-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+    background-color: #cccccc; /* Grey out disabled buttons */
+    cursor: not-allowed;
 }
-.audio-btn, .download-btn, .music-btn {
-  position: absolute;
-  bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+
+/* Specific colors for nav buttons based on position */
+.nav-btn.green {
+    background-color: #4CAF50; /* Green */
 }
+
+.nav-btn.orange {
+    background-color: #FF9800; /* Orange */
+}
+
+/* Positioning and styling for audio and download buttons */
+.audio-btn,
+.download-btn,
+.music-btn {
+    position: absolute;
+    bottom: 10px; /* Distance from the bottom of .page-content */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    border: none;
+    border-radius: 50%; /* Circular shape */
+    width: 40px; /* Fixed size */
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0; /* Remove default padding */
+    transition: background-color 0.3s ease;
+    z-index: 10; /* Ensure buttons are above the image */
+}
+
+.audio-btn:hover,
+.download-btn:hover:not(:disabled),
+.music-btn:hover:not(:disabled) {
+     background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
+}
+
+.audio-btn:disabled,
+.download-btn:disabled,
+.music-btn:disabled {
+    background-color: rgba(0, 0, 0, 0.2); /* Lighter and less interactive when disabled */
+    cursor: not-allowed;
+}
+
+.audio-btn {
+    right: 10px; /* Distance from the right of .page-content */
+}
+
+.download-btn {
+     right: 60px; /* Position download button to the left of the audio button */
+}
+
+.music-btn {
+    left: 10px; /* Position music button to the left of .page-content */
+}
+
+
+.audio-icon {
+    width: 24px; /* SVG icon size */
+    height: 24px;
+    fill: white; /* Icon color */
+}
+
+/* Hide play icon when playing, show pause icon */
+.audio-btn.playing .play,
+.music-btn.playing .play { display: none; }
+.audio-btn.playing .pause,
+.music-btn.playing .pause { display: block; }
+
+/* Hide pause icon when stopped, show play icon */
+.audio-btn.stopped .pause,
+.music-btn.stopped .pause { display: none; }
+.audio-btn.stopped .play,
+.music-btn.stopped .play { display: block; }
+
+
+/* --- Blinking Animation for Music Button when Playing --- */
+@keyframes pulse-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.music-btn.playing {
+    animation: pulse-blink 1.5s infinite; /* Apply blinking animation */
+}
+/* --- End Blinking Animation --- */
+
+
+/* Style for the download link inside the button */
 .download-btn a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
+    display: flex; /* Make the link fill the button */
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent (svg fill) */
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) { 
+    .container {
+        flex-direction: column; /* Stack elements vertically on small screens */
+        padding: 10px;
+    }
+
+    /* Hide arrow buttons on small screens */
+    .container > .nav-btn {
+        display: none;
+    }
+
+    .page-content {
+        margin: 10px 0; /* Add margin between buttons and content */
+        width: 100%;
+    }
+
+    .audio-btn,
+    .download-btn,
+    .music-btn {
+        width: 35px;
+        height: 35px;
+        bottom: 5px;
+        right: 5px;
+    }
+
+    .download-btn {
+        right: 50px; /* Adjust position for smaller buttons */
+    }
+
+     .music-btn {
+        left: 5px; /* Adjust position for smaller buttons */
+     }
+
+
+    .audio-icon {
+        width: 20px;
+        height: 20px;
+    }
 }
