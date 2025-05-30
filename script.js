@@ -41,6 +41,11 @@ const musicBtn = document.getElementById('musicBtn'); // Get music button elemen
 const pauseIcon = document.getElementById('pauseIcon');
 const playIcon = document.getElementById('playIcon');
 const pageContent = document.getElementById('pageContent'); // Get page content element
+const pageWrapper = pageContent.querySelector('.page-wrapper'); // Get the new wrapper element
+
+const transitionDuration = 500; // Milliseconds, must match CSS transition duration
+
+let isTransitioning = false; // Flag to prevent navigation during transition
 
 // --- Swipe Navigation Variables ---
 let touchStartX = 0;
@@ -233,7 +238,7 @@ async function fetchAndDecodeAudioForPage(audioUrl) {
 async function fetchAndDecodeBackgroundMusic(audioUrl) {
     if (bgMusicBuffer) {
         console.log("Background music already loaded.");
-         musicBtn.disabled = false; // Ensure button is enabled if buffer exists
+        musicBtn.disabled = false; // Ensure button is enabled if buffer exists
         updateBackgroundMusicButtonIcon();
         return;
     }
@@ -243,7 +248,7 @@ async function fetchAndDecodeBackgroundMusic(audioUrl) {
         return;
     }
 
-     // Ensure AudioContext is ready before fetching/decoding
+    // Ensure AudioContext is ready before fetching/decoding
     try {
         await initializeAudioContext();
         if (!audioContext || audioContext.state !== 'running') {
@@ -256,7 +261,6 @@ async function fetchAndDecodeBackgroundMusic(audioUrl) {
         musicBtn.disabled = true;
         return;
     }
-
 
     try {
         console.log("Fetching background music:", audioUrl);
@@ -337,19 +341,19 @@ async function playAudio() {
         audioState = 'stopped';
         playbackTime = 0; // Reset playback time after it naturally ends
         updateAudioButtonIcon();
-         // After page audio ends, if BG music was paused automatically (not manually), resume it
+        // After page audio ends, if BG music was paused automatically (not manually), resume it
         if (bgMusicState === 'paused' && !bgMusicWasManualPaused && musicBtn && !musicBtn.disabled) {
-             console.log("Page audio ended, attempting to resume background music (was auto-paused).");
-             playBackgroundMusic(); // playBackgroundMusic will set bgMusicWasManualPaused = false
+            console.log("Page audio ended, attempting to resume background music (was auto-paused).");
+            playBackgroundMusic(); // playBackgroundMusic will set bgMusicWasManualPaused = false
         } else if (bgMusicState === 'paused' && bgMusicWasManualPaused) {
-             console.log("Page audio ended, BG music was manually paused, not resuming automatically.");
+            console.log("Page audio ended, BG music was manually paused, not resuming automatically.");
         }
     };
 }
 
 async function playBackgroundMusic() {
     if (!audioContext || audioContext.state !== 'running') {
-         console.log(`Cannot play BG music. AudioContext state: ${audioContext ? audioContext.state : 'null'}. Attempting resume...`);
+        console.log(`Cannot play BG music. AudioContext state: ${audioContext ? audioContext.state : 'null'}. Attempting resume...`);
         try {
             await initializeAudioContext();
             if (!audioContext || audioContext.state !== 'running') {
@@ -381,10 +385,10 @@ async function playBackgroundMusic() {
     bgMusicSource.buffer = bgMusicBuffer;
     bgMusicSource.loop = true;
 
-     // Add a gain node for background music to control volume (optional, but good practice)
-     // let gainNode = audioContext.createGain();
-     // gainNode.gain.value = 0.5; // Set background music volume lower
-     // bgMusicSource.connect(gainNode).connect(audioContext.destination);
+    // Add a gain node for background music to control volume (optional, but good practice)
+    // let gainNode = audioContext.createGain();
+    // gainNode.gain.value = 0.5; // Set background music volume lower
+    // bgMusicSource.connect(gainNode).connect(audioContext.destination);
 
     bgMusicSource.connect(audioContext.destination); // Connect directly for now
 
@@ -424,9 +428,9 @@ function pauseBackgroundMusic() {
 }
 
 function toggleBackgroundMusic() {
-   if (musicBtn.disabled || !bgMusicBuffer) {
-         console.log("Music button clicked but is disabled or buffer is not loaded.");
-         return;
+    if (musicBtn.disabled || !bgMusicBuffer) {
+        console.log("Music button clicked but is disabled or buffer is not loaded.");
+        return;
     }
 
     console.log(`Music button clicked. Page audio state: ${audioState}, BG music state: ${bgMusicState}, Manual pause state: ${bgMusicWasManualPaused}`);
@@ -543,13 +547,13 @@ function updatePage() {
     // Check if background music should be paused based on page audio presence
     const nextPageHasAudio = pages[currentPageIndex] && pages[currentPageIndex].audio;
     if (nextPageHasAudio && bgMusicState === 'playing') {
-         console.log("Next page has audio, pausing background music.");
-         pauseBackgroundMusic();
-         bgMusicWasManualPaused = false; // It's auto-paused, not manual
+        console.log("Next page has audio, pausing background music.");
+        pauseBackgroundMusic();
+        bgMusicWasManualPaused = false; // It's auto-paused, not manual
     } else if (!nextPageHasAudio && bgMusicState === 'paused' && !bgMusicWasManualPaused && musicBtn && !musicBtn.disabled) {
         // If the next page *doesn't* have audio AND BG music was paused due to page audio, resume it.
         console.log("Next page has no audio, background music was paused, attempting resume.");
-         playBackgroundMusic();
+        playBackgroundMusic();
     }
 
     if (currentPageIndex < 0 || currentPageIndex >= pages.length) {
@@ -597,132 +601,132 @@ function updatePage() {
         loadImage(mainImage, mainImageUrl),
         loadImage(watermarkImage, watermarkImageUrl)
     ])
-    .then(() => {
-        console.log("Main image loaded. Watermark image load attempted.");
+        .then(() => {
+            console.log("Main image loaded. Watermark image load attempted.");
 
-        const displayCanvas = drawImageOnCanvas(mainImage, null, false);
-        if (!displayCanvas) {
-            console.error("Failed to create canvas for display.");
-            pageImage.src = '';
-            pageImage.classList.remove('visible');
-            downloadBtn.disabled = true;
-            document.body.style.backgroundColor = '#ffe0b2';
-            resetAudioState();
-             // Also attempt to resume background music if it was paused for page audio that failed to load
-            if (bgMusicState === 'paused' && !bgMusicWasManualPaused && musicBtn && !musicBtn.disabled) {
-                 console.log("Page image failed to load, attempting to resume background music.");
-                 playBackgroundMusic();
-            }
-            return;
-        }
-
-        const dominantColor = getRepresentativeColor(displayCanvas);
-        if (dominantColor) {
-            document.body.style.backgroundColor = dominantColor;
-            console.log("Setting background color to:", dominantColor);
-        } else {
-            document.body.style.backgroundColor = '#ffe0b2';
-            console.log("Failed to extract color, setting fallback background.");
-        }
-
-        const displayDataUrl = displayCanvas.toDataURL();
-        if (displayDataUrl && displayDataUrl.length > "data:,".length) {
-            pageImage.onload = null;
-            pageImage.onerror = null;
-            pageImage.src = displayDataUrl;
-            console.log("Display canvas data URL set for page image.");
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                     pageImage.classList.add('visible');
-
-                     // Start page audio after a 2-second delay IF there is audio
-                     if (audioBuffer && audioContext && audioContext.state !== 'closed') {
-                        audioStartTimeoutId = setTimeout(() => {
-                            console.log("2-second delay finished, attempting auto-play.");
-                            if (audioState === 'stopped') { // Only auto-play if user hasn't clicked the button
-                                // Pause background music immediately before playing page audio
-                                if (bgMusicState === 'playing') {
-                                    console.log("Auto-playing page audio, pausing background music.");
-                                    pauseBackgroundMusic();
-                                    bgMusicWasManualPaused = false; // Auto-paused
-                                }
-                                playAudio();
-                            } else {
-                                console.log(`Auto-play skipped, page audio state is ${audioState}.`);
-                            }
-                            audioStartTimeoutId = null;
-                        }, 2000);
-                        console.log("Scheduled audio playback in 2 seconds.");
-                    } else {
-                        console.log("Audio buffer not ready or AudioContext not available for auto-play after image loaded.");
-                        audioState = 'stopped';
-                        updateAudioButtonIcon();
-                        audioBtn.disabled = true;
-                    }
-                });
-            });
-
-
-        } else {
-            console.error("Failed to create valid data URL from display canvas.");
-            pageImage.src = '';
-            pageImage.classList.remove('visible');
-            downloadBtn.disabled = true;
-            document.body.style.backgroundColor = '#ffe0b2';
-            resetAudioState();
-        }
-        displayCanvas.remove();
-
-        const downloadCanvas = drawImageOnCanvas(mainImage, watermarkImage, true);
-        if (!downloadCanvas) {
-            console.warn("Failed to create canvas for download.");
-            downloadBtn.disabled = true;
-        } else {
-            downloadCanvas.toBlob((blob) => {
-                if (blob) {
-                    currentDownloadBlobUrl = URL.createObjectURL(blob);
-                    downloadLink.href = currentDownloadBlobUrl;
-                    const filename = mainImageUrl.substring(mainImageUrl.lastIndexOf('/') + 1);
-                    downloadLink.download = `page_${currentPageIndex + 1}_${filename}`;
-                    downloadBtn.disabled = false;
-                    console.log("Download Blob created. Button enabled.");
-                } else {
-                    console.error("Failed to create blob for download.");
-                    downloadBtn.disabled = true;
+            const displayCanvas = drawImageOnCanvas(mainImage, null, false);
+            if (!displayCanvas) {
+                console.error("Failed to create canvas for display.");
+                pageImage.src = '';
+                pageImage.classList.remove('visible');
+                downloadBtn.disabled = true;
+                document.body.style.backgroundColor = '#ffe0b2';
+                resetAudioState();
+                // Also attempt to resume background music if it was paused for page audio that failed to load
+                if (bgMusicState === 'paused' && !bgMusicWasManualPaused && musicBtn && !musicBtn.disabled) {
+                    console.log("Page image failed to load, attempting to resume background music.");
+                    playBackgroundMusic();
                 }
-                downloadCanvas.remove();
-            }, 'image/png');
-        }
+                return;
+            }
 
-        prevBtn.disabled = currentPageIndex === 0;
-        nextBtn.disabled = currentPageIndex === pages.length - 1;
+            const dominantColor = getRepresentativeColor(displayCanvas);
+            if (dominantColor) {
+                document.body.style.backgroundColor = dominantColor;
+                console.log("Setting background color to:", dominantColor);
+            } else {
+                document.body.style.backgroundColor = '#ffe0b2';
+                console.log("Failed to extract color, setting fallback background.");
+            }
 
-        if (currentPageIndex === pages.length - 1) {
-            nextBtn.classList.remove('green');
-            nextBtn.classList.add('orange');
-            prevBtn.classList.remove('orange');
-            prevBtn.classList.add('green');
-        } else if (currentPageIndex === 0) {
-            nextBtn.classList.remove('orange');
-            nextBtn.classList.add('green');
-            prevBtn.classList.remove('green');
-            prevBtn.classList.add('orange');
-        } else {
-            nextBtn.classList.remove('orange');
-            nextBtn.classList.add('green');
-            prevBtn.classList.remove('green');
-            prevBtn.classList.add('orange');
-        }
-    })
-    .catch((error) => {
-        console.error("Error during image loading or canvas drawing:", error);
-        pageImage.src = '';
-        pageImage.classList.remove('visible');
-        downloadBtn.disabled = true;
-        document.body.style.backgroundColor = '#ffe0b2';
-        resetAudioState();
-    });
+            const displayDataUrl = displayCanvas.toDataURL();
+            if (displayDataUrl && displayDataUrl.length > "data:,".length) {
+                pageImage.onload = null;
+                pageImage.onerror = null;
+                pageImage.src = displayDataUrl;
+                console.log("Display canvas data URL set for page image.");
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        pageImage.classList.add('visible');
+
+                        // Start page audio after a 2-second delay IF there is audio
+                        if (audioBuffer && audioContext && audioContext.state !== 'closed') {
+                            audioStartTimeoutId = setTimeout(() => {
+                                console.log("2-second delay finished, attempting auto-play.");
+                                if (audioState === 'stopped') { // Only auto-play if user hasn't clicked the button
+                                    // Pause background music immediately before playing page audio
+                                    if (bgMusicState === 'playing') {
+                                        console.log("Auto-playing page audio, pausing background music.");
+                                        pauseBackgroundMusic();
+                                        bgMusicWasManualPaused = false; // Auto-paused
+                                    }
+                                    playAudio();
+                                } else {
+                                    console.log(`Auto-play skipped, page audio state is ${audioState}.`);
+                                }
+                                audioStartTimeoutId = null;
+                            }, 2000);
+                            console.log("Scheduled audio playback in 2 seconds.");
+                        } else {
+                            console.log("Audio buffer not ready or AudioContext not available for auto-play after image loaded.");
+                            audioState = 'stopped';
+                            updateAudioButtonIcon();
+                            audioBtn.disabled = true;
+                        }
+                    });
+                });
+
+
+            } else {
+                console.error("Failed to create valid data URL from display canvas.");
+                pageImage.src = '';
+                pageImage.classList.remove('visible');
+                downloadBtn.disabled = true;
+                document.body.style.backgroundColor = '#ffe0b2';
+                resetAudioState();
+            }
+            displayCanvas.remove();
+
+            const downloadCanvas = drawImageOnCanvas(mainImage, watermarkImage, true);
+            if (!downloadCanvas) {
+                console.warn("Failed to create canvas for download.");
+                downloadBtn.disabled = true;
+            } else {
+                downloadCanvas.toBlob((blob) => {
+                    if (blob) {
+                        currentDownloadBlobUrl = URL.createObjectURL(blob);
+                        downloadLink.href = currentDownloadBlobUrl;
+                        const filename = mainImageUrl.substring(mainImageUrl.lastIndexOf('/') + 1);
+                        downloadLink.download = `page_${currentPageIndex + 1}_${filename}`;
+                        downloadBtn.disabled = false;
+                        console.log("Download Blob created. Button enabled.");
+                    } else {
+                        console.error("Failed to create blob for download.");
+                        downloadBtn.disabled = true;
+                    }
+                    downloadCanvas.remove();
+                }, 'image/png');
+            }
+
+            prevBtn.disabled = currentPageIndex === 0;
+            nextBtn.disabled = currentPageIndex === pages.length - 1;
+
+            if (currentPageIndex === pages.length - 1) {
+                nextBtn.classList.remove('green');
+                nextBtn.classList.add('orange');
+                prevBtn.classList.remove('orange');
+                prevBtn.classList.add('green');
+            } else if (currentPageIndex === 0) {
+                nextBtn.classList.remove('orange');
+                nextBtn.classList.add('green');
+                prevBtn.classList.remove('green');
+                prevBtn.classList.add('orange');
+            } else {
+                nextBtn.classList.remove('orange');
+                nextBtn.classList.add('green');
+                prevBtn.classList.remove('green');
+                prevBtn.classList.add('orange');
+            }
+        })
+        .catch((error) => {
+            console.error("Error during image loading or canvas drawing:", error);
+            pageImage.src = '';
+            pageImage.classList.remove('visible');
+            downloadBtn.disabled = true;
+            document.body.style.backgroundColor = '#ffe0b2';
+            resetAudioState();
+        });
 }
 
 prevBtn.addEventListener('click', () => {
@@ -757,8 +761,8 @@ audioBtn.addEventListener('click', () => {
         updateAudioButtonIcon();
         // If BG music was paused because page audio was playing, resume it
         if (bgMusicState === 'paused' && !bgMusicWasManualPaused && musicBtn && !musicBtn.disabled) {
-             console.log("Page audio stopped by user, attempting to resume background music.");
-             playBackgroundMusic();
+            console.log("Page audio stopped by user, attempting to resume background music.");
+            playBackgroundMusic();
         }
     } else {
         console.log("Audio button clicked: Attempting to play audio.");
@@ -791,10 +795,10 @@ pageContent.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY; // Store Y position
         console.log(`Touch start at X: ${touchStartX}, Y: ${touchStartY} (Swipe enabled)`);
     } else {
-         console.log("Touch start ignored: Multiple touches or large screen size.");
-         // Reset start coordinates if conditions are not met
-         touchStartX = 0;
-         touchStartY = 0;
+        console.log("Touch start ignored: Multiple touches or large screen size.");
+        // Reset start coordinates if conditions are not met
+        touchStartX = 0;
+        touchStartY = 0;
     }
 }, { passive: true }); // Use passive: true as we won't prevent default here initially
 
@@ -814,40 +818,40 @@ pageContent.addEventListener('touchend', (e) => {
             if (deltaX > 0) { // Swiped right
                 console.log("Swipe right detected.");
                 if (currentPageIndex > 0) {
-                     console.log("Navigating to previous page via swipe.");
+                    console.log("Navigating to previous page via swipe.");
                     currentPageIndex--;
                     updatePage();
                     e.preventDefault(); // Prevent default if a swipe caused navigation
-                     console.log("preventDefault called.");
+                    console.log("preventDefault called.");
                 } else {
                     console.log("Swipe right ignored: Already on first page.");
                 }
             } else { // Swiped left
-                 console.log("Swipe left detected.");
+                console.log("Swipe left detected.");
                 if (currentPageIndex < pages.length - 1) {
-                     console.log("Navigating to next page via swipe.");
+                    console.log("Navigating to next page via swipe.");
                     currentPageIndex++;
                     updatePage();
                     e.preventDefault(); // Prevent default if a swipe caused navigation
-                     console.log("preventDefault called.");
+                    console.log("preventDefault called.");
                 } else {
                     console.log("Swipe left ignored: Already on last page.");
                 }
             }
         } else {
-             console.log("Swipe movement below threshold or too vertical.");
+            console.log("Swipe movement below threshold or too vertical.");
         }
     } else {
-         console.log("Touch end ignored: Multiple touches or large screen size.");
+        console.log("Touch end ignored: Multiple touches or large screen size.");
     }
-     // Always reset touch start coordinates after touchend
-     touchStartX = 0;
-     touchStartY = 0;
+    // Always reset touch start coordinates after touchend
+    touchStartX = 0;
+    touchStartY = 0;
 }, { passive: false }); // Use passive: false so we can call preventDefault if needed
 
 // Optional: Add touchcancel listener for robustness
 pageContent.addEventListener('touchcancel', () => {
-     console.log("Touch cancelled, resetting swipe tracking.");
-     touchStartX = 0;
-     touchStartY = 0;
+    console.log("Touch cancelled, resetting swipe tracking.");
+    touchStartX = 0;
+    touchStartY = 0;
 });
