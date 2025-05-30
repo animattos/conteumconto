@@ -1,13 +1,13 @@
 // Array defining the pages. Each object has an image path and an audio asset name.
 const pages = [
-    { image: 'capa.png', audio: '' },
+    { image: 'capa.jpg', audio: '' },
     { image: 'a.jpg', audio: '01.mp3' },
     { image: 'b.jpg', audio: '02.mp3' },
-    { image: 'c.png', audio: '03.mp3' },
-    { image: 'd.png', audio: '00.mp3' },
+    { image: 'c.jpg', audio: '03.mp3' },
+    { image: 'd.jpg', audio: '00.mp3' },
 ];
 
-const watermarkImageUrl = 'ChatGPT Image 29 de mai. de 2025, 15_01_13.png';
+const watermarkImageUrl = 'marca.png';
 const backgroundMusicUrl = '04.mp3'; // URL for the background music
 
 let currentPageIndex = 0;
