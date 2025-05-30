@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffe0b2;
+  transition: background-color 1s ease;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+.page-content {
+  position: relative;
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#pageImage {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+#pageImage.visible {
+  opacity: 1;
+}
+.nav-btn {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 24px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  line-height: 1;
+}
+.nav-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+.audio-btn, .download-btn, .music-btn {
+  position: absolute;
+  bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.download-btn a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
