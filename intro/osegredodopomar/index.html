@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GARATUJAS — Lily’s Lostpurr</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar">
+      <h1 class="brand">GARATUJAS</h1>
+
+<!-- Botão hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu"
+            aria-controls="primary-nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+      <nav class="nav" id="primary-nav">
+      <a href="../../index.html">INÍCIO</a>
+      <a href="#">COMO FUNCIONA</a>
+      <a href="#">PARCEIRO DA ESCOLA</a>
+      <a href="#">CONTATO</a>
+    </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="cover-col">
+        <img src="assets/lilys_lost_purr.jpg" alt="Lily's Lost Purr" class="cover"/>
+      </div>
+
+      <div class="content-col">
+        <h2 class="title">O SEGREDO DO POMAR</h2>
+        <p class="desc">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, 
+          quis nostrud lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim 
+          veniam, quis nostrud.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad 
+          minim veniam, quis nostrud.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </p>
+        <p class="author"><strong>AUTOR:</strong> ALESSANDRO MATTOS</p>
+
+        <div class="access-row">
+          <img src="assets/headphones.svg" alt="Ouvir" class="phones" />
+          <input id="code" type="password" inputmode="text" autocomplete="one-time-code" placeholder="DIGITE SEU CÓDIGO" aria-label="Digite seu código de acesso" />
+          <button id="go" class="btn btn-go" aria-label="Confirmar código">
+            <span class="triangle" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p id="msg" class="msg" role="alert" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Garatujas — Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
