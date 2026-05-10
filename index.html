@@ -1,151 +1,125 @@
-<html lang="pt">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitura de Imagem com GPT</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            color: white;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 320px;
-        }
-
-        .input-container {
-            display: flex;
-            align-items: center;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            overflow: hidden;
-        }
-
-        .input-container i {
-            color: white;
-            font-size: 20px;
-            padding: 10px;
-            background: #ff9800;
-        }
-
-        .input-container input {
-            border: none;
-            outline: none;
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-            background: white;
-        }
-
-        .login-button {
-            background: #ff9800;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease;
-            border: none;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        .login-button:hover {
-            background: #e68900;
-        }
-
-        .cancel-button {
-            margin-top: 10px;
-            background: #ccc;
-            color: black;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease;
-            border: none;
-            width: 100%;
-        }
-        @media (max-width: 600px) {
-            .modal-content {
-                padding: 20px;
-            }
-
-            .input-container i {
-                padding: 8px;
-            }
-
-            .input-container input {
-                padding: 8px;
-                font-size: 14px;
-            }
-
-            .login-button, .cancel-button {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GARATUJAS</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <div class="menu">
-             
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="topbar">
+      <h1 class="brand">GARATUJAS</h1>
+
+      <!-- Botão hamburger (aparece apenas no mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-controls="primary-nav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="primary-nav">
+        <a href="#inicio">INÍCIO</a>
+        <a href="#como-funciona">COMO FUNCIONA</a>
+        <a href="#parceiro">PARCEIRO DA ESCOLA</a>
+        <a href="#contato">CONTATO</a>
+      </nav>
     </div>
+  </header>
 
-    
-    <div class="modal-content">
-        <h2 style="color: #333; margin-bottom: 20px;">Acesso ao Sistema</h2>
-
-        <div class="input-container">
-            <i class="fas fa-user"></i>
-            <input type="text" id="loginUsername" placeholder="Usuário">
-        </div>
-
-        <div class="input-container">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="loginPassword" placeholder="Senha">
-        </div>
-
-        <button onclick="login()" class="login-button">Entrar</button>
-        <button onclick="resetFields()" class="cancel-button">Cancelar</button>
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <div class="hero-inner">
+      <h2>BIBLIOTECA DIGITAL<br/>COM LEITURA MULTIMODAL</h2><br/>
+      <button id="cta" class="btn btn-cta">SEJA ASSINANTE <span class="price">R$29,90</span></button>
     </div>
-    
+  </section>
 
-    <script>
-        function resetFields() {
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
-        }
+  <!-- CATALOGO -->
+  <section class="catalogo" aria-labelledby="titulo-catalogo">
+    <h3 id="titulo-catalogo">NOSSO CATÁLOGO DE HISTÓRIAS</h3>
 
-        function login() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
+    <div class="grid">
+      <article class="card">
+        <img src="assets/lilys_lost_purr.jpg" alt="Lily's Lost Purr" />
+        <h4>O Segredo do Pomar</h4>
+        <a class="btn btn-primary" href="intro/osegredodopomar/index.html">ACESSAR HISTÓRIA</a>
+      </article>
 
-            if (username === 'mattos' && password === '123') {
-                alert('Login bem-sucedido!');
-                window.location.href = 'sistema.html';
-            } else {
-                alert('Usuário ou senha incorretos.');
-            }
-        }
-    </script>
+      <article class="card">
+        <img src="assets/story_thief.jpg" alt="Uma surpresa na floresta" />
+        <h4>UMA SURPRESA NA FLORESTA</h4>
+        <a class="btn btn-primary" href="intro/floresta.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Dancing with Dragons" />
+        <h4>DANCING WITH DRAGONS</h4>
+        <a class="btn btn-primary" href="intro/dragons.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/menino_abelha.jpg" alt="O Menino Abelha" />
+        <h4>O MENINO ABELHA</h4>
+        <a class="btn btn-primary" href="intro/abelha.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/gassy_cassie.jpg" alt="Gassy Cassie" />
+        <h4>GASSY CASSIE</h4>
+        <a class="btn btn-primary" href="gassy-cassie.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/grito.jpg" alt="O que eu faço com esse grito?" />
+        <h4>O QUE FAÇO COM ESSE GRITO?</h4>
+        <a class="btn btn-primary" href="intro/grito.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Mini Rabbit" />
+        <h4>MINI RABBIT</h4>
+        <a class="btn btn-primary" href="intro/rabbit.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/sara.jpg" alt="Os Cabelos de Sara" />
+        <h4>OS CABELOS DE SARA</h4>
+        <a class="btn btn-primary" href="intro/sara.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/some_days.jpg" alt="Some Days" />
+        <h4>SOME DAYS</h4>
+        <a class="btn btn-primary" href="intro/days.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/sara.jpg" alt="Os Cabelos de Sara" />
+        <h4>OS CABELOS DE SARA</h4>
+        <a class="btn btn-primary" href="intro/sara.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/some_days.jpg" alt="Some Days" />
+        <h4>SOME DAYS</h4>
+        <a class="btn btn-primary" href="intro/days.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Mini Rabbit" />
+        <h4>MINI RABBIT</h4>
+        <a class="btn btn-primary" href="intro/rabbit.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+
+    </div>
+    <nav id="pager" class="pager" aria-label="Paginação de histórias"></nav>
+  </section>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Garatujas — Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
