@@ -113,3 +113,41 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.setAttribute('aria-expanded', String(open));
   });
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal-info');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBody = document.getElementById('modal-body');
+  const closeBtn = document.querySelector('.close-button');
+  
+  // Informações que vão aparecer em cada menu
+  const infoData = {
+    'COMO FUNCIONA': 'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
+    'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
+    'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21)  97374-3649'
+  };
+
+  // Seleciona os links do nav (exceto o INÍCIO se quiser que ele continue apenas voltando ao topo)
+  const menuLinks = document.querySelectorAll('.nav a');
+
+  menuLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const textoMenu = link.textContent.trim();
+      
+      // Se tivermos informação para esse menu, abrimos o popup
+      if (infoData[textoMenu]) {
+        e.preventDefault(); // Impede o pulo da página
+        modalTitle.innerText = textoMenu;
+        modalBody.innerHTML = `<p>${infoData[textoMenu]}</p>`;
+        modal.style.display = 'block';
+      }
+    });
+  });
+
+  // Fechar ao clicar no X
+  closeBtn.onclick = () => modal.style.display = 'none';
+
+  // Fechar ao clicar fora da caixa branca
+  window.onclick = (event) => {
+    if (event.target == modal) modal.style.display = 'none';
+  };
+});

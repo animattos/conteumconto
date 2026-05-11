@@ -11,6 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  
   <!-- HEADER -->
   <header class="site-header">
   <div class="topbar">
@@ -127,9 +129,23 @@
   </section>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Garatujas — Todos os direitos reservados.</p>
+    <p>© <span id="year"></span> Conte um Conto— Todos os direitos reservados.</p>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // Opcional: Redirecionar para uma página de erro externa
+        // window.location.href = "pagina-de-erro.html";
+    }
+</script>
+<div id="modal-info" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <h2 id="modal-title">Título</h2>
+    <div id="modal-body">
+      </div>
+  </div>
+</div>
 </body>
 </html>
