@@ -269,3 +269,24 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 .heart-icon {
   font-size: 1.2rem;
 }
+.titulo-like-wrapper {
+  display: flex;
+  align-items: center;      /* Alinha o texto e o botão verticalmente ao centro */
+  justify-content: center; /* Centraliza o conjunto no card */
+  gap: 5px;                /* Espaçamento entre o título e o botão */
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Ajuste o h4 para não ocupar a linha inteira */
+.card h4 {
+  margin: 0; 
+  text-align: left;
+  min-height: auto;
+}
+
+/* Ajuste a like-container para não empurrar tudo */
+.like-container {
+  width: auto;
+  margin-bottom: 0;
+}
