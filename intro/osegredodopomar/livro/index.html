@@ -1,388 +1,349 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>O Segredo do Pomar - Carrossel com Áudio</title>
-    <style>
-        /* ======= Base Styles ======= */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: sans-serif;
-            background-color: #000; /* Default background */
-            color: #fff;
-        }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrossel com Áudio</title>
+<style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
 
-        /* ======= Carousel Styles ======= */
-        .carousel {
-            height: 100vh;
-            width: 100%;
-            transition: transform 0.5s ease-in-out;
-            display: none; /* Hidden by default, shown by JS on mobile */
-        }
+    .carousel {
+      height: 100vh;
+      width: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
 
-        .slide {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-            position: relative;
-            flex-direction: column;
-        }
+    .slide {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      position: relative;
+      flex-direction: column;
+    }
 
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ensures full image is visible */
-        }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        /* ======= Audio Styles (Hidden) ======= */
-        audio {
-            display: none;
-        }
+    audio {
+      display: none;
+    }
 
-        /* ======= Fixed UI Buttons (Hidden by default, shown by JS on mobile) ======= */
-        .play-button, .download-page-btn, .home-btn {
-            display: none; 
-            position: fixed;
-            z-index: 10000; /* Above everything */
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-        }
+    .play-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
-        /* Play/Stop Button (Bottom Left) */
-        .play-button {
-            bottom: 20px;
-            left: 20px;
-        }
+    .play-button img {
+      width: 50px;
+      height: 50px;
+      transition: all 0.3s ease-in-out;
+    }
 
-        .play-button img {
-            width: 50px;
-            height: 50px;
-            transition: all 0.3s ease-in-out;
-        }
+    .play-button.animate img {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+  </style>
 
-        .play-button.animate img {
-            transform: scale(0.5);
-            opacity: 0;
-        }
+<!-- Guard de acesso: impede abrir por link direto sem token -->
+<script>
+(function(){
+  try {
+    var ok = sessionStorage.getItem('acessoOK') === '1';
+    if (!ok) {
+      window.location.replace('../../index.html');
+    }
+  } catch(e) {
+    window.location.replace('../../index.html');
+  }
+})();
+</script>
 
-        /* Download Button (Bottom Right) */
-        .download-page-btn {
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-        }
-
-        /* Home Button (Next to Download) */
-        .home-btn {
-            bottom: 20px;
-            right: 92px;
-            width: 44px;
-            height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .home-btn svg {
-            width: 44px;
-            height: 44px;
-            display: block;
-        }
-
-        /* ======= PC Blocking Message Styles ======= */
-        #pc-block-message {
-            display: none; /* Hidden by default, shown by JS on PC */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #2a3b4c; /* Background color from the simulation image */
-            color: #fff;
-            justify-content: center;
-            align-items: center;
-            z-index: 20000; /* Topmost layer */
-            text-align: center;
-            padding: 40px;
-            box-sizing: border-box;
-        }
-
-        #pc-block-message div {
-            background-color: rgba(0,0,0,0.5); /* Semi-transparent box for text */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 600px;
-        }
-
-        #pc-block-message h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            margin-top: 0;
-        }
-
-        #pc-block-message p {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-    </style>
-
-    <script>
-        (function(){
-            try {
-                var ok = sessionStorage.getItem('acessoOK') === '1';
-                if (!ok) {
-                    window.location.replace('../../index.html');
-                }
-            } catch(e) {
-                window.location.replace('../../index.html');
-            }
-        })();
-    </script>
 </head>
 <body>
+<div class="carousel" id="carousel">
 
-    <div id="pc-block-message">
-        <div>
-            <h1>Ops!</h1>
-            <p>Esta história foi criada especialmente para telas de celular. Por favor, acesse usando seu smartphone para uma experiência mágica.</p>
-        }
-    </div>
 
-    <div class="carousel" id="carousel">
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/01.jpg"/><audio id="audio0" src="audio/01.mp3"></audio></section>
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/02.jpg"/><audio id="audio1" src="audio/02.mp3"></audio></section>
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/03.jpg"/><audio id="audio2" src="audio/03.mp3"></audio></section>
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/04.jpg"/><audio id="audio3" src="audio/04.mp3"></audio></section>
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/05.jpg"/><audio id="audio4" src="audio/05.mp3"></audio></section>
-        <section class="slide"><img alt="O Segredo do Pomar" src="images/06.jpg"/><audio id="audio5" src="audio/06.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/07.jpg"/><audio id="audio6" src="audio/07.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/08.jpg"/><audio id="audio7" src="audio/08.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/09.jpg"/><audio id="audio8" src="audio/09.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/10.jpg"/><audio id="audio9" src="audio/10.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/11.jpg"/><audio id="audio10" src="audio/11.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/12.jpg"/><audio id="audio11" src="audio/12.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/13.jpg"/><audio id="audio12" src="audio/13.mp3"></audio></section> <section class="slide"><img alt="O Segredo do Pomar" src="images/14.jpg"/><audio id="audio13" src="audio/14.mp3"></audio></section> </div>
 
-    <button class="play-button" id="playButton">
-        <img alt="Play" id="btnIcon" src="images/play-icon.png"/>
-    </button>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/01.jpg"/><audio id="audio0" src="audio/01.mp3"></audio></section>
 
-    <img alt="Download" class="download-page-btn" id="downloadBtn" onclick="baixarImagem()" src="images/download-icon.png"/>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/02.jpg"/><audio id="audio1" src="audio/02.mp3"></audio></section>
 
-    <a class="home-btn" id="homeBtn" href="../../../index.html" title="Início" aria-label="Voltar ao início">
-        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img">
-            <circle cx="32" cy="32" r="32" fill="#FFC107"/>
-            <path d="M16 30 L32 18 L48 30" fill="#fff"/>
-            <rect x="20" y="30" width="24" height="18" rx="2" ry="2" fill="#fff"/>
-            <rect x="29" y="36" width="6" height="12" rx="2" ry="2" fill="#FFC107"/>
-        </svg>
-    </a>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/03.jpg"/><audio id="audio2" src="audio/03.mp3"></audio></section>
 
-    <audio id="transitionSound" preload="auto" src="audio/folha.mp3"></audio>
-    <audio id="downloadSound" preload="auto" src="audio/botdow.mp3"></audio>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/04.jpg"/><audio id="audio3" src="audio/04.mp3"></audio></section>
 
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/05.jpg"/><audio id="audio4" src="audio/05.mp3"></audio></section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Mobile Detection Function
-            function isMobile() {
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
+<section class="slide"><img alt="O Segredo do Pomar" src="images/06.jpg"/><audio id="audio1" src="audio/06.mp3"></audio></section>
 
-            // 2. PC Blocking Logic
-            if (!isMobile()) {
-                // It's a PC, hide content and show message
-                document.getElementById('pc-block-message').style.display = 'flex';
-                // Stop any audio that might have loaded
-                document.querySelectorAll("audio").forEach(a => a.pause());
-            } else {
-                // It's a mobile device, show content and initialize story
-                document.getElementById('carousel').style.display = 'block';
-                document.getElementById('playButton').style.display = 'block';
-                document.getElementById('downloadBtn').style.display = 'block';
-                document.getElementById('homeBtn').style.display = 'inline-flex';
+<section class="slide"><img alt="O Segredo do Pomar" src="images/07.jpg"/><audio id="audio1" src="audio/07.mp3"></audio></section>
 
-                initializeStory();
-            }
+<section class="slide"><img alt="O Segredo do Pomar" src="images/08.jpg"/><audio id="audio1" src="audio/08.mp3"></audio></section>
 
-            // --- Story Initialization (only runs on mobile) ---
-            function initializeStory() {
-                const carousel = document.getElementById("carousel");
-                const slides = document.querySelectorAll(".slide");
-                const playBtn = document.getElementById("playButton");
-                const btnIcon = document.getElementById("btnIcon");
-                let startY = 0;
-                let currentIndex = 0;
-                let isPlaying = false;
+<section class="slide"><img alt="O Segredo do Pomar" src="images/09.jpg"/><audio id="audio1" src="audio/09.mp3"></audio></section>
 
-                function updateButtonIcon(isAudioPlaying) {
-                    playBtn.classList.add("animate");
-                    setTimeout(() => {
-                        btnIcon.src = isAudioPlaying ? "images/stop-icon.png" : "images/play-icon.png";
-                        playBtn.classList.remove("animate");
-                    }, 150);
-                }
+<section class="slide"><img alt="O Segredo do Pomar" src="images/10.jpg"/><audio id="audio1" src="audio/10.mp3"></audio></section>
 
-                function showSlide(index) {
-                    if (index === currentIndex) return;
+<section class="slide"><img alt="O Segredo do Pomar" src="images/11.jpg"/><audio id="audio1" src="audio/11.mp3"></audio></section>
 
-                    // Play transition sound
-                    const transSound = document.getElementById("transitionSound");
-                    if (transSound) transSound.play().catch(() => {});
+<section class="slide"><img alt="O Segredo do Pomar" src="images/12.jpg"/><audio id="audio1" src="audio/12.mp3"></audio></section>
 
-                    // Move carousel (vertical)
-                    carousel.style.transform = `translateY(-${index * 100}vh)`;
+<section class="slide"><img alt="O Segredo do Pomar" src="images/13.jpg"/><audio id="audio1" src="audio/13.mp3"></audio></section>
 
-                    // Stop current audio
-                    const oldAudio = slides[currentIndex].querySelector("audio");
-                    if (oldAudio) {
-                        oldAudio.pause();
-                        oldAudio.currentTime = 0;
-                    }
+<section class="slide"><img alt="O Segredo do Pomar" src="images/14.jpg"/><audio id="audio1" src="audio/14.mp3"></audio></section>
 
-                    // Pre-load and play new audio after transition
-                    setTimeout(() => {
-                        const currentAudio = slides[index].querySelector("audio");
-                        if (currentAudio) {
-                            currentAudio.play().then(() => {
-                                isPlaying = true;
-                                updateButtonIcon(true);
-                            }).catch(() => {});
-                        }
-                    }, 1000);
 
-                    currentIndex = index;
-                }
 
-                function stopAllAudio() {
-                    slides.forEach(slide => {
-                        const audio = slide.querySelector("audio");
-                        if (audio) {
-                            audio.pause();
-                            audio.currentTime = 0;
-                        }
-                    });
-                    isPlaying = false;
-                    updateButtonIcon(false);
-                }
 
-                // Touch interaction for swiping
-                carousel.addEventListener("touchstart", (e) => {
-                    startY = e.touches[0].clientY;
-                });
+</div>
+<button class="play-button" id="playButton">
+<img alt="Play" id="btnIcon" src="images/play-icon.png"/>
+</button>
+<script>
+const carousel = document.getElementById("carousel");
+const slides = document.querySelectorAll(".slide");
+let startY = 0;
+let currentIndex = 0;
+const playBtn = document.getElementById("playButton");
+const btnIcon = document.getElementById("btnIcon");
+let isPlaying = false;
 
-                carousel.addEventListener("touchend", (e) => {
-                    let endY = e.changedTouches[0].clientY;
-                    if (startY - endY > 50 && currentIndex < slides.length - 1) {
-                        showSlide(currentIndex + 1);
-                    } else if (endY - startY > 50 && currentIndex > 0) {
-                        showSlide(currentIndex - 1);
-                    }
-                });
+function updateButtonIcon(isAudioPlaying) {
+  const btn = document.getElementById("playButton");
+  btn.classList.add("animate");
 
-                // Play/Stop button interaction
-                playBtn.addEventListener("click", () => {
-                    const currentAudio = slides[currentIndex].querySelector("audio");
-                    if (isPlaying) {
-                        currentAudio.pause();
-                        currentAudio.currentTime = 0;
-                        isPlaying = false;
-                        updateButtonIcon(false);
-                    } else {
-                        currentAudio.play().then(() => {
-                            isPlaying = true;
-                            updateButtonIcon(true);
-                        }).catch(() => {});
-                    }
-                });
+  setTimeout(() => {
+    btnIcon.src = isAudioPlaying ? "images/stop-icon.png" : "images/play-icon.png";
+    btn.classList.remove("animate");
+  }, 150);
+}
 
-                // Initial load: play first audio
-                window.onload = () => {
-                    const currentAudio = slides[0].querySelector("audio");
-                    setTimeout(() => {
-                        currentAudio.play().then(() => {
-                            isPlaying = true;
-                            updateButtonIcon(true);
-                        }).catch(() => {});
-                    }, 1000);
+function showSlide(index) {
+  if (index === currentIndex) return;
 
-                    // Add ended event listeners to all audio
-                    slides.forEach(slide => {
-                        const audio = slide.querySelector("audio");
-                        if (audio) {
-                            audio.addEventListener("ended", () => {
-                                isPlaying = false;
-                                updateButtonIcon(false);
-                            });
-                        }
-                    });
-                };
+  document.getElementById("transitionSound").play().catch(() => {});
+  carousel.style.transform = `translateY(-${index * 100}vh)`;
 
-                // Audio unlock on first interaction (needed for some mobile browsers)
-                function unlockAudio() {
-                    document.querySelectorAll("audio").forEach(a => {
-                        a.play().then(() => {
-                            a.pause();
-                            a.currentTime = 0;
-                        }).catch(() => {});
-                    });
-                    document.removeEventListener("click", unlockAudio);
-                    document.removeEventListener("touchstart", unlockAudio);
-                }
-                document.addEventListener("click", unlockAudio, { once: true });
-                document.addEventListener("touchstart", unlockAudio, { once: true });
-            } // End of initializeStory()
+  slides.forEach((slide, i) => {
+    const audio = slide.querySelector("audio");
+    if (audio && i !== index) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
 
-        }); // End of DOMContentLoaded
+  setTimeout(() => {
+    const currentAudio = slides[index].querySelector("audio");
+    if (currentAudio) {
+      currentAudio.play().then(() => {
+        isPlaying = true;
+        updateButtonIcon(true);
+      }).catch(() => {});
+    }
+  }, 1000);
 
-        // --- Download Image Function (Accessible globally) ---
-        function baixarImagem() {
-            // Play download sound
-            const downSound = document.getElementById('downloadSound');
-            if (downSound) downSound.play().catch(() => {});
+  currentIndex = index;
+}
 
-            // Find current slide
-            const carousel = document.getElementById("carousel");
-            const slides = document.querySelectorAll(".slide");
-            const currentIndex = Array.from(carousel.children).indexOf(carousel.querySelector('.slide[style*="transform: translateY"]')) + 1;
-            // The method above to get index might be tricky based on CSS transform. 
-            // Better to track currentIndex globally in initializeStory or pass it out.
-            // For simplicity, using a CSS selector based on current position from initializeStory
-            // requires that variable to be accessible. Since I consolidated, I'll use a hacky way
-            // or pass the index when the function is called, but it's called inline.
-            // Let's use a simpler selector which might be imperfect depending on implementation.
-            
-            // Re-tracking index more robustly for download
-            const currentY = parseFloat(carousel.style.transform.replace('translateY(', '').replace('vh)', '')) || 0;
-            const computedIndex = Math.abs(currentY) / 100;
-            const slideToCapture = slides[computedIndex];
+function stopAllAudio() {
+  slides.forEach(slide => {
+    const audio = slide.querySelector("audio");
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
+  isPlaying = false;
+  updateButtonIcon(false);
+}
 
-            if (!slideToCapture) return;
+carousel.addEventListener("touchstart", (e) => {
+  startY = e.touches[0].clientY;
+});
 
-            html2canvas(slideToCapture).then(canvas => {
-                const ctx = canvas.getContext('2d');
-                const logo = new Image();
-                logo.onload = () => {
-                    const logoWidth = canvas.width * 0.25; // 25% of slide width
-                    const logoHeight = logo.height * (logoWidth / logo.width);
-                    const posX = canvas.width - logoWidth - 20; // Bottom Right
-                    const posY = canvas.height - logoHeight - 20;
-                    ctx.drawImage(logo, posX, posY, logoWidth, logoHeight);
+carousel.addEventListener("touchend", (e) => {
+  let endY = e.changedTouches[0].clientY;
+  let previousIndex = currentIndex;
 
-                    const link = document.createElement('a');
-                    link.download = 'o_segredo_do_pomar_pagina_com_marca.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                };
-                logo.src = 'images/marca.png';
-            });
-        }
-    </script>
+  if (startY - endY > 50 && currentIndex < slides.length - 1) {
+    showSlide(currentIndex + 1);
+  } else if (endY - startY > 50 && currentIndex > 0) {
+    showSlide(currentIndex - 1);
+  }
+});
+
+playBtn.addEventListener("click", () => {
+  const currentAudio = slides[currentIndex].querySelector("audio");
+  if (isPlaying) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    isPlaying = false;
+    updateButtonIcon(false);
+  } else {
+    currentAudio.play().then(() => {
+      isPlaying = true;
+      updateButtonIcon(true);
+    }).catch(() => {});
+  }
+});
+
+window.onload = () => {
+  const currentAudio = slides[0].querySelector("audio");
+  setTimeout(() => {
+    currentAudio.play().then(() => {
+      isPlaying = true;
+      updateButtonIcon(true);
+    }).catch(() => {});
+  }, 1000);
+
+  currentAudio.addEventListener("ended", () => {
+    isPlaying = false;
+    updateButtonIcon(false);
+  });
+};
+
+slides.forEach(slide => {
+  const audio = slide.querySelector("audio");
+  if (audio) {
+    audio.addEventListener("ended", () => {
+      isPlaying = false;
+      updateButtonIcon(false);
+    });
+  }
+});</script>
+<img alt="Download" class="download-page-btn" onclick="baixarImagem()" src="images/download-icon.png"/>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+    .download-page-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
+<script>
+    function baixarImagem() {
+  document.getElementById('downloadSound').play().catch(() => {});
+      html2canvas(document.querySelector('.slide:nth-child(' + (currentIndex + 1) + ')')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'pagina_atual.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+<img alt="Download" class="download-page-btn" onclick="baixarImagem()" src="images/download-icon.png"/>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+    .download-page-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
+<style>
+  .home-btn{
+    position: fixed;
+    bottom: 20px;
+    right: 92px;
+    width: 44px;
+    height: 44px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .home-btn svg{ width: 44px; height: 44px; display:block; }
+</style>
+
+<script>
+    function baixarImagem() {
+      const slide = document.querySelector('.slide:nth-child(' + (currentIndex + 1) + ')');
+      html2canvas(slide).then(canvas => {
+        const ctx = canvas.getContext('2d');
+        const logo = new Image();
+        logo.onload = () => {
+          const logoWidth = canvas.width * 0.25;
+          const logoHeight = logo.height * (logoWidth / logo.width);
+          const posX = canvas.width - logoWidth - 20;
+          const posY = canvas.height - logoHeight - 20;
+          ctx.drawImage(logo, posX, posY, logoWidth, logoHeight);
+
+          const link = document.createElement('a');
+          link.download = 'pagina_com_marca.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        };
+        logo.src = 'images/marca.png';
+      });
+    }
+  </script>
+<audio id="transitionSound" preload="auto" src="audio/folha.mp3"></audio><audio id="downloadSound" src="audio/botdow.mp3"></audio><script>
+document.querySelectorAll('.download-page-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sound = document.getElementById('downloadSound');
+    if (sound) {
+      sound.play().catch(() => {});
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function desbloquearTodosAudios() {
+    document.querySelectorAll("audio").forEach(a => {
+      a.play().then(() => {
+        a.pause();
+        a.currentTime = 0;
+      }).catch(() => {});
+    });
+    document.removeEventListener("click", desbloquearTodosAudios);
+    document.removeEventListener("touchstart", desbloquearTodosAudios);
+  }
+
+  document.addEventListener("click", desbloquearTodosAudios, { once: true });
+  document.addEventListener("touchstart", desbloquearTodosAudios, { once: true });
+});
+</script>
+
+
+
+
+<a class="home-btn" href="../../../index.html" title="Início" aria-label="Voltar ao início">
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img">
+    <circle cx="32" cy="32" r="32" fill="#FFC107"/>
+    <path d="M16 30 L32 18 L48 30" fill="#fff"/>
+    <rect x="20" y="30" width="24" height="18" rx="2" ry="2" fill="#fff"/>
+    <rect x="29" y="36" width="6" height="12" rx="2" ry="2" fill="#FFC107"/>
+  </svg>
+</a>
 </body>
 </html>
