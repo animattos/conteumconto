@@ -124,12 +124,21 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 .hero{
   min-height:360px; display:grid; align-items:center;
   /* Removido o degradê azul: fica só a imagem */
-  background: url('assets/hero.jpg') center/cover no-repeat;
+  background: url('assets/hero.jpg') top center/cover no-repeat;
   color:#fff;
 }
 .hero-inner{ width:min(1100px,92%); margin-inline:auto; padding:28px 0 44px; }
 .hero h2{ font-size:clamp(15px, 4.2vw, 54px); font-weight:900; letter-spacing:.5px; margin:0 0 18px 0;
   text-shadow:0 2px 0 rgba(0,0,0,.15); }
+
+
+@media (min-width: 1600px) {
+  .hero {
+    /* Move a imagem 15px para cima a partir do topo */
+    background-position: center calc(0% - 60px);
+  }
+}
+
 
 /* Preço destacado no botão (maior e rosa) */
 .price{
