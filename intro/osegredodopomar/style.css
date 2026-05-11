@@ -12,63 +12,141 @@
   --radius:14px;
 }
 
+/* ======= Header / Nav ======= */
+.site-header .topbar {
+  background: var(--brand); color: #fff; display: flex; flex-direction: column; align-items: center;
+  padding: 16px 20px 10px; position: relative;
+}
+
+.brand {
+  margin: 0;
+  letter-spacing: .5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  /* Você pode manter o font-size base aqui ou remover se as novas classes resolverem */
+  /* font-size: 3rem; */
+}
+
+/* --- NOVO CÓDIGO AQUI --- */
+
+/* Regra para CONTE e CONTO */
+
+.shadows-into-light-regular {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Adicione esta regra ao seu arquivo CSS */
+
+.brand .fonte-diferente {
+    font-family: 'Shadows Into Light', cursive; /* APLICA A FONTE DO GOOGLE FONTS */
+    font-weight: 400; /* Peso normal para esta fonte */
+}
+
+.brand .palavra-grande {
+  font-size: 1.0em; /* Valor aumentado para ficar maior que o original */
+  font-weight: 800;
+}
+
+/* Regra para o UM */
+.brand .palavra-pequena {
+  font-size: 0.7em; /* Mantém menor */
+  font-weight: 800; /* Deixa o 'UM' mais fino */
+  vertical-align: middle;
+  margin: 0 3px; /* Espaço nas laterais */
+}
+
+
+
+/* Botões também como <a> */
+.btn{
+  display:inline-flex;           /* faz width funcionar em <a> */
+  align-items:center;
+  justify-content:center;        /* centraliza o texto */
+  text-decoration:none;          /* remove sublinhado */
+  border:0;
+  border-radius:10px;
+  padding:14px 22px;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .08s ease, filter .2s ease, background .2s ease;
+  box-shadow:var(--shadow);
+}
+
+/* garantir que nunca sublinhe nem mude a cor do primário */
+.btn:link,
+.btn:visited,
+.btn:hover,
+.btn:active{ text-decoration:none; }
+
+.btn-primary,
+.btn-primary:link,
+.btn-primary:visited{ color:#fff; }
+
+/* já existia, mantém 100% no card */
+.card .btn{ width:100%; }
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{
-  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:#f6f8fb;
-}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-serif;
+  color:var(--text); background:#f6f8fb; line-height:1.4;}
 
-/* ======= Header ======= */
+/* ======= Header / Nav ======= */
 .site-header .topbar{
-  background:var(--brand);
-  color:#fff;
-  text-align:center;
-  padding:18px 12px 10px;
+  background:var(--brand); color:#fff; display:flex; flex-direction:column; align-items:center;
+  padding:16px 20px 10px; position:relative;
 }
+.brand{margin:0; letter-spacing:.5px; font-weight:800;}
+.nav{display:flex; gap:28px; margin-top:8px; flex-wrap:wrap; justify-content:center;}
+.nav a{color:#e6f2ff; text-decoration:none; font-weight:600; padding:6px 2px; position:relative;}
+.nav a::after{content:''; position:absolute; left:0; bottom:-3px; height:2px; width:0; background:#fff; transition:width .2s ease;}
+.nav a:hover::after{ width:100% }
 
 /* ======= Hamburger (mobile) ======= */
-.hamburger{
-  display:none;
-  width:44px; height:38px;
-  background:transparent; border:0; cursor:pointer;
-  position:absolute; right:12px; top:12px;
-}
-.hamburger span{
-  display:block; height:3px; margin:6px 0; background:#fff; border-radius:2px;
-  transition:transform .25s ease, opacity .25s ease;
-}
+.hamburger{display:none; width:44px; height:38px; background:transparent; border:0; cursor:pointer;
+  position:absolute; right:12px; top:12px;}
+.hamburger span{display:block; height:3px; margin:6px 0; background:#fff; border-radius:2px;
+  transition:transform .25s ease, opacity .25s ease;}
 .hamburger.is-open span:nth-child(1){ transform: translateY(9px) rotate(45deg); }
 .hamburger.is-open span:nth-child(2){ opacity:0; }
 .hamburger.is-open span:nth-child(3){ transform: translateY(-9px) rotate(-45deg); }
 
-/* Menu colapsado no mobile */
 @media (max-width:880px){
   .hamburger{ display:block; }
-
-  .site-header .topbar{
-    padding-top: 18px; padding-bottom: 10px;
-  }
-
   .nav{
-    flex-direction:column;
-    width:100%;
-    gap:12px;
-    background:var(--brand);
+    flex-direction:column; width:100%; gap:12px; background:var(--brand);
     max-height:0; overflow:hidden; padding:0;
     transition:max-height .3s ease, padding .3s ease;
   }
-  .nav.open{
-    max-height:260px;
-    padding:8px 0 12px;
-  }
+  .nav.open{ max-height:260px; padding:8px 0 12px; }
 }
 
-.brand{ margin:0; font-weight:900; letter-spacing:.6px; }
-.nav{ display:flex; gap:22px; justify-content:center; margin-top:6px; flex-wrap:wrap; }
-.nav a{ color:#e7f1ff; text-decoration:none; font-size:12px; font-weight:700; letter-spacing:.4px; }
-.nav a:hover{ color:#fff; }
+/* ======= Hero ======= */
+.hero{
+  min-height:360px; display:grid; align-items:center;
+  /* Removido o degradê azul: fica só a imagem */
+  background: url('assets/hero.jpg') top center/cover no-repeat;
+  color:#fff;
+}
+.hero-inner{ width:min(1100px,92%); margin-inline:auto; padding:28px 0 44px; }
+.hero h2{ font-size:clamp(15px, 4.2vw, 54px); font-weight:900; letter-spacing:.5px; margin:0 0 18px 0;
+  text-shadow:0 2px 0 rgba(0,0,0,.15); }
+
+
+@media (min-width: 1600px) {
+  .hero {
+    /* Move a imagem 15px para cima a partir do topo */
+    background-position: center calc(0% - 60px);
+  }
+}
+/* ======= Footer ======= */
+.footer{ background:var(--brand); color:#fff; text-align:center; padding:24px 16px; }
+
+/* ======= Responsive ======= */
+@media (max-width:980px){ .grid{ grid-template-columns: repeat(2, 1fr);} }
+@media (max-width:620px){ .grid{ grid-template-columns:1fr;} .nav{ gap:16px } .brand{ font-size:22px } }
+
 
 /* ======= Main Card ======= */
 .wrap{ width:min(1100px, 92%); margin:40px auto; }
