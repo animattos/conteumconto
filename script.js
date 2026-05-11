@@ -164,41 +164,52 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const namespace = "conteumconto_v3_2026";
 
-  // Função para configurar cada contador de forma independente
-  function configurarContador(idBotao, idTexto, chaveUnica) {
+
+
+
+
+
+
+
+
+// CONFIGURAÇÃO DO SEU FIREBASE (Copiado da sua imagem 37c793.png)
+const firebaseConfig = {
+  apiKey: "AIzaSyCgwOnJCZh7UwD2ojJLeFT7L-2QdqFLqUk",
+  authDomain: "conteumconto-f4f8e.firebaseapp.com",
+  databaseURL: "https://conteumconto-f4f8e-default-rtdb.firebaseio.com",
+  projectId: "conteumconto-f4f8e",
+  storageBucket: "conteumconto-f4f8e.firebasestorage.app",
+  messagingSenderId: "841077071051",
+  appId: "1:841077071051:web:1286e3ae640dc9ef934f4e",
+  measurementId: "G-S644M4GX7T"
+};
+
+// INICIALIZAÇÃO (O segredo está aqui para não dar erro)
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// FUNÇÃO QUE CONTROLA OS LIKES
+function monitorarLike(idBotao, idTexto, caminho) {
     const btn = document.getElementById(idBotao);
     const label = document.getElementById(idTexto);
-
     if (!btn || !label) return;
 
-    // 1. Busca o valor individual daquela chave
-    fetch(`https://api.countapi.it/get/${namespace}/${chaveUnica}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.value) label.innerText = data.value;
-      });
+    const ref = database.ref('likes/' + caminho);
 
-    // 2. Incrementa apenas a chave passada por parâmetro
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      btn.style.pointerEvents = "none"; // Evita cliques duplos
-
-      fetch(`https://api.countapi.it/hit/${namespace}/${chaveUnica}`)
-        .then(res => res.json())
-        .then(data => {
-          label.innerText = data.value;
-        })
-        .finally(() => {
-          btn.style.pointerEvents = "auto";
-        });
+    // Mostra o valor atual que vem do banco
+    ref.on('value', (snap) => {
+        label.innerText = snap.val() || 0;
     });
-  }
 
-  // AGORA VOCÊ CHAMA A FUNÇÃO PARA CADA HISTÓRIA SEPARADAMENTE:
-  configurarContador('like-btn-pomar', 'like-count-pomar', 'pomar_likes');
-  configurarContador('like-btn-floresta', 'like-count-floresta', 'floresta_likes');
-  configurarContador('like-btn-dragon', 'like-count-dragon', 'dragon_likes');
-});
+    // Soma +1 quando clica
+    btn.onclick = (e) => {
+        e.preventDefault();
+        ref.transaction(atual => (atual || 0) + 1);
+    };
+}
+
+// ATIVAÇÃO PARA CADA BOTÃO
+monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
+monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
+monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
