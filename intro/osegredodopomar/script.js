@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('click', async (e) => {
 
   // BOTÃO VALIDAR
-  if (e.target.id === 'btnCadastrar') {
+  if (e.target.closest('#btnCadastrar')) {
 
     const nome =
       document.getElementById('cadNome').value.trim();
