@@ -40,10 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  btn.addEventListener('click', validar);
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') validar();
-  });
+  
 });
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modal-info');
