@@ -13,6 +13,39 @@
 <script src="script.js"></script>
 </head>
 <body>
+
+<div id="modalCadastro" class="modal">
+
+  <div class="modal-content">
+
+    <span id="fecharCadastro">&times;</span>
+
+    <h2>VALIDAR CADASTRO</h2>
+
+    <input
+      type="text"
+      id="cadNome"
+      placeholder="Seu nome"
+    >
+
+    <input
+      type="text"
+      id="cadCodigo"
+      placeholder="Seu código"
+    >
+
+    <button id="btnCadastrar">
+      VALIDAR
+    </button>
+
+    <p id="cadMsg"></p>
+
+  </div>
+
+</div>
+
+
+
   <header class="site-header">
   <div class="topbar">
     <div class="brand-wrapper">
@@ -34,8 +67,31 @@
       <a href="#">COMO FUNCIONA</a>
       <a href="#">PARCEIRO DA ESCOLA</a>
       <a href="#">CONTATO</a>
+      <a href="#" id="btn-validar">CADASTRAR</a>
     </nav>
     </div>
+
+<div id="modal-cadastro" class="modal">
+  <div class="modal-content">
+
+    <span class="close-cadastro">&times;</span>
+
+    <h2>VALIDAR CADASTRO</h2>
+
+    <input type="text" id="cadastro-nome" placeholder="Seu nome">
+
+    <input type="text" id="cadastro-codigo" placeholder="Seu código">
+
+    <button id="confirmar-cadastro">
+      VALIDAR
+    </button>
+
+    <p id="cadastro-msg"></p>
+
+  </div>
+</div>
+
+
   </header>
 
   <main class="wrap">

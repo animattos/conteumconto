@@ -58,10 +58,40 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Informações que vão aparecer em cada menu
   const infoData = {
-    'COMO FUNCIONA': 'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
-    'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
-    'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21) 97374-3649'
-  };
+  'COMO FUNCIONA': 'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
+
+  'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
+
+  'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21) 97374-3649',
+
+  'CADASTRAR': `
+
+  <div class="cadastro-box">
+
+    <input
+      type="text"
+      id="cadNome"
+      placeholder="Digite seu nome"
+      class="cad-input"
+    >
+
+    <input
+      type="text"
+      id="cadCodigo"
+      placeholder="Digite seu código"
+      class="cad-input"
+    >
+
+    <button id="btnCadastrar" class="cad-btn">
+      VALIDAR CADASTRO
+    </button>
+
+    <p id="cadMsg"></p>
+
+  </div>
+
+`
+};
 
   // Seleciona os links do nav (exceto o INÍCIO se quiser que ele continue apenas voltando ao topo)
   const menuLinks = document.querySelectorAll('.nav a');
@@ -74,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (infoData[textoMenu]) {
         e.preventDefault(); // Impede o pulo da página
         modalTitle.innerText = textoMenu;
-        modalBody.innerHTML = `<p>${infoData[textoMenu]}</p>`;
+        modalBody.innerHTML = infoData[textoMenu];
         modal.style.display = 'block';
       }
     });
@@ -150,4 +180,100 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btn) btn.onclick = validar;
   input?.addEventListener('keypress', (e) => { if (e.key === 'Enter') validar(); });
+});
+
+// ..............................VALIDAR CADASTRO ..........................................//
+
+document.addEventListener('click', (e) => {
+
+  // BOTÃO VALIDAR CADASTRO
+  if (e.target && e.target.id === 'btnCadastrar') {
+
+    const nome =
+      document.getElementById('cadNome').value.trim();
+
+    const codigo =
+      document.getElementById('cadCodigo').value.trim();
+
+    const msg =
+      document.getElementById('cadMsg');
+
+
+    // CAMPOS VAZIOS
+    if (!nome || !codigo) {
+
+      msg.style.color = 'red';
+
+      msg.textContent =
+        'Preencha todos os campos.';
+
+      return;
+    }
+
+
+    // PROCURA O CÓDIGO
+    database.ref('codigos/' + codigo)
+      .once('value')
+
+      .then((snapshot) => {
+
+        // NÃO EXISTE
+        if (!snapshot.exists()) {
+
+          msg.style.color = 'red';
+
+          msg.textContent =
+            'Código inválido.';
+
+          return;
+        }
+
+        const dados = snapshot.val();
+
+
+        // JÁ USADO
+        if (dados.status !== 'livre') {
+
+          msg.style.color = 'red';
+
+          msg.textContent =
+            'Código já utilizado.';
+
+          return;
+        }
+
+
+        // SALVA USUÁRIO
+        database.ref('usuarios/' + codigo).set({
+
+          nome: nome,
+          codigo: codigo
+
+        });
+
+
+        // MUDA STATUS
+        database.ref(
+          'codigos/' + codigo + '/status'
+        ).set('usado');
+
+
+        msg.style.color = 'green';
+
+        msg.textContent =
+          'Cadastro realizado com sucesso!';
+
+      })
+
+      .catch((err) => {
+
+        console.error(err);
+
+        msg.style.color = 'red';
+
+        msg.textContent =
+          'Erro ao validar código.';
+      });
+  }
+
 });
