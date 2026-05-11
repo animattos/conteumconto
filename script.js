@@ -217,35 +217,43 @@ monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
 
 
 
-// Função para o botão de acesso
-function validarAcesso() {
-    const input = document.querySelector('input[placeholder="DIGITE SEU CÓDIGO"]');
-    const codigo = input.value.trim();
+function check() {
+  const code = (input.value || '').trim();
+  if (!code) {
+    msg.textContent = 'Digite seu código.';
+    input.focus();
+    return;
+  }
 
-    if (!codigo) {
-        alert("Por favor, digite um código.");
-        return;
+  // Acessa o Firebase para verificar o código em tempo real
+  const acessoRef = database.ref('acessos/' + code);
+
+  acessoRef.once('value').then((snapshot) => {
+    const status = snapshot.val();
+
+    if (status === "livre") {
+      // Seta como "usado" no Firebase na mesma hora
+      acessoRef.set("usado"); 
+      
+      msg.style.color = '#15803d';
+      msg.textContent = 'Código válido! Liberando acesso...';
+      
+      // Salva na sessão do navegador para o usuário não ser barrado enquanto lê
+      try { sessionStorage.setItem('acessoOK', '1'); } catch(e) {}
+      
+      setTimeout(() => { 
+        window.location.href = 'livro/index.html'; 
+      }, 500);
+
+    } else if (status === "usado") {
+      msg.style.color = '#b91c1c';
+      msg.textContent = 'Este código já foi utilizado por outra pessoa.';
+    } else {
+      msg.style.color = '#b91c1c';
+      msg.textContent = 'Código inválido ou inexistente.';
     }
-
-    const acessoRef = database.ref('acessos/' + codigo);
-
-    acessoRef.once('value').then((snapshot) => {
-        const status = snapshot.val();
-
-        if (status === "livre") {
-            // BLOQUEIA para o próximo: muda de 'livre' para 'usado'
-            acessoRef.set("usado"); 
-            alert("Acesso liberado! Aproveite o conto.");
-            
-            // Aqui você coloca o link para o áudio ou página secreta
-            window.location.href = "sua-pagina-do-conto.html"; 
-        } else if (status === "usado") {
-            alert("Este código já foi utilizado.");
-        } else {
-            alert("Código inválido.");
-        }
-    });
+  }).catch((error) => {
+    console.error("Erro ao acessar o Firebase:", error);
+    msg.textContent = 'Erro de conexão. Tente novamente.';
+  });
 }
-
-// Conecta a função ao botão verde (ajuste o ID conforme seu HTML)
-document.querySelector('.btn-verde-play').onclick = validarAcesso;
