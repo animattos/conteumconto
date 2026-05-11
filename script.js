@@ -164,37 +164,41 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 });
 
-
 document.addEventListener('DOMContentLoaded', () => {
-  const likeBtn = document.getElementById('like-btn-pomar');
-  const likeCountLabel = document.getElementById('like-count-pomar');
-  
-  // NOME DA CHAVE: Troque para algo único do seu projeto
-  const namespace = "conteumconto_oficial_2026";
-  const key = "pomar_likes";
+  const namespace = "conteumconto_v3_2026";
 
-  // 1. Buscar o valor atual ao carregar a página
-  fetch(`https://api.countapi.it/hit/${namespace}/${key}`)
-    .then(res => res.json())
-    .then(res => {
-      if(res.value) likeCountLabel.innerText = res.value;
-    })
-    .catch(() => console.log("Contador inicializado em 0"));
+  // Função para configurar cada contador de forma independente
+  function configurarContador(idBotao, idTexto, chaveUnica) {
+    const btn = document.getElementById(idBotao);
+    const label = document.getElementById(idTexto);
 
-  // 2. Incrementar ao clicar
-  likeBtn.addEventListener('click', () => {
-    // Desabilita temporariamente para evitar cliques múltiplos rápidos
-    likeBtn.disabled = true;
+    if (!btn || !label) return;
 
-    fetch(`https://api.countapi.it/hit/${namespace}/${key}`)
+    // 1. Busca o valor individual daquela chave
+    fetch(`https://api.countapi.it/get/${namespace}/${chaveUnica}`)
       .then(res => res.json())
-      .then(res => {
-        likeCountLabel.innerText = res.value;
-        likeBtn.disabled = false;
-        
-        // Opcional: Salvar no localStorage para o usuário saber que já clicou
-        localStorage.setItem('voted_pomar', 'true');
-        likeBtn.style.opacity = "0.7";
+      .then(data => {
+        if (data.value) label.innerText = data.value;
       });
-  });
+
+    // 2. Incrementa apenas a chave passada por parâmetro
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.style.pointerEvents = "none"; // Evita cliques duplos
+
+      fetch(`https://api.countapi.it/hit/${namespace}/${chaveUnica}`)
+        .then(res => res.json())
+        .then(data => {
+          label.innerText = data.value;
+        })
+        .finally(() => {
+          btn.style.pointerEvents = "auto";
+        });
+    });
+  }
+
+  // AGORA VOCÊ CHAMA A FUNÇÃO PARA CADA HISTÓRIA SEPARADAMENTE:
+  configurarContador('like-btn-pomar', 'like-count-pomar', 'pomar_likes');
+  configurarContador('like-btn-floresta', 'like-count-floresta', 'floresta_likes');
+  configurarContador('like-btn-dragon', 'like-count-dragon', 'dragon_likes');
 });
