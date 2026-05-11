@@ -213,3 +213,39 @@ function monitorarLike(idBotao, idTexto, caminho) {
 monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
 monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
 monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
+
+
+
+
+// Função para o botão de acesso
+function validarAcesso() {
+    const input = document.querySelector('input[placeholder="DIGITE SEU CÓDIGO"]');
+    const codigo = input.value.trim();
+
+    if (!codigo) {
+        alert("Por favor, digite um código.");
+        return;
+    }
+
+    const acessoRef = database.ref('acessos/' + codigo);
+
+    acessoRef.once('value').then((snapshot) => {
+        const status = snapshot.val();
+
+        if (status === "livre") {
+            // BLOQUEIA para o próximo: muda de 'livre' para 'usado'
+            acessoRef.set("usado"); 
+            alert("Acesso liberado! Aproveite o conto.");
+            
+            // Aqui você coloca o link para o áudio ou página secreta
+            window.location.href = "sua-pagina-do-conto.html"; 
+        } else if (status === "usado") {
+            alert("Este código já foi utilizado.");
+        } else {
+            alert("Código inválido.");
+        }
+    });
+}
+
+// Conecta a função ao botão verde (ajuste o ID conforme seu HTML)
+document.querySelector('.btn-verde-play').onclick = validarAcesso;
