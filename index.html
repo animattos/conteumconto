@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GARATUJAS — Lily’s Lostpurr</title>
-  <link rel="stylesheet" href="style.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <title>CONTE UM CONTO</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 <script src="script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  
+  <!-- HEADER -->
   <header class="site-header">
   <div class="topbar">
     <div class="brand-wrapper">
@@ -23,56 +26,160 @@
       </h1>
     </div>
 
-<!-- Botão hamburger -->
-    <button class="hamburger" id="hamburger" aria-label="Abrir menu"
-            aria-controls="primary-nav" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+      <!-- Botão hamburger (aparece apenas no mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-controls="primary-nav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
 
       <nav class="nav" id="primary-nav">
-      <a href="../../index.html">INÍCIO</a>
-      <a href="#">COMO FUNCIONA</a>
-      <a href="#">PARCEIRO DA ESCOLA</a>
-      <a href="#">CONTATO</a>
-    </nav>
+        <a href="#inicio">INÍCIO</a>
+        <a href="#como-funciona">COMO FUNCIONA</a>
+        <a href="#parceiro">PARCEIRO DA ESCOLA</a>
+        <a href="#contato">CONTATO</a>
+      </nav>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="card">
-      <div class="cover-col">
-        <img src="assets/lilys_lost_purr.jpg" alt="Lily's Lost Purr" class="cover"/>
-      </div>
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <div class="hero-inner">
+      <h2>BIBLIOTECA DIGITAL<br/>COM LEITURA<br/>MULTIMODAL</h2><br/>
+      <button id="cta" class="btn btn-cta">SEJA ASSINANTE <span class="price">R$29,90</span></button>
+    </div>
+  </section>
 
-      <div class="content-col">
-        <h2 class="title">O SEGREDO DO POMAR</h2>
-        <p class="desc">
-          No quintal do avô, o pequeno Léo vive cercado pelo perfume das árvores e o zumbido constante das abelhas. 
-          Movido por uma curiosidade latente, ele decide investigar o que se esconde dentro de uma colmeia, ignorando os avisos sobre o respeito à natureza. 
-          Ao perturbar o lar das operárias, Léo desencadeia uma fúria dourada que o ensina, através do medo e da fuga, que a harmonia do jardim é frágil. 
-          Sob o olhar sábio do avô, o menino descobre que o mel não é um tesouro a ser roubado, mas o fruto de um trabalho sagrado. 
-          Aprender a observar sem tocar torna-se sua maior lição de vida.
-        </p>
-        <p class="author"><strong>AUTOR:</strong> ALESSANDRO MATTOS</p>
+  <!-- CATALOGO -->
+  <section class="catalogo" aria-labelledby="titulo-catalogo">
+    <h3 id="titulo-catalogo">NOSSO CATÁLOGO DE HISTÓRIAS</h3>
 
-        <div class="access-row">
-          <img src="assets/headphones.svg" alt="Ouvir" class="phones" />
-          <input id="code" type="password" inputmode="text" autocomplete="one-time-code" placeholder="DIGITE SEU CÓDIGO" aria-label="Digite seu código de acesso" />
-          <button id="go" class="btn btn-go" aria-label="Confirmar código">
-            <span class="triangle" aria-hidden="true"></span>
-          </button>
-        </div>
-        <p id="msg" class="msg" role="alert" aria-live="polite"></p>
-      </div>
-    </section>
-  </main>
+
+
+
+<!-- POMAR-->
+
+    <div class="grid">
+      <article class="card">
+        <img src="assets/lilys_lost_purr.jpg" alt="Lily's Lost Purr" /><br>
+        <div class="titulo-like-wrapper">
+    <h4>O Segredo do Pomar</h4>
+    <div class="like-container">
+      <button class="btn-like" id="like-btn-pomar">
+        <span class="heart-icon">❤</span>
+        <span id="like-count-pomar">0</span>
+      </button>
+    </div>
+  </div>
+ <a class="btn btn-primary" href="intro/osegredodopomar/index.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+<!-- FLORESTA-->
+
+  <article class="card">
+        <img src="assets/story_thief.jpg" alt="Uma surpresa na floresta" /><br>
+        <div class="titulo-like-wrapper">
+    <h4>O Segredo do Pomar</h4>
+    <div class="like-container">
+      <button class="btn-like" id="like-btn-floresta">
+        <span class="heart-icon">❤</span>
+        <span id="like-count-floresta">0</span>
+      </button>
+    </div>
+  </div>
+ <a class="btn btn-primary" href="intro/floresta.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+
+<!-- DRAGON-->
+
+        <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Dancing with Dragons" /><br>
+        <div class="titulo-like-wrapper">
+    <h4>DANCING WITH DRAGONS</h4>
+    <div class="like-container">
+      <button class="btn-like" id="like-btn-dragon">
+        <span class="heart-icon">❤</span>
+        <span id="like-count-dragon">0</span>
+      </button>
+    </div>
+  </div>
+        <a class="btn btn-primary" href="intro/dragons.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+<!-- ABELHA-->
+
+
+      <article class="card">
+        <img src="assets/menino_abelha.jpg" alt="O Menino Abelha" />
+        <h4>O MENINO ABELHA</h4>
+        <a class="btn btn-primary" href="intro/abelha.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/gassy_cassie.jpg" alt="Gassy Cassie" />
+        <h4>GASSY CASSIE</h4>
+        <a class="btn btn-primary" href="gassy-cassie.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/grito.jpg" alt="O que eu faço com esse grito?" />
+        <h4>O QUE FAÇO COM ESSE GRITO?</h4>
+        <a class="btn btn-primary" href="intro/grito.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Mini Rabbit" />
+        <h4>MINI RABBIT</h4>
+        <a class="btn btn-primary" href="intro/rabbit.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/sara.jpg" alt="Os Cabelos de Sara" />
+        <h4>OS CABELOS DE SARA</h4>
+        <a class="btn btn-primary" href="intro/sara.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/some_days.jpg" alt="Some Days" />
+        <h4>SOME DAYS</h4>
+        <a class="btn btn-primary" href="intro/days.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/sara.jpg" alt="Os Cabelos de Sara" />
+        <h4>OS CABELOS DE SARA</h4>
+        <a class="btn btn-primary" href="intro/sara.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/some_days.jpg" alt="Some Days" />
+        <h4>SOME DAYS</h4>
+        <a class="btn btn-primary" href="intro/days.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+      <article class="card">
+        <img src="assets/mini_rabbit.jpg" alt="Mini Rabbit" />
+        <h4>MINI RABBIT</h4>
+        <a class="btn btn-primary" href="intro/rabbit.html">ACESSAR HISTÓRIA</a>
+      </article>
+
+
+    </div>
+    <nav id="pager" class="pager" aria-label="Paginação de histórias"></nav>
+  </section>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Conte um Conto — Todos os direitos reservados.</p>
+    <p>© <span id="year"></span> Conte um Conto— Todos os direitos reservados. <br>CNPJ - 55.413.591/0001-10
+</p>
   </footer>
 
   <script src="script.js"></script>
-  <div id="modal-info" class="modal">
+  <script>
+    if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // Opcional: Redirecionar para uma página de erro externa
+        // window.location.href = "pagina-de-erro.html";
+    }
+</script>
+<div id="modal-info" class="modal">
   <div class="modal-content">
     <span class="close-button">&times;</span>
     <h2 id="modal-title">Título</h2>
