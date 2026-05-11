@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const likeCountLabel = document.getElementById('like-count-pomar');
   
   // NOME DA CHAVE: Troque para algo único do seu projeto
-  const namespace = "conteumconto_v1";
+  const namespace = "conteumconto_oficial_2026";
   const key = "pomar_likes";
 
   // 1. Buscar o valor atual ao carregar a página
