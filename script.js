@@ -121,8 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Informações que vão aparecer em cada menu
   const infoData = {
-    'COMO FUNCIONA': 'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
+    'COMO FUNCIONA': '<strong>1. Ampliação do Repertório Vocabular</strong><br> Ao ouvir histórias narradas com qualidade profissional, a criança é exposta a palavras e estruturas gramaticais que não costumam aparecer na fala cotidiana, enriquecendo a forma como ela se expressa.',
+
+
+
+
+
+
     'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
+
+
+
+
+
+    
     'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21)  97374-3649'
   };
 
@@ -150,4 +162,39 @@ document.addEventListener('DOMContentLoaded', () => {
   window.onclick = (event) => {
     if (event.target == modal) modal.style.display = 'none';
   };
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const likeBtn = document.getElementById('like-btn-pomar');
+  const likeCountLabel = document.getElementById('like-count-pomar');
+  
+  // NOME DA CHAVE: Troque para algo único do seu projeto
+  const namespace = "conteumconto_v1";
+  const key = "pomar_likes";
+
+  // 1. Buscar o valor atual ao carregar a página
+  fetch(`https://api.countapi.xyz/get/${namespace}/${key}`)
+    .then(res => res.json())
+    .then(res => {
+      if(res.value) likeCountLabel.innerText = res.value;
+    })
+    .catch(() => console.log("Contador inicializado em 0"));
+
+  // 2. Incrementar ao clicar
+  likeBtn.addEventListener('click', () => {
+    // Desabilita temporariamente para evitar cliques múltiplos rápidos
+    likeBtn.disabled = true;
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+      .then(res => res.json())
+      .then(res => {
+        likeCountLabel.innerText = res.value;
+        likeBtn.disabled = false;
+        
+        // Opcional: Salvar no localStorage para o usuário saber que já clicou
+        localStorage.setItem('voted_pomar', 'true');
+        likeBtn.style.opacity = "0.7";
+      });
+  });
 });

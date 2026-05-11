@@ -239,3 +239,33 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 }
 
 .close-button:hover { color: var(--brand); }
+
+.like-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* Alinha à direita como na imagem */
+  margin-bottom: 10px;
+}
+
+.btn-like {
+  background-color: #ff707a; /* Cor rosa/avermelhada da imagem */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-like:active {
+  transform: scale(0.95);
+}
+
+.heart-icon {
+  font-size: 1.2rem;
+}
