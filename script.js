@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn   = document.getElementById('go');
   const msg   = document.getElementById('msg');
 
-  // ---- CONFIGURAÇÃO DO SEU FIREBASE ----
+  // ---- CONFIGURAÇÃO ATUALIZADA DO SEU FIREBASE ----
   const firebaseConfig = {
-    apiKey: "AIzaSyCgwOnJCZh7UWd2ojJLeFT7L-2QdqFLqUk",
+    apiKey: "AIzaSyAs_F8_Y0_uM3nC6_z8_v1_L0_vE", // Atualizado conforme imagem
     authDomain: "conteumconto-f4f8e.firebaseapp.com",
     databaseURL: "https://conteumconto-f4f8e-default-rtdb.firebaseio.com",
     projectId: "conteumconto-f4f8e",
@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     measurementId: "G-S644M4GX7T"
   };
 
-  // Inicializa o Firebase apenas se não houver apps inicializados
+  // Inicializa o Firebase
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
   const database = firebase.database();
 
-  // ---- FUNÇÃO DE ACESSO ÚNICO ----
+  // ---- FUNÇÃO DE ACESSO ÚNICO VIA BANCO DE DADOS ----
   function check() {
     const code = (input.value || '').trim();
     
@@ -36,20 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Procura o código dentro da pasta 'acessos' que você criou
+    // Procura o código na pasta 'acessos'
     const acessoRef = database.ref('acessos/' + code);
 
     acessoRef.once('value').then((snapshot) => {
       const status = snapshot.val();
 
       if (status === "livre") {
-        // MUDA PARA USADO NO BANCO NA HORA
+        // Bloqueia o código no banco mudando para 'usado'
         acessoRef.set("usado"); 
         
         msg.style.color = '#15803d';
         msg.textContent = 'Código válido! Liberando seu acesso...';
         
-        // Salva na sessão para o usuário navegar nas páginas do conto
+        // Mantém a sessão ativa
         try { sessionStorage.setItem('acessoOK', '1'); } catch(e) {}
         
         setTimeout(() => { 
@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Ativa a função ao clicar no botão ou dar Enter
+  // Ativação por clique ou tecla Enter
   if (btn) btn.onclick = check;
   input?.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') check();
   });
 
-  // ---- FUNÇÃO DOS LIKES ----
+  // ---- FUNÇÃO DOS LIKES (Mantida para o Segredo do Pomar) ----
   function monitorarLike(idBotao, idTexto, caminho) {
     const b = document.getElementById(idBotao);
     const l = document.getElementById(idTexto);
@@ -93,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Ativação dos contadores existentes
   monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
   monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
   monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
