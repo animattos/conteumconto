@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Desabilita temporariamente para evitar cliques múltiplos rápidos
     likeBtn.disabled = true;
 
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+    fetch(`https://api.countapi.it/hit/${namespace}/${key}`)
       .then(res => res.json())
       .then(res => {
         likeCountLabel.innerText = res.value;
