@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const key = "pomar_likes";
 
   // 1. Buscar o valor atual ao carregar a página
-  fetch(`https://api.countapi.xyz/get/${namespace}/${key}`)
+  fetch(`https://api.countapi.it/hit/${namespace}/${key}`)
     .then(res => res.json())
     .then(res => {
       if(res.value) likeCountLabel.innerText = res.value;
