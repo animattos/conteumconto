@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn   = document.getElementById('go');
   const msg   = document.getElementById('msg');
 
-  // ---- CONFIGURAÇÃO ATUALIZADA DO SEU FIREBASE ----
+  // ---- CONFIGURAÇÃO DO SEU FIREBASE ----
   const firebaseConfig = {
-    apiKey: "AIzaSyAs_F8_Y0_uM3nC6_z8_v1_L0_vE", // Atualizado conforme imagem
+    apiKey: "AIzaSyAs_F8_Y0_uM3nC6_z8_v1_L0_vE",
     authDomain: "conteumconto-f4f8e.firebaseapp.com",
     databaseURL: "https://conteumconto-f4f8e-default-rtdb.firebaseio.com",
     projectId: "conteumconto-f4f8e",
@@ -19,13 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     measurementId: "G-S644M4GX7T"
   };
 
-  // Inicializa o Firebase
+  // Inicializa o Firebase com verificação de segurança
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
+  
+  // Define a variável database corretamente
   const database = firebase.database();
 
-  // ---- FUNÇÃO DE ACESSO ÚNICO VIA BANCO DE DADOS ----
+  // ---- FUNÇÃO DE ACESSO ÚNICO ----
   function check() {
     const code = (input.value || '').trim();
     
@@ -36,20 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Procura o código na pasta 'acessos'
+    // Procura na pasta 'acessos' do seu banco
     const acessoRef = database.ref('acessos/' + code);
 
     acessoRef.once('value').then((snapshot) => {
       const status = snapshot.val();
 
       if (status === "livre") {
-        // Bloqueia o código no banco mudando para 'usado'
+        // Marca como usado no Firebase
         acessoRef.set("usado"); 
         
         msg.style.color = '#15803d';
-        msg.textContent = 'Código válido! Liberando seu acesso...';
+        msg.textContent = 'Código válido! A libertar o acesso...';
         
-        // Mantém a sessão ativa
         try { sessionStorage.setItem('acessoOK', '1'); } catch(e) {}
         
         setTimeout(() => { 
@@ -58,31 +59,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
       } else if (status === "usado") {
         msg.style.color = '#b91c1c';
-        msg.textContent = 'Este código já foi utilizado por outra pessoa.';
+        msg.textContent = 'Este código já foi utilizado.';
       } else {
         msg.style.color = '#b91c1c';
-        msg.textContent = 'Código inválido ou inexistente.';
+        msg.textContent = 'Código inválido.';
       }
     }).catch((error) => {
-      console.error("Erro no Firebase:", error);
-      msg.textContent = 'Erro de conexão. Verifique sua internet.';
+      console.error("Erro:", error);
+      msg.textContent = 'Erro de conexão com o banco.';
     });
   }
 
-  // Ativação por clique ou tecla Enter
   if (btn) btn.onclick = check;
   input?.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') check();
   });
 
-  // ---- FUNÇÃO DOS LIKES (Mantida para o Segredo do Pomar) ----
+  // ---- SISTEMA DE LIKES ----
   function monitorarLike(idBotao, idTexto, caminho) {
     const b = document.getElementById(idBotao);
     const l = document.getElementById(idTexto);
     if (!b || !l) return;
 
     const ref = database.ref('likes/' + caminho);
-
     ref.on('value', (snap) => {
       l.innerText = snap.val() || 0;
     });
