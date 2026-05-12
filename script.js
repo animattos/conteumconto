@@ -88,10 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPage(1);
   })();
 
-  // CTA (exemplo)
-  document.getElementById('cta')?.addEventListener('click', () => {
-    alert('Plano mensal: R$29,90 — (placeholder)');
-  });
+  
 
   // ---- Mobile menu toggle (fechado por padrão) ----
   const hamburger = document.getElementById('hamburger');
@@ -434,7 +431,48 @@ document.addEventListener('DOMContentLoaded', () => {
       cadMsg.textContent =
         'Erro ao cadastrar.';
     }
+};
 
-  };
+// --- NOVO BLOCO PARA O BOTÃO SEJA ASSINANTE ---
+document.addEventListener('DOMContentLoaded', () => {
+  const btnCta = document.getElementById('cta');
+  const modalPlanos = document.getElementById('modalPlanos');
+  const fecharPlanos = document.getElementById('fecharPlanos');
+
+  if (btnCta && modalPlanos) {
+    btnCta.addEventListener('click', (e) => {
+      e.preventDefault(); // Evita qualquer comportamento padrão
+      modalPlanos.style.display = 'flex'; // Abre o novo modal
+    });
+  }
+
+  // Lógica para fechar este modal específico pelo botão "X"
+  if (fecharPlanos) {
+    fecharPlanos.addEventListener('click', () => {
+      modalPlanos.style.display = 'none';
+    });
+  }
+});
 
 
+
+
+
+  
+
+
+// ======= SOLUÇÃO PARA ABRIR PLANOS SEM CONFLITO =======
+document.addEventListener('DOMContentLoaded', () => {
+  const btnCta = document.getElementById('cta');
+  const modalPlanos = document.getElementById('modalPlanos');
+
+  if (btnCta && modalPlanos) {
+    // Esta linha abaixo remove o "alert" antigo e qualquer outra função 
+    // que estivesse presa ao botão antes
+    btnCta.onclick = (e) => {
+      e.stopImmediatePropagation(); // Impede que o alert antigo apareça
+      e.preventDefault();
+      modalPlanos.style.display = 'flex';
+    };
+  }
+});

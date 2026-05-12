@@ -488,3 +488,117 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 }
 
 
+/* Estilização do Modal de Planos */
+
+
+
+
+.planos-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.plano-card {
+  flex: 1;
+  min-width: 250px;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  transition: transform 0.3s;
+  border: 3px solid transparent;
+}
+
+.plano-card:hover {
+  transform: translateY(-10px);
+}
+
+.plano-card.individual { background: #e0f7fa; border-color: #4dd0e1; }
+.plano-card.escola { background: #f3e5f5; border-color: #ba68c8; }
+
+.emoji-topo { font-size: 50px; margin-bottom: 10px; }
+
+.plano-card h3 { font-size: 20px; margin-bottom: 15px; color: #333; }
+
+.plano-card .preco {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff3b9d;
+  margin-bottom: 15px;
+}
+
+.plano-card .preco span { font-size: 14px; color: #666; }
+
+.beneficios {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.beneficios li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-assinar {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 0 #15803d;
+}
+
+.btn-assinar:active { transform: translateY(3px); box-shadow: none; }
+
+
+/* Ajuste apenas na caixa e no título */
+.modal-infantil {
+    background: #ffffff !important; /* Fundo branco */
+    border: none !important;        /* Retira o contorno amarelo */
+    max-width: 750px !important;
+}
+
+/* Ajuste no título */
+.modal-infantil .fonte-diferente {
+    font-size: 26px !important;    /* Letra menor */
+    color: #000000 !important;      /* Cor preta */
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Ajuste apenas na cor do botão dentro do plano */
+.plano-card .btn {
+    background: var(--accent) !important; /* Cor verde padrão do seu site */
+    color: #062c17 !important;            /* Texto escuro para contraste */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Adicione isso ao seu styles.css */
+#modalPlanos {
+  overflow-y: auto; /* Ativa a rolagem vertical */
+  display: none;    /* Mantém escondido por padrão */
+  align-items: flex-start; /* Alinha ao topo para não cortar conteúdo */
+  padding: 20px 0;
+}
+
+.modal-infantil {
+  margin: 20px auto; /* Garante margem em telas pequenas */
+  max-height: none;  /* Permite que a caixa cresça conforme o conteúdo */
+}
+
