@@ -296,25 +296,31 @@ function check() {
 
 
   // FECHAR
-  // Localize todos os botões de fechar e todos os modais
-const closeButtons = document.querySelectorAll('.close-button, #fecharCadastro');
-const allModals = document.querySelectorAll('.modal');
+ // Aguarda o documento carregar completamente
+document.addEventListener('DOMContentLoaded', () => {
 
-// Fecha qualquer modal ao clicar em qualquer "X"
-closeButtons.forEach(btn => {
-  btn.onclick = () => {
-    allModals.forEach(m => m.style.display = 'none');
+  // Seleciona todos os modais e todos os botões de fechar
+  const modais = document.querySelectorAll('.modal');
+  const botoesFechar = document.querySelectorAll('.close-button, #fecharCadastro');
+
+  // Adiciona a função de fechar para cada botão encontrado
+  botoesFechar.forEach(botao => {
+    botao.onclick = () => {
+      modais.forEach(modal => {
+        modal.style.display = 'none';
+      });
+    };
+  });
+
+  // Fecha o modal se o usuário clicar na parte escura (fora da caixa branca)
+  window.onclick = (event) => {
+    modais.forEach(modal => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
   };
 });
-
-// Fecha ao clicar fora da caixa branca
-window.onclick = (event) => {
-  allModals.forEach(m => {
-    if (event.target == m) {
-      m.style.display = 'none';
-    }
-  });
-};
 
 
   // CADASTRAR
