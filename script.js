@@ -236,13 +236,23 @@ function monitorarLikeComTrava(btnId, countId, livroID) {
 // Chamas a função para cada um dos teus livros:
 monitorarLikeComTrava('like-btn-pomar', 'like-count-pomar', 'pomar');
 monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
+
+
+
+
+
+
+
+
+
+
 // ... e assim por diante
 
 // .........................................................................ATIVAÇÃO PARA CADA BOTÃO LIKE.................................................//
-monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
-monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
-monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
-monitorarLike('like-btn-abelha', 'like-count-abelha', 'abelha');
+monitorarLikeComTrava('like-btn-pomar', 'like-count-pomar', 'pomar');
+monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
+monitorarLikeComTrava('like-btn-dragon', 'like-count-dragon', 'dragon');
+monitorarLikeComTrava('like-btn-abelha', 'like-count-abelha', 'abelha');
 
 
 
