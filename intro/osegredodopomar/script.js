@@ -1,296 +1,480 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // footer year
+
+  // =========================
+  // ANO FOOTER
+  // =========================
   const y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
 
-  const input = document.getElementById('code');
-  const btn   = document.getElementById('go');
-  const msg   = document.getElementById('msg');
+  if (y) {
+    y.textContent = new Date().getFullYear();
+  }
 
-  // ---- Mobile menu toggle (igual ao index) ----
-  const hamburger = document.getElementById('hamburger');
-  const nav = document.getElementById('primary-nav');
 
-  function resetOnDesktop(){
-    if (!window.matchMedia('(max-width: 880px)').matches){
+  // =========================
+  // MENU MOBILE
+  // =========================
+  const hamburger =
+    document.getElementById('hamburger');
+
+  const nav =
+    document.getElementById('primary-nav');
+
+
+  function resetOnDesktop() {
+
+    if (!window.matchMedia('(max-width: 880px)').matches) {
+
       nav?.classList.remove('open');
+
       hamburger?.classList.remove('is-open');
-      hamburger?.setAttribute('aria-expanded','false');
+
+      hamburger?.setAttribute(
+        'aria-expanded',
+        'false'
+      );
     }
   }
+
   resetOnDesktop();
-  window.addEventListener('resize', resetOnDesktop);
+
+  window.addEventListener(
+    'resize',
+    resetOnDesktop
+  );
+
 
   hamburger?.addEventListener('click', () => {
-    const open = !nav.classList.contains('open');
+
+    const open =
+      !nav.classList.contains('open');
+
     nav.classList.toggle('open', open);
-    hamburger.classList.toggle('is-open', open);
-    hamburger.setAttribute('aria-expanded', String(open));
+
+    hamburger.classList.toggle(
+      'is-open',
+      open
+    );
+
+    hamburger.setAttribute(
+      'aria-expanded',
+      String(open)
+    );
+
   });
 
-  // fecha o menu ao clicar em um link, no mobile
+
+  // FECHAR MENU MOBILE
   nav?.querySelectorAll('a').forEach(a => {
+
     a.addEventListener('click', () => {
-      if (window.matchMedia('(max-width: 880px)').matches){
+
+      if (
+        window.matchMedia('(max-width: 880px)')
+        .matches
+      ) {
+
         nav.classList.remove('open');
+
         hamburger.classList.remove('is-open');
-        hamburger.setAttribute('aria-expanded','false');
+
+        hamburger.setAttribute(
+          'aria-expanded',
+          'false'
+        );
       }
+
     });
+
   });
 
 
-  
-});
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('modal-info');
-  const modalTitle = document.getElementById('modal-title');
-  const modalBody = document.getElementById('modal-body');
-  const closeBtn = document.querySelector('.close-button');
+  // =========================
+  // MODAL INFO
+  // =========================
+  const modalInfo =
+    document.getElementById('modal-info');
+
+  const modalTitle =
+    document.getElementById('modal-title');
+
+  const modalBody =
+    document.getElementById('modal-body');
+
+  const closeBtn =
+    document.querySelector('.close-button');
 
 
-
-
-
-  
-  // Informações que vão aparecer em cada menu
   const infoData = {
-  'COMO FUNCIONA': 'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
 
-  'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
+    'COMO FUNCIONA':
+      'Nossa biblioteca oferece leitura multimodal onde a criança interage com sons e animações enquanto lê.',
 
-  'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21) 97374-3649',
+    'PARCEIRO DA ESCOLA':
+      'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
 
-  'CADASTRAR': `
+    'CONTATO':
+      'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21) 97374-3649'
 
-  <div class="cadastro-box">
+  };
 
-    <input
-      type="text"
-      id="cadNome"
-      placeholder="Digite seu nome"
-      class="cad-input"
-    >
 
-    <input
-      type="text"
-      id="cadCodigo"
-      placeholder="Digite seu código"
-      class="cad-input"
-    >
+  const menuLinks =
+    document.querySelectorAll('.nav a');
 
-    <button id="btnCadastrar" class="cad-btn">
-      VALIDAR CADASTRO
-    </button>
-
-    <p id="cadMsg"></p>
-
-  </div>
-
-`
-};
-
-  // Seleciona os links do nav (exceto o INÍCIO se quiser que ele continue apenas voltando ao topo)
-  const menuLinks = document.querySelectorAll('.nav a');
 
   menuLinks.forEach(link => {
+
     link.addEventListener('click', (e) => {
-      const textoMenu = link.textContent.trim();
-      
-      // Se tivermos informação para esse menu, abrimos o popup
-      if (infoData[textoMenu]) {
-        e.preventDefault(); // Impede o pulo da página
-        modalTitle.innerText = textoMenu;
-        modalBody.innerHTML = infoData[textoMenu];
-        modal.style.display = 'block';
-        if (textoMenu === 'CADASTRAR') {
 
-  setTimeout(() => {
-
-    const botao =
-      document.getElementById('btnCadastrar');
-
-    botao.onclick = () => {
-
-      alert('BOTÃO FUNCIONANDO');
-
-    };
-
-  }, 100);
-
-}
-       if (textoMenu === 'CADASTRAR') {
-
-  setTimeout(() => {
-
-    const btnCadastrar =
-      document.getElementById('btnCadastrar');
-
-    btnCadastrar.onclick = async () => {
-
-      const nome =
-        document.getElementById('cadNome').value.trim();
-
-      const codigo =
-        document.getElementById('cadCodigo').value.trim();
-
-      const msg =
-        document.getElementById('cadMsg');
+      const textoMenu =
+        link.textContent.trim();
 
 
-      if (!nome || !codigo) {
+      // =========================
+      // ABRIR MODAL CADASTRO
+      // =========================
+      if (textoMenu === 'CADASTRAR') {
 
-        msg.style.color = 'red';
+        e.preventDefault();
 
-        msg.textContent =
-          'Preencha todos os campos.';
+        const modalCadastro =
+          document.getElementById('modalCadastro');
+
+        modalCadastro.style.display =
+          'block';
 
         return;
       }
 
 
-      try {
+      // =========================
+      // MODAL INFO
+      // =========================
+      if (infoData[textoMenu]) {
 
-        const snapshot = await database
-          .ref('codigos/' + codigo)
-          .once('value');
+        e.preventDefault();
 
+        modalTitle.innerText =
+          textoMenu;
 
-        if (!snapshot.exists()) {
+        modalBody.innerHTML =
+          infoData[textoMenu];
 
-          msg.style.color = 'red';
-
-          msg.textContent =
-            'Código inválido.';
-
-          return;
-        }
-
-        const dados = snapshot.val();
-
-
-        if (dados.status !== 'livre') {
-
-          msg.style.color = 'red';
-
-          msg.textContent =
-            'Código já utilizado.';
-
-          return;
-        }
-
-
-        await database
-          .ref('usuarios/' + codigo)
-          .set({
-
-            nome: nome,
-            codigo: codigo
-
-          });
-
-
-        await database
-          .ref('codigos/' + codigo + '/status')
-          .set('usado');
-
-
-        msg.style.color = 'green';
-
-        msg.textContent =
-          'Cadastro realizado com sucesso!';
-
-
-      } catch (err) {
-
-        console.error(err);
-
-        msg.style.color = 'red';
-
-        msg.textContent =
-          'Erro ao cadastrar.';
+        modalInfo.style.display =
+          'block';
       }
 
-    };
-
-  }, 100);
-
-} 
-      }
     });
+
   });
 
-  // Fechar ao clicar no X
-  closeBtn.onclick = () => modal.style.display = 'none';
 
-  // Fechar ao clicar fora da caixa branca
-  window.onclick = (event) => {
-    if (event.target == modal) modal.style.display = 'none';
+  // FECHAR MODAL INFO
+  closeBtn.onclick = () => {
+
+    modalInfo.style.display =
+      'none';
+
   };
-});
 
-// ........................................BANCODADOS......................................................................)
-const firebaseConfig = {
-  apiKey: "AIzaSyAs_F8_Y0_uM3nC6_z8_v1_L0_vE",
-  authDomain: "conteumconto-f4f8e.firebaseapp.com",
-  databaseURL: "https://conteumconto-f4f8e-default-rtdb.firebaseio.com",
-  projectId: "conteumconto-f4f8e",
-  storageBucket: "conteumconto-f4f8e.firebasestorage.app",
-  messagingSenderId: "841077071051",
-  appId: "1:841077071051:web:1286e3ae640dc9ef934f4e"
-};
 
-// 2. Inicialização
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-const database = firebase.database();
+  window.onclick = (event) => {
 
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('code');
-  const btn = document.getElementById('go');
-  const msg = document.getElementById('msg');
+    if (event.target == modalInfo) {
 
-  // Função para validar
-  function validar() {
-    const code = (input.value || '').trim();
+      modalInfo.style.display =
+        'none';
+    }
+
+  };
+
+
+
+  // =========================
+  // FIREBASE
+  // =========================
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyAs_F8_Y0_uM3nC6_z8_v1_L0_vE",
+
+    authDomain:
+      "conteumconto-f4f8e.firebaseapp.com",
+
+    databaseURL:
+      "https://conteumconto-f4f8e-default-rtdb.firebaseio.com",
+
+    projectId:
+      "conteumconto-f4f8e",
+
+    storageBucket:
+      "conteumconto-f4f8e.firebasestorage.app",
+
+    messagingSenderId:
+      "841077071051",
+
+    appId:
+      "1:841077071051:web:1286e3ae640dc9ef934f4e"
+  };
+
+
+  if (!firebase.apps.length) {
+
+    firebase.initializeApp(
+      firebaseConfig
+    );
+  }
+
+  const database =
+    firebase.database();
+
+
+
+  // =========================
+  // LOGIN COM CÓDIGO
+  // =========================
+  const input =
+    document.getElementById('code');
+
+  const btn =
+    document.getElementById('go');
+
+  const msg =
+    document.getElementById('msg');
+
+
+  async function validar() {
+
+    const code =
+      (input.value || '').trim();
+
+
     if (!code) {
-      msg.textContent = 'Digite seu código.';
+
+      msg.textContent =
+        'Digite seu código.';
+
       return;
     }
 
-    // Procura no Realtime Database
-   database.ref('likes/acessos/' + code).once('value')
-      .then((snapshot) => {
-        const status = snapshot.val();
 
-        if (status === "livre") {
-          // Muda para usado
-          database.ref('likes/acessos/' + code).set("usado");
-          msg.style.color = '#15803d';
-          msg.textContent = 'Código válido! Entrando...';
-          sessionStorage.setItem('acessoOK', '1');
-          
-          setTimeout(() => { 
-            window.location.href = 'livro/index.html'; 
-          }, 800);
-        } else if (status === "usado") {
-          msg.style.color = '#b91c1c';
-          msg.textContent = 'Este código já foi utilizado.';
-        } else {
-          msg.style.color = '#b91c1c';
-          msg.textContent = 'Código inválido.';
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        msg.textContent = 'Erro de ligação ao banco.';
-      });
+    try {
+
+      const snapshot = await database
+        .ref('likes/acessos/' + code)
+        .once('value');
+
+
+      const status =
+        snapshot.val();
+
+
+      if (status === 'livre') {
+
+        await database
+          .ref('likes/acessos/' + code)
+          .set('usado');
+
+
+        msg.style.color =
+          '#15803d';
+
+        msg.textContent =
+          'Código válido! Entrando...';
+
+
+        sessionStorage.setItem(
+          'acessoOK',
+          '1'
+        );
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            'livro/index.html';
+
+        }, 800);
+
+      }
+
+      else if (status === 'usado') {
+
+        msg.style.color =
+          '#b91c1c';
+
+        msg.textContent =
+          'Este código já foi utilizado.';
+      }
+
+      else {
+
+        msg.style.color =
+          '#b91c1c';
+
+        msg.textContent =
+          'Código inválido.';
+      }
+
+    }
+
+    catch (err) {
+
+      console.error(err);
+
+      msg.textContent =
+        'Erro de ligação ao banco.';
+    }
+
   }
 
-  if (btn) btn.onclick = validar;
-  input?.addEventListener('keypress', (e) => { if (e.key === 'Enter') validar(); });
+
+  if (btn) {
+
+    btn.onclick = validar;
+  }
+
+
+  input?.addEventListener(
+    'keypress',
+    (e) => {
+
+      if (e.key === 'Enter') {
+
+        validar();
+      }
+
+    }
+  );
+
+
+
+  // =========================
+  // MODAL CADASTRO
+  // =========================
+  const modalCadastro =
+    document.getElementById('modalCadastro');
+
+  const fecharCadastro =
+    document.getElementById('fecharCadastro');
+
+  const btnCadastrar =
+    document.getElementById('btnCadastrar');
+
+  const cadMsg =
+    document.getElementById('cadMsg');
+
+
+  // FECHAR
+  fecharCadastro.onclick = () => {
+
+    modalCadastro.style.display =
+      'none';
+
+  };
+
+
+  // CADASTRAR
+  btnCadastrar.onclick = async () => {
+
+    const nome =
+      document.getElementById('cadNome')
+      .value
+      .trim();
+
+    const codigo =
+      document.getElementById('cadCodigo')
+      .value
+      .trim();
+
+
+    if (!nome || !codigo) {
+
+      cadMsg.style.color =
+        'red';
+
+      cadMsg.textContent =
+        'Preencha todos os campos.';
+
+      return;
+    }
+
+
+    try {
+
+      const snapshot = await database
+        .ref('codigos/' + codigo)
+        .once('value');
+
+
+      // CÓDIGO NÃO EXISTE
+      if (!snapshot.exists()) {
+
+        cadMsg.style.color =
+          'red';
+
+        cadMsg.textContent =
+          'Código inválido.';
+
+        return;
+      }
+
+
+      const dados =
+        snapshot.val();
+
+
+      // JÁ UTILIZADO
+      if (dados.status !== 'livre') {
+
+        cadMsg.style.color =
+          'red';
+
+        cadMsg.textContent =
+          'Código já utilizado.';
+
+        return;
+      }
+
+
+      // SALVA USUÁRIO
+      await database
+        .ref('usuarios/' + codigo)
+        .set({
+
+          nome: nome,
+
+          codigo: codigo
+
+        });
+
+
+      // ALTERA STATUS
+      await database
+        .ref('codigos/' + codigo + '/status')
+        .set('usado');
+
+
+      cadMsg.style.color =
+        'green';
+
+      cadMsg.textContent =
+        'Cadastro realizado com sucesso!';
+
+
+    }
+
+    catch (err) {
+
+      console.error(err);
+
+      cadMsg.style.color =
+        'red';
+
+      cadMsg.textContent =
+        'Erro ao cadastrar.';
+    }
+
+  };
+
 });
-
-// ..............................VALIDAR CADASTRO ..........................................//
-

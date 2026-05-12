@@ -3,120 +3,231 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>GARATUJAS — Lily’s Lostpurr</title>
+
   <link rel="stylesheet" href="style.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
 </head>
+
 <body>
 
-<div id="modalCadastro" class="modal">
+  <!-- MODAL CADASTRO -->
+  <div id="modalCadastro" class="modal">
 
-  <div class="modal-content">
+    <div class="modal-content">
 
-    <span id="fecharCadastro">&times;</span>
+      <span id="fecharCadastro" class="close-button">
+        &times;
+      </span>
 
-    <h2>VALIDAR CADASTRO</h2>
+      <h2>VALIDAR CADASTRO</h2>
 
-    <input
-      type="text"
-      id="cadNome"
-      placeholder="Seu nome"
-    >
+      <input
+        type="text"
+        id="cadNome"
+        placeholder="Seu nome"
+      >
 
-    <input
-      type="text"
-      id="cadCodigo"
-      placeholder="Seu código"
-    >
+      <input
+        type="text"
+        id="cadCodigo"
+        placeholder="Seu código"
+      >
 
-    <button id="btnCadastrar">
-      VALIDAR
-    </button>
+      <button id="btnCadastrar">
+        VALIDAR
+      </button>
 
-    <p id="cadMsg"></p>
+      <p id="cadMsg"></p>
+
+    </div>
 
   </div>
 
-</div>
 
-
-
+  <!-- HEADER -->
   <header class="site-header">
-  <div class="topbar">
-    <div class="brand-wrapper">
-      <h1 class="brand">
-        <span class="palavra-grande">CONTE</span>
-        <span class="palavra-pequena fonte-diferente">UM</span>
-        <span class="palavra-grande">CONTO</span>
-      </h1>
-    </div>
 
-<!-- Botão hamburger -->
-    <button class="hamburger" id="hamburger" aria-label="Abrir menu"
-            aria-controls="primary-nav" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="topbar">
 
+      <div class="brand-wrapper">
+
+        <h1 class="brand">
+          <span class="palavra-grande">CONTE</span>
+
+          <span class="palavra-pequena fonte-diferente">
+            UM
+          </span>
+
+          <span class="palavra-grande">CONTO</span>
+        </h1>
+
+      </div>
+
+      <!-- MENU MOBILE -->
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Abrir menu"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+
+      <!-- MENU -->
       <nav class="nav" id="primary-nav">
-      <a href="../../index.html">INÍCIO</a>
-      <a href="#">COMO FUNCIONA</a>
-      <a href="#">PARCEIRO DA ESCOLA</a>
-      <a href="#">CONTATO</a>
-      <a href="#" id="btn-validar">CADASTRAR</a>
-    </nav>
+
+        <a href="../../index.html">INÍCIO</a>
+
+        <a href="#" class="menu-info">
+          COMO FUNCIONA
+        </a>
+
+        <a href="#" class="menu-info">
+          PARCEIRO DA ESCOLA
+        </a>
+
+        <a href="#" class="menu-info">
+          CONTATO
+        </a>
+
+        <a href="#" id="btn-validar">
+          CADASTRAR
+        </a>
+
+      </nav>
+
     </div>
-
-
-
 
   </header>
 
+
+  <!-- CONTEÚDO -->
   <main class="wrap">
+
     <section class="card">
+
       <div class="cover-col">
-        <img src="assets/lilys_lost_purr.jpg" alt="Lily's Lost Purr" class="cover"/>
+
+        <img
+          src="assets/lilys_lost_purr.jpg"
+          alt="Lily's Lost Purr"
+          class="cover"
+        />
+
       </div>
 
       <div class="content-col">
-        <h2 class="title">O SEGREDO DO POMAR</h2>
+
+        <h2 class="title">
+          O SEGREDO DO POMAR
+        </h2>
+
         <p class="desc">
-          No quintal do avô, o pequeno Léo vive cercado pelo perfume das árvores e o zumbido constante das abelhas. 
-          Movido por uma curiosidade latente, ele decide investigar o que se esconde dentro de uma colmeia, ignorando os avisos sobre o respeito à natureza. 
-          Ao perturbar o lar das operárias, Léo desencadeia uma fúria dourada que o ensina, através do medo e da fuga, que a harmonia do jardim é frágil. 
-          Sob o olhar sábio do avô, o menino descobre que o mel não é um tesouro a ser roubado, mas o fruto de um trabalho sagrado. 
+          No quintal do avô, o pequeno Léo vive cercado pelo perfume das árvores e o zumbido constante das abelhas.
+          Movido por uma curiosidade latente, ele decide investigar o que se esconde dentro de uma colmeia, ignorando os avisos sobre o respeito à natureza.
+          Ao perturbar o lar das operárias, Léo desencadeia uma fúria dourada que o ensina, através do medo e da fuga, que a harmonia do jardim é frágil.
+          Sob o olhar sábio do avô, o menino descobre que o mel não é um tesouro a ser roubado, mas o fruto de um trabalho sagrado.
           Aprender a observar sem tocar torna-se sua maior lição de vida.
         </p>
-        <p class="author"><strong>AUTOR:</strong> ALESSANDRO MATTOS</p>
 
+        <p class="author">
+          <strong>AUTOR:</strong>
+          ALESSANDRO MATTOS
+        </p>
+
+
+        <!-- ACESSO -->
         <div class="access-row">
-          <img src="assets/headphones.svg" alt="Ouvir" class="phones" />
-          <input id="code" type="password" inputmode="text" autocomplete="one-time-code" placeholder="DIGITE SEU CÓDIGO" aria-label="Digite seu código de acesso" />
-          <button id="go" class="btn btn-go" aria-label="Confirmar código">
+
+          <img
+            src="assets/headphones.svg"
+            alt="Ouvir"
+            class="phones"
+          />
+
+          <input
+            id="code"
+            type="password"
+            inputmode="text"
+            autocomplete="one-time-code"
+            placeholder="DIGITE SEU CÓDIGO"
+            aria-label="Digite seu código de acesso"
+          />
+
+          <button
+            id="go"
+            class="btn btn-go"
+            aria-label="Confirmar código"
+          >
             <span class="triangle" aria-hidden="true"></span>
           </button>
+
         </div>
-        <p id="msg" class="msg" role="alert" aria-live="polite"></p>
+
+        <p
+          id="msg"
+          class="msg"
+          role="alert"
+          aria-live="polite"
+        ></p>
+
       </div>
+
     </section>
+
   </main>
 
+
+  <!-- FOOTER -->
   <footer class="footer">
-    <p>© <span id="year"></span> Conte um Conto — Todos os direitos reservados. <br>CNPJ - 55.413.591/0001-10
+
+    <p>
+      © <span id="year"></span>
+      Conte um Conto — Todos os direitos reservados.
+      <br>
+      CNPJ - 55.413.591/0001-10
+    </p>
+
   </footer>
 
+
+  <!-- MODAL INFO -->
   <div id="modal-info" class="modal">
-  <div class="modal-content">
-    <span class="close-button">&times;</span>
-    <h2 id="modal-title">Título</h2>
-    <div id="modal-body">
-      </div>
+
+    <div class="modal-content">
+
+      <span class="close-button">
+        &times;
+      </span>
+
+      <h2 id="modal-title">
+        Título
+      </h2>
+
+      <div id="modal-body"></div>
+
+    </div>
+
   </div>
-</div>
-<script src="script.js"></script>
+
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
+
 </body>
 </html>
