@@ -190,24 +190,53 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 // FUNÇÃO QUE CONTROLA OS LIKES
-function monitorarLike(idBotao, idTexto, caminho) {
-    const btn = document.getElementById(idBotao);
-    const label = document.getElementById(idTexto);
-    if (!btn || !label) return;
+// Procura as linhas onde tens as funções de monitorarLike e substitui/acrescenta esta lógica:
 
-    const ref = database.ref('likes/' + caminho);
+function monitorarLikeComTrava(btnId, countId, livroID) {
+    const btnLike = document.getElementById(btnId);
+    const countText = document.getElementById(countId);
 
-    // Mostra o valor atual que vem do banco
-    ref.on('value', (snap) => {
-        label.innerText = snap.val() || 0;
-    });
+    if (!btnLike) return;
 
-    // Soma +1 quando clica
-    btn.onclick = (e) => {
-        e.preventDefault();
-        ref.transaction(atual => (atual || 0) + 1);
+    // 1. Verifica logo ao carregar se este aparelho já curtiu este livro
+    if (localStorage.getItem('voto_' + livroID)) {
+        btnLike.disabled = true;
+        btnLike.style.opacity = "0.5";
+        btnLike.style.cursor = "not-allowed";
+        btnLike.title = "Tu já curtiste esta história!";
+    }
+
+    btnLike.onclick = async () => {
+        // 2. Bloqueio extra caso o botão seja clicado
+        if (localStorage.getItem('voto_' + livroID)) {
+            alert("Já registaste a tua curtida nesta história!");
+            return;
+        }
+
+        try {
+            // 3. Atualiza o Firebase (Transação para evitar erros de contagem)
+            await database.ref('likes/' + livroID).transaction((current) => {
+                return (current || 0) + 1;
+            });
+
+            // 4. Salva a "marca" no navegador (PC ou Telemóvel)
+            localStorage.setItem('voto_' + livroID, 'true');
+
+            // 5. Feedback visual imediato
+            btnLike.disabled = true;
+            btnLike.style.opacity = "0.5";
+            alert("Obrigado pelo teu like!");
+
+        } catch (error) {
+            console.error("Erro ao curtir:", error);
+        }
     };
 }
+
+// Chamas a função para cada um dos teus livros:
+monitorarLikeComTrava('like-btn-pomar', 'like-count-pomar', 'pomar');
+monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
+// ... e assim por diante
 
 // .........................................................................ATIVAÇÃO PARA CADA BOTÃO LIKE.................................................//
 monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
