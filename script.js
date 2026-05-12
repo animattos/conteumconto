@@ -138,22 +138,33 @@ document.addEventListener('DOMContentLoaded', () => {
     'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21)  97374-3649'
   };
 
-  // Seleciona os links do nav (exceto o INÍCIO se quiser que ele continue apenas voltando ao topo)
-  const menuLinks = document.querySelectorAll('.nav a');
+  // Seleciona os links do nav
+const menuLinks = document.querySelectorAll('.nav a');
 
-  menuLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      const textoMenu = link.textContent.trim();
-      
-      // Se tivermos informação para esse menu, abrimos o popup
-      if (infoData[textoMenu]) {
-        e.preventDefault(); // Impede o pulo da página
-        modalTitle.innerText = textoMenu;
-        modalBody.innerHTML = `<p>${infoData[textoMenu]}</p>`;
-        modal.style.display = 'block';
+menuLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    const textoMenu = link.textContent.trim();
+    
+    // 1. LÓGICA ESPECÍFICA PARA O BOTÃO CADASTRAR
+    if (textoMenu === 'CADASTRAR') {
+      e.preventDefault(); // Impede o link de recarregar a página
+      const modalCadastro = document.getElementById('modalCadastro');
+      if (modalCadastro) {
+        // Usamos 'flex' porque seu CSS usa align-items: center para centralizar o popup
+        modalCadastro.style.display = 'flex'; 
       }
-    });
+      return; // Encerra aqui para não tentar abrir o modal de informações
+    }
+
+    // 2. LÓGICA PARA OS OUTROS BOTÕES (COMO FUNCIONA, CONTATO, ETC)
+    if (infoData[textoMenu]) {
+      e.preventDefault();
+      modalTitle.innerText = textoMenu;
+      modalBody.innerHTML = `<p>${infoData[textoMenu]}</p>`;
+      modal.style.display = 'block';
+    }
   });
+});
 
   // Fechar ao clicar no X
   closeBtn.onclick = () => modal.style.display = 'none';
