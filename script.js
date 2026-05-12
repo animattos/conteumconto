@@ -476,3 +476,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 });
+
+
+
+
+
+// ======= LOGICA PARA O FORMULÁRIO DE ASSINATURA =======
+document.addEventListener('DOMContentLoaded', () => {
+  const modalDados = document.getElementById('modalDadosAssinatura');
+  const fecharDados = document.getElementById('fecharDados');
+  
+  // Seleciona todos os botões de assinar que estão DENTRO do modal de planos
+  const botoesAssinar = document.querySelectorAll('#modalPlanos .btn-cta');
+
+  botoesAssinar.forEach(botao => {
+    botao.addEventListener('click', () => {
+      // Opcional: fechar o modal de planos antes de abrir o de dados
+      document.getElementById('modalPlanos').style.display = 'none';
+      
+      // Abrir o modal de dados
+      modalDados.style.display = 'flex';
+    });
+  });
+
+  if (fecharDados) {
+    fecharDados.onclick = () => {
+      modalDados.style.display = 'none';
+    };
+  }
+});
