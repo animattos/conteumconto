@@ -103,7 +103,103 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.innerText = textoMenu;
         modalBody.innerHTML = infoData[textoMenu];
         modal.style.display = 'block';
-        
+       if (textoMenu === 'CADASTRAR') {
+
+  setTimeout(() => {
+
+    const btnCadastrar =
+      document.getElementById('btnCadastrar');
+
+    btnCadastrar.onclick = async () => {
+
+      const nome =
+        document.getElementById('cadNome').value.trim();
+
+      const codigo =
+        document.getElementById('cadCodigo').value.trim();
+
+      const msg =
+        document.getElementById('cadMsg');
+
+
+      if (!nome || !codigo) {
+
+        msg.style.color = 'red';
+
+        msg.textContent =
+          'Preencha todos os campos.';
+
+        return;
+      }
+
+
+      try {
+
+        const snapshot = await database
+          .ref('codigos/' + codigo)
+          .once('value');
+
+
+        if (!snapshot.exists()) {
+
+          msg.style.color = 'red';
+
+          msg.textContent =
+            'Código inválido.';
+
+          return;
+        }
+
+        const dados = snapshot.val();
+
+
+        if (dados.status !== 'livre') {
+
+          msg.style.color = 'red';
+
+          msg.textContent =
+            'Código já utilizado.';
+
+          return;
+        }
+
+
+        await database
+          .ref('usuarios/' + codigo)
+          .set({
+
+            nome: nome,
+            codigo: codigo
+
+          });
+
+
+        await database
+          .ref('codigos/' + codigo + '/status')
+          .set('usado');
+
+
+        msg.style.color = 'green';
+
+        msg.textContent =
+          'Cadastro realizado com sucesso!';
+
+
+      } catch (err) {
+
+        console.error(err);
+
+        msg.style.color = 'red';
+
+        msg.textContent =
+          'Erro ao cadastrar.';
+      }
+
+    };
+
+  }, 100);
+
+} 
       }
     });
   });
@@ -182,100 +278,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ..............................VALIDAR CADASTRO ..........................................//
 
-document.addEventListener('click', async (e) => {
-
-  // BOTÃO VALIDAR
-  if (e.target.closest('#btnCadastrar')) {
-
-    const nome =
-      document.getElementById('cadNome').value.trim();
-
-    const codigo =
-      document.getElementById('cadCodigo').value.trim();
-
-    const msg =
-      document.getElementById('cadMsg');
-
-
-    // CAMPOS VAZIOS
-    if (!nome || !codigo) {
-
-      msg.style.color = 'red';
-
-      msg.textContent =
-        'Preencha todos os campos.';
-
-      return;
-    }
-
-
-    try {
-
-      // PROCURA CÓDIGO
-      const snapshot = await database
-        .ref('codigos/' + codigo)
-        .once('value');
-
-
-      // NÃO EXISTE
-      if (!snapshot.exists()) {
-
-        msg.style.color = 'red';
-
-        msg.textContent =
-          'Código inválido.';
-
-        return;
-      }
-
-      const dados = snapshot.val();
-
-
-      // JÁ USADO
-      if (dados.status !== 'livre') {
-
-        msg.style.color = 'red';
-
-        msg.textContent =
-          'Código já utilizado.';
-
-        return;
-      }
-
-
-      // SALVA USUÁRIO
-      await database
-        .ref('usuarios/' + codigo)
-        .set({
-
-          nome: nome,
-          codigo: codigo
-
-        });
-
-
-      // ALTERA STATUS
-      await database
-        .ref('codigos/' + codigo + '/status')
-        .set('usado');
-
-
-      msg.style.color = 'green';
-
-      msg.textContent =
-        'Cadastro realizado com sucesso!';
-
-
-    } catch (err) {
-
-      console.error(err);
-
-      msg.style.color = 'red';
-
-      msg.textContent =
-        'Erro ao cadastrar.';
-    }
-
-  }
-
-});
