@@ -514,11 +514,6 @@ input#code:focus{
 
 
 
-
-
-/* =========================
-   LOGIN
-========================= */
 /* ======= LOGIN ADJUSTMENTS ======= */
 .access-row {
   display: grid;
@@ -595,3 +590,7 @@ input#code:focus{
     grid-column: span 1;
   }
 }
+
+
+
+
