@@ -232,120 +232,134 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================
   // LOGIN COM CÓDIGO
   // =========================
-  const input =
-    document.getElementById('code');
+// =========================
+// LOGIN COM NOME + CÓDIGO
+// =========================
 
-  const btn =
-    document.getElementById('go');
+const loginNome =
+  document.getElementById('loginNome');
 
-  const msg =
-    document.getElementById('msg');
+const loginCodigo =
+  document.getElementById('loginCodigo');
+
+const btn =
+  document.getElementById('go');
+
+const msg =
+  document.getElementById('msg');
 
 
-  async function validar() {
+async function validar() {
 
-    const code =
-      (input.value || '').trim();
+  const nome =
+    loginNome.value.trim();
+
+  const codigo =
+    loginCodigo.value.trim();
 
 
-    if (!code) {
+  // CAMPOS VAZIOS
+  if (!nome || !codigo) {
+
+    msg.style.color = 'red';
+
+    msg.textContent =
+      'Preencha nome e código.';
+
+    return;
+  }
+
+
+  try {
+
+    // PROCURA O USUÁRIO
+    const snapshot = await database
+      .ref('usuarios/' + codigo)
+      .once('value');
+
+
+    // NÃO EXISTE
+    if (!snapshot.exists()) {
+
+      msg.style.color = 'red';
 
       msg.textContent =
-        'Digite seu código.';
+        'Cadastro não encontrado.';
 
       return;
     }
 
 
-    try {
-
-      const snapshot = await database
-        .ref('likes/acessos/' + code)
-        .once('value');
+    const dados =
+      snapshot.val();
 
 
-      const status =
-        snapshot.val();
+    // VERIFICA NOME
+    if (dados.nome !== nome) {
 
-
-      if (status === 'livre') {
-
-        await database
-          .ref('likes/acessos/' + code)
-          .set('usado');
-
-
-        msg.style.color =
-          '#15803d';
-
-        msg.textContent =
-          'Código válido! Entrando...';
-
-
-        sessionStorage.setItem(
-          'acessoOK',
-          '1'
-        );
-
-
-        setTimeout(() => {
-
-          window.location.href =
-            'livro/index.html';
-
-        }, 800);
-
-      }
-
-      else if (status === 'usado') {
-
-        msg.style.color =
-          '#b91c1c';
-
-        msg.textContent =
-          'Este código já foi utilizado.';
-      }
-
-      else {
-
-        msg.style.color =
-          '#b91c1c';
-
-        msg.textContent =
-          'Código inválido.';
-      }
-
-    }
-
-    catch (err) {
-
-      console.error(err);
+      msg.style.color = 'red';
 
       msg.textContent =
-        'Erro de ligação ao banco.';
+        'Nome ou código inválido.';
+
+      return;
     }
+
+
+    // LOGIN OK
+    msg.style.color = '#15803d';
+
+    msg.textContent =
+      'Acesso liberado!';
+
+
+    sessionStorage.setItem(
+      'acessoOK',
+      '1'
+    );
+
+
+    setTimeout(() => {
+
+      window.location.href =
+        'livro/index.html';
+
+    }, 800);
 
   }
 
+  catch (err) {
 
-  if (btn) {
+    console.error(err);
 
-    btn.onclick = validar;
+    msg.style.color = 'red';
+
+    msg.textContent =
+      'Erro ao acessar.';
   }
 
+}
 
-  input?.addEventListener(
-    'keypress',
-    (e) => {
 
-      if (e.key === 'Enter') {
+// BOTÃO
+if (btn) {
 
-        validar();
-      }
+  btn.onclick = validar;
+}
 
+
+// ENTER
+loginCodigo?.addEventListener(
+  'keypress',
+  (e) => {
+
+    if (e.key === 'Enter') {
+
+      validar();
     }
-  );
 
+  }
+);
 
 
   // =========================
