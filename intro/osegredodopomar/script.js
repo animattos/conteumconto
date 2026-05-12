@@ -229,9 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // =========================
-  // LOGIN COM CÓDIGO
-  // =========================
+
 // =========================
 // LOGIN COM NOME + CÓDIGO
 // =========================
@@ -379,12 +377,25 @@ loginCodigo?.addEventListener(
 
 
   // FECHAR
-  fecharCadastro.onclick = () => {
+  // Localize todos os botões de fechar e todos os modais
+const closeButtons = document.querySelectorAll('.close-button, #fecharCadastro');
+const allModals = document.querySelectorAll('.modal');
 
-    modalCadastro.style.display =
-      'none';
-
+// Fecha qualquer modal ao clicar em qualquer "X"
+closeButtons.forEach(btn => {
+  btn.onclick = () => {
+    allModals.forEach(m => m.style.display = 'none');
   };
+});
+
+// Fecha ao clicar fora da caixa branca
+window.onclick = (event) => {
+  allModals.forEach(m => {
+    if (event.target == m) {
+      m.style.display = 'none';
+    }
+  });
+};
 
 
   // CADASTRAR
@@ -491,3 +502,45 @@ loginCodigo?.addEventListener(
   };
 
 });
+
+
+
+
+//...................NÃO CURTIR DUAS X.........................//
+
+const btnLike = document.getElementById('btn-like');
+const curtidasTexto = document.getElementById('contagem-likes');
+const livroID = 'segredo_do_pomar'; // O ID que você criou no Firebase
+
+// 1. Ao carregar a página, verifica se o usuário já curtiu antes
+const jaCurtiu = localStorage.getItem('curtiu_' + livroID);
+
+if (jaCurtiu) {
+  btnLike.disabled = true;
+  btnLike.innerText = "✅ Já Curtido";
+  btnLike.style.opacity = "0.5";
+}
+
+// 2. Lógica do clique
+btnLike.onclick = async () => {
+  // Verifica novamente por segurança
+  if (localStorage.getItem('curtiu_' + livroID)) return;
+
+  try {
+    // Aumenta o contador no Firebase
+    await database.ref('likes/' + livroID).transaction((current) => {
+      return (current || 0) + 1;
+    });
+
+    // Salva no navegador que este aparelho/PC já curtiu
+    localStorage.setItem('curtiu_' + livroID, 'true');
+
+    // Desativa o botão na hora
+    btnLike.disabled = true;
+    btnLike.innerText = "✅ Obrigado!";
+    
+    alert("Curtida registrada!");
+  } catch (error) {
+    console.error("Erro ao curtir:", error);
+  }
+};
