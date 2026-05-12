@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CONTE UM CONTO</title>
   <link rel="stylesheet" href="styles.css"/>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script src="script.js" defer></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -35,6 +38,7 @@
         <a href="#como-funciona">COMO FUNCIONA</a>
         <a href="#parceiro">PARCEIRO DA ESCOLA</a>
         <a href="#contato">CONTATO</a>
+        <a href="#" id="btn-validar">CADSTRAR</a>
       </nav>
     </div>
   </header>
@@ -107,11 +111,23 @@
 <!-- ABELHA-->
 
 
-      <article class="card">
-        <img src="assets/menino_abelha.jpg" alt="O Menino Abelha" />
-        <h4>O MENINO ABELHA</h4>
+<article class="card">
+        <img src="assets/menino_abelha.jpg" alt="O Menino Abelha" /><br>
+        <div class="titulo-like-wrapper">
+    <h4>O MENINO ABELHA</h4>
+    <div class="like-container">
+      <button class="btn-like" id="like-btn-dragon">
+        <span class="heart-icon">❤</span>
+        <span id="like-count-dragon">0</span>
+      </button>
+    </div>
+  </div>
         <a class="btn btn-primary" href="intro/abelha.html">ACESSAR HISTÓRIA</a>
       </article>
+
+
+<!-- CASSIE-->
+
 
       <article class="card">
         <img src="assets/gassy_cassie.jpg" alt="Gassy Cassie" />
@@ -167,7 +183,7 @@
   </section>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Conte um Conto— Todos os direitos reservados. <br>CNPJ - 55.413.591/0001-10
+    <p>© <span id="year"></span> Conte um Conto — Todos os direitos reservados. <br>CNPJ - 55.413.591/0001-10
 </p>
   </footer>
 
