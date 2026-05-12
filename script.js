@@ -209,10 +209,11 @@ function monitorarLike(idBotao, idTexto, caminho) {
     };
 }
 
-// ATIVAÇÃO PARA CADA BOTÃO
+// .........................................................................ATIVAÇÃO PARA CADA BOTÃO LIKE.................................................//
 monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
 monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
 monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
+monitorarLike('like-btn-abelha', 'like-count-abelha', 'abelha');
 
 
 
