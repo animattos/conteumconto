@@ -290,3 +290,201 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
   width: auto;
   margin-bottom: 0;
 }
+
+
+
+
+
+/* =========================
+   MODAL CADASTRO
+========================= */
+
+#modalCadastro{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.65);
+
+  backdrop-filter: blur(4px);
+
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* CAIXA */
+
+#modalCadastro .modal-content{
+
+  width:90%;
+  max-width:420px;
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:35px 30px;
+
+  position:relative;
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.25);
+
+  animation: abrirModal .25s ease;
+}
+
+
+/* TÍTULO */
+
+#modalCadastro h2{
+
+  font-size:28px;
+
+  margin-bottom:25px;
+
+  text-align:center;
+
+  color:#222;
+}
+
+
+/* INPUTS */
+
+#modalCadastro input{
+
+  width:100%;
+
+  padding:16px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#f3f3f3;
+
+  margin-bottom:16px;
+
+  font-size:16px;
+
+  outline:none;
+
+  transition:.2s;
+}
+
+
+#modalCadastro input:focus{
+
+  background:#ececec;
+
+  transform:scale(1.02);
+}
+
+
+/* BOTÃO */
+
+#btnCadastrar{
+
+  width:100%;
+
+  border:none;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  color:#fff;
+
+  background:linear-gradient(
+    135deg,
+    #ff8c42,
+    #ff5e62
+  );
+
+  transition:.2s;
+}
+
+
+#btnCadastrar:hover{
+
+  transform:translateY(-2px);
+
+  opacity:.95;
+}
+
+
+/* MENSAGEM */
+
+#cadMsg{
+
+  margin-top:16px;
+
+  text-align:center;
+
+  font-size:15px;
+
+  font-weight:600;
+}
+
+
+/* FECHAR */
+
+#fecharCadastro{
+
+  position:absolute;
+
+  right:18px;
+
+  top:12px;
+
+  font-size:32px;
+
+  cursor:pointer;
+
+  color:#666;
+
+  transition:.2s;
+}
+
+
+#fecharCadastro:hover{
+
+  transform:scale(1.1);
+
+  color:#000;
+}
+
+
+/* ANIMAÇÃO */
+
+@keyframes abrirModal{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(20px)
+      scale(.95);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+

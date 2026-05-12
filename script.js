@@ -189,53 +189,32 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+
+
+
+
+
+
 // FUNÇÃO QUE CONTROLA OS LIKES
-// Procura as linhas onde tens as funções de monitorarLike e substitui/acrescenta esta lógica:
+function monitorarLike(idBotao, idTexto, caminho) {
+    const btn = document.getElementById(idBotao);
+    const label = document.getElementById(idTexto);
+    if (!btn || !label) return;
 
-function monitorarLikeComTrava(btnId, countId, livroID) {
-    const btnLike = document.getElementById(btnId);
-    const countText = document.getElementById(countId);
+    const ref = database.ref('likes/' + caminho);
 
-    if (!btnLike) return;
+    // Mostra o valor atual que vem do banco
+    ref.on('value', (snap) => {
+        label.innerText = snap.val() || 0;
+    });
 
-    // 1. Verifica logo ao carregar se este aparelho já curtiu este livro
-    if (localStorage.getItem('voto_' + livroID)) {
-        btnLike.disabled = true;
-        btnLike.style.opacity = "0.5";
-        btnLike.style.cursor = "not-allowed";
-        btnLike.title = "Tu já curtiste esta história!";
-    }
-
-    btnLike.onclick = async () => {
-        // 2. Bloqueio extra caso o botão seja clicado
-        if (localStorage.getItem('voto_' + livroID)) {
-            alert("Já registaste a tua curtida nesta história!");
-            return;
-        }
-
-        try {
-            // 3. Atualiza o Firebase (Transação para evitar erros de contagem)
-            await database.ref('likes/' + livroID).transaction((current) => {
-                return (current || 0) + 1;
-            });
-
-            // 4. Salva a "marca" no navegador (PC ou Telemóvel)
-            localStorage.setItem('voto_' + livroID, 'true');
-
-            // 5. Feedback visual imediato
-            btnLike.disabled = true;
-            btnLike.style.opacity = "0.5";
-            alert("Obrigado pelo teu like!");
-
-        } catch (error) {
-            console.error("Erro ao curtir:", error);
-        }
+    // Soma +1 quando clica
+    btn.onclick = (e) => {
+        e.preventDefault();
+        ref.transaction(atual => (atual || 0) + 1);
     };
 }
 
-// Chamas a função para cada um dos teus livros:
-monitorarLikeComTrava('like-btn-pomar', 'like-count-pomar', 'pomar');
-monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
 
 
 
@@ -244,15 +223,12 @@ monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
 
 
 
-
-
-// ... e assim por diante
 
 // .........................................................................ATIVAÇÃO PARA CADA BOTÃO LIKE.................................................//
-monitorarLikeComTrava('like-btn-pomar', 'like-count-pomar', 'pomar');
-monitorarLikeComTrava('like-btn-floresta', 'like-count-floresta', 'floresta');
-monitorarLikeComTrava('like-btn-dragon', 'like-count-dragon', 'dragon');
-monitorarLikeComTrava('like-btn-abelha', 'like-count-abelha', 'abelha');
+monitorarLike('like-btn-pomar', 'like-count-pomar', 'pomar');
+monitorarLike('like-btn-floresta', 'like-count-floresta', 'floresta');
+monitorarLike('like-btn-dragon', 'like-count-dragon', 'dragon');
+monitorarLike('like-btn-abelha', 'like-count-abelha', 'abelha');
 
 
 
@@ -297,3 +273,151 @@ function check() {
     msg.textContent = 'Erro de conexão. Tente novamente.';
   });
 }
+
+
+
+
+
+
+  // =========================
+  // MODAL CADASTRO
+  // =========================
+  const modalCadastro =
+    document.getElementById('modalCadastro');
+
+  const fecharCadastro =
+    document.getElementById('fecharCadastro');
+
+  const btnCadastrar =
+    document.getElementById('btnCadastrar');
+
+  const cadMsg =
+    document.getElementById('cadMsg');
+
+
+  // FECHAR
+  // Localize todos os botões de fechar e todos os modais
+const closeButtons = document.querySelectorAll('.close-button, #fecharCadastro');
+const allModals = document.querySelectorAll('.modal');
+
+// Fecha qualquer modal ao clicar em qualquer "X"
+closeButtons.forEach(btn => {
+  btn.onclick = () => {
+    allModals.forEach(m => m.style.display = 'none');
+  };
+});
+
+// Fecha ao clicar fora da caixa branca
+window.onclick = (event) => {
+  allModals.forEach(m => {
+    if (event.target == m) {
+      m.style.display = 'none';
+    }
+  });
+};
+
+
+  // CADASTRAR
+  btnCadastrar.onclick = async () => {
+
+    const nome =
+      document.getElementById('cadNome')
+      .value
+      .trim();
+
+    const codigo =
+      document.getElementById('cadCodigo')
+      .value
+      .trim();
+
+
+    if (!nome || !codigo) {
+
+      cadMsg.style.color =
+        'red';
+
+      cadMsg.textContent =
+        'Preencha todos os campos.';
+
+      return;
+    }
+
+
+    try {
+
+      const snapshot = await database
+        .ref('codigos/' + codigo)
+        .once('value');
+
+
+      // CÓDIGO NÃO EXISTE
+      if (!snapshot.exists()) {
+
+        cadMsg.style.color =
+          'red';
+
+        cadMsg.textContent =
+          'Código inválido.';
+
+        return;
+      }
+
+
+      const dados =
+        snapshot.val();
+
+
+      // JÁ UTILIZADO
+      if (dados.status !== 'livre') {
+
+        cadMsg.style.color =
+          'red';
+
+        cadMsg.textContent =
+          'Código já utilizado.';
+
+        return;
+      }
+
+
+      // SALVA USUÁRIO
+      await database
+        .ref('usuarios/' + codigo)
+        .set({
+
+          nome: nome,
+
+          codigo: codigo
+
+        });
+
+
+      // ALTERA STATUS
+      await database
+        .ref('codigos/' + codigo + '/status')
+        .set('usado');
+
+
+      cadMsg.style.color =
+        'green';
+
+      cadMsg.textContent =
+        'Cadastro realizado com sucesso!';
+
+
+    }
+
+    catch (err) {
+
+      console.error(err);
+
+      cadMsg.style.color =
+        'red';
+
+      cadMsg.textContent =
+        'Erro ao cadastrar.';
+    }
+
+  };
+
+
