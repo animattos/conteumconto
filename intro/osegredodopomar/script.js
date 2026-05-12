@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalCadastro =
           document.getElementById('modalCadastro');
 
-        modalCadastro.style.display =
-          'block';
+        modalCadastro.style.display = 'flex';
 
         return;
       }
