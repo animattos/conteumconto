@@ -103,6 +103,22 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.innerText = textoMenu;
         modalBody.innerHTML = infoData[textoMenu];
         modal.style.display = 'block';
+        if (textoMenu === 'CADASTRAR') {
+
+  setTimeout(() => {
+
+    const botao =
+      document.getElementById('btnCadastrar');
+
+    botao.onclick = () => {
+
+      alert('BOTÃO FUNCIONANDO');
+
+    };
+
+  }, 100);
+
+}
        if (textoMenu === 'CADASTRAR') {
 
   setTimeout(() => {
