@@ -110,15 +110,37 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 .hamburger.is-open span:nth-child(2){ opacity:0; }
 .hamburger.is-open span:nth-child(3){ transform: translateY(-9px) rotate(-45deg); }
 
+
+
+/* ======= BARRA AZUL COM MENUS ======= */
+
 @media (max-width:880px){
   .hamburger{ display:block; }
-  .nav{
-    flex-direction:column; width:100%; gap:12px; background:var(--brand);
-    max-height:0; overflow:hidden; padding:0;
-    transition:max-height .3s ease, padding .3s ease;
-  }
-  .nav.open{ max-height:260px; padding:8px 0 12px; }
+.nav{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:100%;
+  gap:18px;
+  background:var(--brand);
+
+  max-height:0;
+  overflow:hidden;
+  padding:0 22px;
+
+  transition:max-height .3s ease, padding .3s ease;
 }
+
+.nav a{
+  display:block;
+  width:100%;
+}
+  .nav.open{ max-height:500px; padding:20px 0 22px; }
+}
+
+
+
+
 
 /* ======= Hero ======= */
 .hero{
@@ -212,15 +234,15 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 10% auto;
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 500px;
+  width: 95% !important;
+  max-width: 600px !important; /* Aumentamos aqui */
+  background: #fff;
+  border-radius: 24px;
+  padding: 35px 30px;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  animation: modalFadeIn 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: abrirModal .25s ease;
+  box-sizing: border-box !important; /* Adicione isso também */
 }
 
 @keyframes modalFadeIn {
@@ -581,14 +603,6 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
 
 
 
-
-
-
-
-
-
-
-
 /* Adicione isso ao seu styles.css */
 #modalPlanos {
   overflow-y: auto; /* Ativa a rolagem vertical */
@@ -602,3 +616,29 @@ body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,Helvetica,sans-
   max-height: none;  /* Permite que a caixa cresça conforme o conteúdo */
 }
 
+
+/* ===== MODAIS COM ROLAGEM ===== */
+
+.modal{
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-content{
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Barra de rolagem bonita */
+.modal-content::-webkit-scrollbar{
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+  background: #bdbdbd;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track{
+  background: transparent;
+}
