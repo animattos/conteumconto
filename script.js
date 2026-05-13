@@ -123,18 +123,24 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Informações que vão aparecer em cada menu
   const infoData = {
-    'COMO FUNCIONA': 'BBBB',
+    'COMO FUNCIONA': '<strong>Plano Individual</strong><br>Ao assinar o plano individual, você recebe um código exclusivo. Basta validá-lo no menu (Ativar Código) para liberar seu acesso. Depois, é só escolher sua história favorita e entrar usando seu nome e código. Simples assim!<br><br><strong>Plano Escolar</strong><br>Este é um projeto de parceria educativa para escolas oferecerem uma ferramenta de ponta no currículo digital, para o suporte ao desenvolvimento infantil. Oferecemos planos especiais para instituições de ensino, entre em contato para integrar nossa biblioteca ao seu currículo. Confira no menu (Parceiro da Escola) os detalhes de como aderir ao plano e seus benefícios.',
 
 
 
      'BENEFICIOS': '<strong>1. Ampliação do Repertório Vocabular</strong><br> Ao ouvir histórias narradas com qualidade profissional, a criança é exposta a palavras e estruturas gramaticais que não costumam aparecer na fala cotidiana, enriquecendo a forma como ela se expressa.<br><br><strong>2. Estímulo à Imaginação Criativa</strong><br> Diferente dos desenhos animados, onde a imagem entrega tudo pronto, o áudio multimodal exige que o cérebro da criança "complete" a cena. Ela imagina as cores, os cheiros e os detalhes das ambientações, exercitando o músculo da criatividade.<br><br><strong>3. Facilitação da Alfabetização (Associação Fonética)</strong><br>O sistema multimodal permite que a criança conecte o som das palavras às imagens e, futuramente, aos textos. Isso cria uma base sólida para que ela aprenda a ler com muito mais facilidade e prazer.<br><br> <strong>4. Aumento da Capacidade de Concentração (Foco)</strong><br>Em um mundo de vídeos ultra-rápidos (como TikTok/Reels), ouvir uma história com início, meio e fim treina a "atenção sustentada". A criança aprende a manter o foco em uma narrativa por períodos mais longos.<br><br><strong>5. Desenvolvimento da Inteligência Emocional</strong><br>As histórias apresentam dilemas, medos e vitórias. Através dos personagens, a criança aprende a identificar e nomear as próprias emoções, desenvolvendo empatia e resiliência para lidar com situações do dia a dia.<br><br><strong>6. Aguçamento da Percepção Auditiva</strong><br>O uso de efeitos sonoros (o vento, o som de passos, a mudança de tom de voz) ensina a criança a distinguir sons e a interpretar camadas sonoras, o que é fundamental para o desenvolvimento cognitivo e até para o aprendizado de línguas estrangeiras.<br><br><strong>7. Redução da Ansiedade e Melhoria do Sono</strong>O ritmo da narração é pensado para ser acolhedor. Substituir a luz azul e o ritmo frenético dos vídeos por uma história contada ajuda a baixar os níveis de cortisol, preparando o cérebro para um sono profundo e reparador.<br><br><strong>8. Estímulo à Curiosidade Crítica</strong><br>Com uma história nova todos os dias, a criança desenvolve o hábito de questionar, prever o que vai acontecer e se interessar por novos temas, desde o funcionamento da natureza até lendas de culturas distantes.<br><br><strong>9. Autonomia Digital Segura</strong><br>A interface simples permite que a criança escolha sua própria aventura. Isso gera um sentimento de independência e confiança ("eu consigo escolher e ouvir sozinho"), dentro de um ambiente controlado e livre de riscos.<br><br><strong>10. Fortalecimento do Vínculo Cultural</strong><br>O acesso a um catálogo diversificado apresenta à criança diferentes realidades e valores morais, ajudando na formação de um cidadão com visão de mundo mais ampla e consciente.<br><br><strong>',
 
 
-    'PARCEIRO DA ESCOLA': 'Oferecemos planos especiais para instituições de ensino. Entre em contato para integrar nossa biblioteca ao seu currículo.',
+    'PARCEIRO DA ESCOLA': ' <strong>1. Quer ser nosso parceiro?</strong><br>Ao consolidar a parceria, sua instituição recebe um lote de 100 códigos personalizados (ex: escola001, escola002), facilitando o gerenciamento e o envio aos responsáveis. Esse modelo permite que a escola integre o acesso à plataforma diretamente na mensalidade por um preço abaixo do que oferecemos no plano individual, ou ofereça uma condição exclusiva grátis, tornando a biblioteca digital um benefício acessível e de alto valor agregado para os alunos. <br>Assine o Plano Escolar e descubra como podemos transformar o tempo de tela em um portal para a imaginação. Nosso projeto foi desenhado para apoiar a alfabetização real de forma lúdica e envolvente. Para entender nossa proposta em detalhes, faça o download do nosso projeto pedagógico em PDF.' + 
+    '<div style="text-align: center; margin-top: 20px;">' +
+      '<a href="assets/projeto_escola.pdf" target="_blank" download="Projeto_Escola_Conte_Um_Conto.pdf" class="btn btn-primary" style="font-size: 13px; padding: 10px 15px;">' +
+        '📥 BAIXAR PROJETO' +
+      '</a>' +
+    '</div>',
+    
 
 
     
-    'CONTATO': 'E-mail: suporte@conteumconto.com.br <br> WhatsApp: (21)  97374-3649'
+    'CONTATO': 'E-mail: contato@conteumconto.com.br <br> WhatsApp: (21)  97374-3649'
   };
 
 
@@ -153,7 +159,7 @@ menuLinks.forEach(link => {
     const textoMenu = link.textContent.trim();
     
     // 1. LÓGICA ESPECÍFICA PARA O BOTÃO CADASTRAR
-    if (textoMenu === 'CADASTRAR') {
+    if (textoMenu === 'ATIVAR CÓDIGO') {
       e.preventDefault(); // Impede o link de recarregar a página
       const modalCadastro = document.getElementById('modalCadastro');
       if (modalCadastro) {
