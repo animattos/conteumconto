@@ -123,7 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Informações que vão aparecer em cada menu
   const infoData = {
-    'COMO FUNCIONA': '<strong>Plano Individual</strong><br>Ao assinar o plano individual, você recebe um código exclusivo. Basta validá-lo no menu (Ativar Código) para liberar seu acesso. Depois, é só escolher sua história favorita e entrar usando seu nome e código. Simples assim!<br><br><strong>Plano Escolar</strong><br>Este é um projeto de parceria educativa para escolas oferecerem uma ferramenta de ponta no currículo digital, para o suporte ao desenvolvimento infantil. Oferecemos planos especiais para instituições de ensino, entre em contato para integrar nossa biblioteca ao seu currículo. Confira no menu (Parceiro da Escola) os detalhes de como aderir ao plano e seus benefícios.',
+
+    'O QUE É?': '<strong>O que é o Conte um Conto?</strong><br>É uma biblioteca digital viva que utiliza tecnologia multimodal para transformar a hora da leitura. Unimos ilustrações artísticas, narrações profissionais e design sonoro imersivo para resgatar a imaginação, acelerar a alfabetização e oferecer uma alternativa educativa ao uso passivo de telas. Descubra no menu (Benefícios) como estamos transformando o tempo de tela em desenvolvimento real para o seu filho. Somos mais do que um produto, somos uma experiência sonora e visual que estimula o cérebro, educa o coração e liberta a imaginação do seu filho. ',
+
+
+    'COMO FUNCIONA?': '<strong>Plano Individual</strong><br>Ao assinar o plano individual, você recebe um código exclusivo. Basta validá-lo no menu (Ativar Código) para liberar seu acesso. Depois, é só escolher sua história favorita e entrar usando seu nome e código. Simples assim!<br><br><strong>Plano Escolar</strong><br>Este é um projeto de parceria educativa para escolas oferecerem uma ferramenta de ponta no currículo digital, para o suporte ao desenvolvimento infantil. Oferecemos planos especiais para instituições de ensino, entre em contato para integrar nossa biblioteca ao seu currículo. Confira no menu (Parceiro da Escola) os detalhes de como aderir ao plano e seus benefícios.',
 
 
 
