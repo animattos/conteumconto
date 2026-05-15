@@ -61,7 +61,69 @@
       transform: scale(0.5);
       opacity: 0;
     }
+
+
+
+
+
+/* Legenda */
+.legenda {
+    position: absolute;
+    bottom: 15%;
+    width: 80%;
+left: 50%;
+transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    z-index: 10;
+    pointer-events: none;
+
+    background: rgba(0,0,0,0.4);
+    padding: 10px;
+    border-radius: 10px;
+}
+.legenda-top {
+    top: 3%;
+    bottom: auto;
+}
+
+.legenda-bottom {
+    bottom: 10%;
+    top: auto;
+}
+
+.legenda-middle {
+    top: 50%;
+    bottom: auto;
+
+    transform: translate(-50%, -50%);
+}
+
+.legenda span {
+    transition: color 0.3s ease;
+}
+
+.palavra-ativa {
+    color: yellow;
+}
   </style>
+
+
+
+
+
+
+
+
+
+
 
 <!-- Guard de acesso: impede abrir por link direto sem token -->
 <script>
@@ -83,33 +145,49 @@
 
 
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/01.jpg"/><audio id="audio0" src="audio/01.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/01.jpg"/><div class="legenda" id="legenda0"></div><audio id="audio0" src="audio/01.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/02.jpg"/><audio id="audio1" src="audio/02.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/03.jpg"/><audio id="audio2" src="audio/03.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/02.jpg"/><div class="legenda" id="legenda1"></div><audio id="audio1" src="audio/02.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/04.jpg"/><audio id="audio3" src="audio/04.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/05.jpg"/><audio id="audio4" src="audio/05.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/03.jpg"/><div class="legenda" id="legenda2"></div><audio id="audio2" src="audio/03.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/06.jpg"/><audio id="audio1" src="audio/06.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/07.jpg"/><audio id="audio1" src="audio/07.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/04.jpg"/><div class="legenda" id="legenda3"></div><audio id="audio3" src="audio/04.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/08.jpg"/><audio id="audio1" src="audio/08.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/09.jpg"/><audio id="audio1" src="audio/09.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/05.jpg"/><div class="legenda" id="legenda4"></div><audio id="audio4" src="audio/05.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/10.jpg"/><audio id="audio1" src="audio/10.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/11.jpg"/><audio id="audio1" src="audio/11.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/06.jpg"/><div class="legenda" id="legenda5"></div><audio id="audio5" src="audio/06.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/12.jpg"/><audio id="audio1" src="audio/12.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/13.jpg"/><audio id="audio1" src="audio/13.mp3"></audio></section>
+<section class="slide"><img alt="O Segredo do Pomar" src="images/07.jpg"/><div class="legenda" id="legenda6"></div><audio id="audio6" src="audio/07.mp3"></audio></section>
 
-<section class="slide"><img alt="O Segredo do Pomar" src="images/14.jpg"/><audio id="audio1" src="audio/14.mp3"></audio></section>
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/08.jpg"/><div class="legenda" id="legenda7"></div><audio id="audio7" src="audio/08.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/09.jpg"/><div class="legenda" id="legenda8"></div><audio id="audio8" src="audio/09.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/10.jpg"/><div class="legenda" id="legenda9"></div><audio id="audio9" src="audio/10.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/11.jpg"/><div class="legenda" id="legenda10"></div><audio id="audio10" src="audio/11.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/12.jpg"/><div class="legenda" id="legenda11"></div><audio id="audio11" src="audio/12.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/13.jpg"/><div class="legenda" id="legenda12"></div><audio id="audio12" src="audio/13.mp3"></audio></section>
+
+
+<section class="slide"><img alt="O Segredo do Pomar" src="images/14.jpg"/><div class="legenda" id="legenda13"></div><audio id="audio13" src="audio/14.mp3"></audio></section>
+
+
+
 
 
 
@@ -140,9 +218,11 @@ function updateButtonIcon(isAudioPlaying) {
 function showSlide(index) {
   if (index === currentIndex) return;
 
+  // 1. Toca o som de transição e move o carrossel imediatamente
   document.getElementById("transitionSound").play().catch(() => {});
   carousel.style.transform = `translateY(-${index * 100}vh)`;
 
+  // 2. Para todos os áudios que estavam tocando antes
   slides.forEach((slide, i) => {
     const audio = slide.querySelector("audio");
     if (audio && i !== index) {
@@ -151,12 +231,17 @@ function showSlide(index) {
     }
   });
 
+  // 3. Aguarda a animação terminar (1s) para tocar o novo áudio e sincronizar
   setTimeout(() => {
     const currentAudio = slides[index].querySelector("audio");
     if (currentAudio) {
       currentAudio.play().then(() => {
         isPlaying = true;
         updateButtonIcon(true);
+        
+        // Chamada da sincronização para o texto aparecer
+        iniciarSincronizacao(currentAudio, index);
+        
       }).catch(() => {});
     }
   }, 1000);
@@ -208,11 +293,20 @@ playBtn.addEventListener("click", () => {
 
 window.onload = () => {
   const currentAudio = slides[0].querySelector("audio");
+  
   setTimeout(() => {
-    currentAudio.play().then(() => {
-      isPlaying = true;
-      updateButtonIcon(true);
-    }).catch(() => {});
+    if (currentAudio) {
+      currentAudio.play().then(() => {
+        isPlaying = true;
+        updateButtonIcon(true);
+        
+        // ESTA LINHA ABAIXO É A QUE ESTAVA FALTANDO:
+        iniciarSincronizacao(currentAudio, 0); 
+        
+      }).catch((error) => {
+        console.log("O áudio aguarda interação do usuário.");
+      });
+    }
   }, 1000);
 
   currentAudio.addEventListener("ended", () => {
@@ -283,28 +377,45 @@ slides.forEach(slide => {
   .home-btn svg{ width: 44px; height: 44px; display:block; }
 </style>
 
-<script>
-    function baixarImagem() {
-      const slide = document.querySelector('.slide:nth-child(' + (currentIndex + 1) + ')');
-      html2canvas(slide).then(canvas => {
-        const ctx = canvas.getContext('2d');
-        const logo = new Image();
-        logo.onload = () => {
-          const logoWidth = canvas.width * 0.25;
-          const logoHeight = logo.height * (logoWidth / logo.width);
-          const posX = canvas.width - logoWidth - 20;
-          const posY = canvas.height - logoHeight - 20;
-          ctx.drawImage(logo, posX, posY, logoWidth, logoHeight);
 
-          const link = document.createElement('a');
-          link.download = 'pagina_com_marca.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        };
-        logo.src = 'images/marca.png';
-      });
-    }
+
+
+
+<script>
+  function baixarImagem() {
+  // 1. Toca o som de download
+  const sound = document.getElementById('downloadSound');
+  if (sound) {
+    sound.play().catch(() => {});
+  }
+
+  // 2. Identifica o número da página (01, 02...)
+  const numeroArquivo = (currentIndex + 1).toString().padStart(2, '0');
+  
+  // 3. Define o caminho exato (conforme sua pasta: images/color01.jpeg)
+  // Nota: Vi na sua foto que o nome é "color01" e não "colorir01"
+  const caminhoImagem = `images/color${numeroArquivo}.jpeg`;
+
+  // 4. Cria o link de download
+  const link = document.createElement('a');
+  link.href = caminhoImagem;
+  link.download = `arte_para_colorir_${numeroArquivo}.jpeg`;
+
+  // 5. O TRUQUE PARA FUNCIONAR LOCALMENTE:
+  // Em vez de clicar via JS puro, vamos garantir que o navegador 
+  // trate como download em vez de abrir na aba
+  link.target = '_blank'; 
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
   </script>
+
+
+
+
+
 <audio id="transitionSound" preload="auto" src="audio/folha.mp3"></audio><audio id="downloadSound" src="audio/botdow.mp3"></audio><script>
 document.querySelectorAll('.download-page-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -345,5 +456,124 @@ document.addEventListener("DOMContentLoaded", () => {
     <rect x="29" y="36" width="6" height="12" rx="2" ry="2" fill="#FFC107"/>
   </svg>
 </a>
+
+
+<!-- O mapa segue a lógica da sua imagem -->
+
+<script>
+
+
+
+function iniciarSincronizacao(audioElement, slideIndex) {
+
+  const displayTexto = document.getElementById(`legenda${slideIndex}`);
+  const mapa = scriptsDasHistorias[slideIndex];
+
+  if (!mapa || !displayTexto) return;
+
+  let ultimoTexto = null;
+
+  audioElement.ontimeupdate = () => {
+
+    const tempoAtual = audioElement.currentTime;
+
+    const fraseAtual = [...mapa]
+      .reverse()
+      .find(p => tempoAtual >= p.tempo);
+
+    const novoTexto = fraseAtual
+      ? JSON.stringify(fraseAtual.texto)
+      : "";
+
+    if (novoTexto !== ultimoTexto) {
+
+      ultimoTexto = novoTexto;
+
+      if (fraseAtual && fraseAtual.texto !== "") {
+
+        displayTexto.classList.remove(
+          "legenda-top",
+          "legenda-bottom",
+          "legenda-middle"
+        );
+
+        if (fraseAtual.posicao === "top") {
+          displayTexto.classList.add("legenda-top");
+        }
+
+        if (fraseAtual.posicao === "bottom") {
+          displayTexto.classList.add("legenda-bottom");
+        }
+
+        if (fraseAtual.posicao === "middle") {
+          displayTexto.classList.add("legenda-middle");
+        }
+
+        displayTexto.style.transition = "opacity 6s ease";
+
+        animarPalavras(fraseAtual.texto, displayTexto);
+
+        requestAnimationFrame(() => {
+          displayTexto.style.opacity = "1";
+        });
+
+      } else {
+
+        displayTexto.style.transition = "opacity 4.5s ease";
+
+        displayTexto.style.opacity = "0";
+
+        setTimeout(() => {
+          displayTexto.innerHTML = "";
+        }, 6000);
+      }
+    }
+  };
+}
+
+
+
+
+
+function animarPalavras(palavras, displayTexto) {
+
+  displayTexto.innerHTML = palavras
+    .map(p => `<span>${p.palavra}</span>`)
+    .join(" ");
+
+  const spans = displayTexto.querySelectorAll("span");
+
+  let index = 0;
+
+  function proximaPalavra() {
+
+    if (index > 0) {
+      spans[index - 1].classList.remove("palavra-ativa");
+    }
+
+    if (index < spans.length) {
+
+      spans[index].classList.add("palavra-ativa");
+
+      const tempoAtual = palavras[index].tempo;
+
+      index++;
+
+      setTimeout(proximaPalavra, tempoAtual);
+
+    } else {
+
+      spans.forEach(s => {
+        s.classList.remove("palavra-ativa");
+      });
+    }
+  }
+
+  proximaPalavra();
+}
+
+</script>
+
+<script src="legendas.js"></script>
 </body>
 </html>
