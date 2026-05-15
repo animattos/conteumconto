@@ -380,37 +380,56 @@ slides.forEach(slide => {
 
 
 
-
 <script>
-  function baixarImagem() {
-  // 1. Toca o som de download
+async function baixarImagem() {
+
+  // som
   const sound = document.getElementById('downloadSound');
   if (sound) {
     sound.play().catch(() => {});
   }
 
-  // 2. Identifica o número da página (01, 02...)
-  const numeroArquivo = (currentIndex + 1).toString().padStart(2, '0');
-  
-  // 3. Define o caminho exato (conforme sua pasta: images/color01.jpeg)
-  // Nota: Vi na sua foto que o nome é "color01" e não "colorir01"
+  // número da página
+  const numeroArquivo = (currentIndex + 1)
+    .toString()
+    .padStart(2, '0');
+
+  // caminho da imagem
   const caminhoImagem = `images/color${numeroArquivo}.jpeg`;
 
-  // 4. Cria o link de download
-  const link = document.createElement('a');
-  link.href = caminhoImagem;
-  link.download = `arte_para_colorir_${numeroArquivo}.jpeg`;
+  try {
 
-  // 5. O TRUQUE PARA FUNCIONAR LOCALMENTE:
-  // Em vez de clicar via JS puro, vamos garantir que o navegador 
-  // trate como download em vez de abrir na aba
-  link.target = '_blank'; 
-  
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+    // carrega a imagem
+    const response = await fetch(caminhoImagem);
+
+    const blob = await response.blob();
+
+    // cria url temporária
+    const url = window.URL.createObjectURL(blob);
+
+    // cria link
+    const link = document.createElement('a');
+
+    link.href = url;
+
+    link.download = `arte_para_colorir_${numeroArquivo}.jpeg`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    // limpa memória
+    window.URL.revokeObjectURL(url);
+
+  } catch (erro) {
+
+    console.log("Erro ao baixar imagem:", erro);
+
+  }
 }
-  </script>
+</script>
 
 
 
