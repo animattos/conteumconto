@@ -303,12 +303,14 @@ const scriptsDasHistorias = {
 
 
 
-3: [
-  {
-    tempo: 2.0,
 
-    texto: [
-      { palavra: "Mesmo", tempo: 200 },
+  3: [
+    {
+  tempo: 2.0,
+
+  texto: [
+
+   { palavra: "Mesmo", tempo: 200 },
       { palavra: "lembrando", tempo: 200 },
       { palavra: "dos", tempo: 200 },
       { palavra: "avisos", tempo: 200 },
@@ -322,46 +324,56 @@ const scriptsDasHistorias = {
       { palavra: "moradoras", tempo: 300 },
       { palavra: "da", tempo: 200 },
       { palavra: "colmeia,", tempo: 400 }
-    ],
 
-    posicao: "top"
-  },
+  ],
 
-  {
-    tempo: 7.0,
+  posicao: "top"
+},
 
-    texto: [
-      { palavra: "o", tempo: 200 },
+{
+  tempo: 5.0,
+
+  texto: [
+
+  
+
+   { palavra: "o", tempo: 200 },
       { palavra: "menino", tempo: 300 },
       { palavra: "decidiu", tempo: 400 },
       { palavra: "dar", tempo: 200 },
       { palavra: "apenas", tempo: 300 },
       { palavra: "uma", tempo: 200 },
-      { palavra: "espiadinha.", tempo: 300 }
-    ],
+      { palavra: "espiadinha.", tempo: 500 }
 
-    posicao: "top"
-  },
 
-  {
-    tempo: 10.0,
+ ],
 
-    texto: [
-      { palavra: "Ele", tempo: 200 },
+  posicao: "top"
+},
+
+{
+  tempo: 7.0,
+
+  texto: [
+
+  { palavra: "Ele", tempo: 200 },
       { palavra: "pegou", tempo: 300 },
       { palavra: "um", tempo: 200 },
       { palavra: "graveto", tempo: 400 },
       { palavra: "comprido", tempo: 400 }
-    ],
 
-    posicao: "top"
-  },
+ ],
 
-  {
-    tempo: 12.0,
+  posicao: "top"
+},
 
-    texto: [
-      { palavra: "e,", tempo: 300 },
+
+{
+  tempo: 9.0,
+
+  texto: [
+
+    { palavra: "e,", tempo: 300 },
       { palavra: "com", tempo: 200 },
       { palavra: "o", tempo: 200 },
       { palavra: "coração", tempo: 400 },
@@ -370,24 +382,9 @@ const scriptsDasHistorias = {
     ],
 
     posicao: "top"
-  },
-
-  {
-    tempo: 15.0,
-
-    texto: [
-      { palavra: "aproximou-se", tempo: 500 },
-      { palavra: "da", tempo: 200 },
-      { palavra: "pequena", tempo: 400 },
-      { palavra: "fresta", tempo: 400 },
-      { palavra: "na", tempo: 200 },
-      { palavra: "madeira.", tempo: 500 }
-    ],
-
-    posicao: "top"
     },
 
-    { tempo: 18.0, texto: "" }
+    { tempo: 11.0, texto: "" }
 
   ]
 
