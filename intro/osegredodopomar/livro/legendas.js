@@ -298,69 +298,120 @@ const scriptsDasHistorias = {
 
 
 
-
 /* .................................PÁGINA_03...................................... */
 
-  3: [
-    
+ 3: [
     {
-      tempo: 1.0,
-      texto: [
+  tempo: 5.5,
+
+  texto: [
+
+  { palavra: "Mesmo", tempo: 300 },
+        { palavra: "lembrando", tempo: 400 },
+        { palavra: "dos", tempo: 200 },
+        { palavra: "avisos", tempo: 300 },
+        { palavra: "do", tempo: 200 },
+        { palavra: "vovô", tempo: 300 },
+        { palavra: "sobre", tempo: 300 },
+        { palavra: "respeitar", tempo: 400 },
         { palavra: "o", tempo: 200 },
+        { palavra: "espaço", tempo: 300 },
+        { palavra: "das", tempo: 200 },
+        { palavra: "moradoras", tempo: 500 },
+        { palavra: "da", tempo: 200 },
+        { palavra: "colmeia,", tempo: 500 }
+
+  ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 12.0,
+
+  texto: [
+
+  
+
+  { palavra: "o", tempo: 200 },
         { palavra: "menino", tempo: 300 },
         { palavra: "decidiu", tempo: 400 },
         { palavra: "dar", tempo: 200 },
         { palavra: "apenas", tempo: 300 },
         { palavra: "uma", tempo: 200 },
         { palavra: "espiadinha.", tempo: 500 }
-      ],
-      posicao: "top"
-    },
-    {
-      tempo: 7.0,
-      texto: [
-        { palavra: "Ele", tempo: 200 },
+
+
+ ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 15.0,
+
+  texto: [
+
+  { palavra: "Ele", tempo: 200 },
         { palavra: "pegou", tempo: 300 },
         { palavra: "um", tempo: 200 },
         { palavra: "graveto", tempo: 400 },
         { palavra: "comprido", tempo: 400 }
-      ],
-      posicao: "top"
-    },
-    {
-      tempo: 9.0,
-      texto: [
-        { palavra: "e,", tempo: 300 },
+
+ ],
+
+  posicao: "top"
+},
+
+
+{
+  tempo: 17.0,
+
+  texto: [
+
+  { palavra: "e,", tempo: 300 },
         { palavra: "com", tempo: 200 },
         { palavra: "o", tempo: 200 },
         { palavra: "coração", tempo: 400 },
         { palavra: "batendo", tempo: 400 },
         { palavra: "forte,", tempo: 500 }
-      ],
-      posicao: "top"
-    },
-    {
-      tempo: 11.0, // Bloco adicionado para sincronizar o final do texto
-      texto: [
-        { palavra: "aproximou-se", tempo: 400 },
+
+ ],
+
+  posicao: "top"
+},
+
+
+
+{
+  tempo: 19.0,
+
+  texto: [
+
+   { palavra: "aproximou-se", tempo: 500 },
         { palavra: "da", tempo: 200 },
         { palavra: "pequena", tempo: 300 },
         { palavra: "fresta", tempo: 300 },
         { palavra: "na", tempo: 200 },
-        { palavra: "madeira.", tempo: 400 }
-      ],
-      posicao: "top"
-    },
-    { tempo: 13.5, texto: "" }
-  ]
-};
+        { palavra: "madeira.", tempo: 500 }
+
+
+ ],
+
+  posicao: "top"
+},
+
+    { tempo: 22.0, texto: "" }
+
+  ],
 
 /* .................................FUNÇÕES...................................... */
-
+};
 
 
 
 function iniciarSincronizacao(audioElement, slideIndex) {
+  
 
   const displayTexto = document.getElementById(`legenda${slideIndex}`);
   const mapa = scriptsDasHistorias[slideIndex];
