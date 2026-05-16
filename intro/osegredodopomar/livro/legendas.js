@@ -302,28 +302,9 @@ const scriptsDasHistorias = {
 /* .................................PÁGINA_03...................................... */
 
   3: [
+    
     {
-      tempo: 2.0,
-      texto: [
-        { palavra: "Mesmo", tempo: 200 },
-        { palavra: "lembrando", tempo: 200 },
-        { palavra: "dos", tempo: 200 },
-        { palavra: "avisos", tempo: 200 },
-        { palavra: "do", tempo: 200 },
-        { palavra: "vovô", tempo: 300 },
-        { palavra: "sobre", tempo: 200 },
-        { palavra: "respeitar", tempo: 200 },
-        { palavra: "o", tempo: 200 },
-        { palavra: "espaço", tempo: 200 },
-        { palavra: "das", tempo: 200 },
-        { palavra: "moradoras", tempo: 300 },
-        { palavra: "da", tempo: 200 },
-        { palavra: "colmeia,", tempo: 400 }
-      ],
-      posicao: "top"
-    },
-    {
-      tempo: 5.0,
+      tempo: 1.0,
       texto: [
         { palavra: "o", tempo: 200 },
         { palavra: "menino", tempo: 300 },
