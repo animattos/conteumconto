@@ -386,7 +386,7 @@ const scriptsDasHistorias = {
 
     { tempo: 11.0, texto: "" }
 
-  ],
+  ]
 
 };
 
