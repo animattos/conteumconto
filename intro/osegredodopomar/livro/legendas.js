@@ -328,7 +328,7 @@ const scriptsDasHistorias = {
   },
 
   {
-    tempo: 10.0,
+    tempo: 7.0,
 
     texto: [
       { palavra: "o", tempo: 200 },
@@ -337,14 +337,14 @@ const scriptsDasHistorias = {
       { palavra: "dar", tempo: 200 },
       { palavra: "apenas", tempo: 300 },
       { palavra: "uma", tempo: 200 },
-      { palavra: "espiadinha.", tempo: 500 }
+      { palavra: "espiadinha.", tempo: 300 }
     ],
 
     posicao: "top"
   },
 
   {
-    tempo: 14.0,
+    tempo: 10.0,
 
     texto: [
       { palavra: "Ele", tempo: 200 },
@@ -358,7 +358,7 @@ const scriptsDasHistorias = {
   },
 
   {
-    tempo: 16.5,
+    tempo: 12.0,
 
     texto: [
       { palavra: "e,", tempo: 300 },
@@ -373,7 +373,7 @@ const scriptsDasHistorias = {
   },
 
   {
-    tempo: 19.5,
+    tempo: 15.0,
 
     texto: [
       { palavra: "aproximou-se", tempo: 500 },
@@ -387,7 +387,7 @@ const scriptsDasHistorias = {
     posicao: "top"
     },
 
-    { tempo: 24.0, texto: "" }
+    { tempo: 18.0, texto: "" }
 
   ]
 
