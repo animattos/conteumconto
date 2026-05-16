@@ -303,140 +303,95 @@ const scriptsDasHistorias = {
 
 
 
-3: [ 
-    {
-      tempo: 2.0,
-      texto: [
+3: [
+  {
+    tempo: 2.0,
 
-  { "palavra": "Mesmo", "tempo": 200 },
-  { "palavra": "lembrando", "tempo": 200 },
-  { "palavra": "dos", "tempo": 200 },
-  { "palavra": "avisos", "tempo": 200 },
-  { "palavra": "do", "tempo": 200 },
-  { "palavra": "vovô", "tempo": 300 },
-  { "palavra": "sobre", "tempo": 200 },
-  { "palavra": "respeitar", "tempo": 200 },
-  { "palavra": "o", "tempo": 200 },
-  { "palavra": "espaço", "tempo": 200 },
-  { "palavra": "das", "tempo": 200 },
-  { "palavra": "moradoras", "tempo": 200 },
-  { "palavra": "da", "tempo": 200 },
-  { "palavra": "colmeia,", "tempo": 300 }
+    texto: [
+      { palavra: "Mesmo", tempo: 200 },
+      { palavra: "lembrando", tempo: 200 },
+      { palavra: "dos", tempo: 200 },
+      { palavra: "avisos", tempo: 200 },
+      { palavra: "do", tempo: 200 },
+      { palavra: "vovô", tempo: 300 },
+      { palavra: "sobre", tempo: 200 },
+      { palavra: "respeitar", tempo: 200 },
+      { palavra: "o", tempo: 200 },
+      { palavra: "espaço", tempo: 200 },
+      { palavra: "das", tempo: 200 },
+      { palavra: "moradoras", tempo: 300 },
+      { palavra: "da", tempo: 200 },
+      { palavra: "colmeia,", tempo: 400 }
+    ],
 
-  ],
+    posicao: "top"
+  },
 
-  posicao: "top"
-},
+  {
+    tempo: 10.0,
 
-{
-  tempo: 10.5,
-  texto: [
-{ "palavra": "o", "tempo": 200 }, 
-{ "palavra": "menino", "tempo": 200 },
- { "palavra": "decidiu", "tempo": 200 }, 
- { "palavra": "dar", "tempo": 200 }, 
- { "palavra": "apenas", "tempo": 200 }, 
- { "palavra": "uma", "tempo": 200 }, 
- { "palavra": "espiadinha.", "tempo": 300 } 
- ],
-  posicao: "top"
-},
+    texto: [
+      { palavra: "o", tempo: 200 },
+      { palavra: "menino", tempo: 300 },
+      { palavra: "decidiu", tempo: 400 },
+      { palavra: "dar", tempo: 200 },
+      { palavra: "apenas", tempo: 300 },
+      { palavra: "uma", tempo: 200 },
+      { palavra: "espiadinha.", tempo: 500 }
+    ],
 
-{
-  tempo: 10.5,
-  texto: [
-{ "palavra": "Ele", "tempo": 200 },
-  { "palavra": "pegou", "tempo": 200 },
-  { "palavra": "um", "tempo": 200 },
-  { "palavra": "graveto", "tempo": 200 },
-  { "palavra": "comprido", "tempo": 200 }
- ],
-  posicao: "top"
-},
+    posicao: "top"
+  },
 
+  {
+    tempo: 14.0,
 
-{
-  tempo: 10.5,
-  texto: [
-{ "palavra": "Ele", "tempo": 200 },
-  { "palavra": "pegou", "tempo": 200 },
-  { "palavra": "um", "tempo": 200 },
-  { "palavra": "graveto", "tempo": 200 },
-  { "palavra": "comprido", "tempo": 200 }
- ],
-  posicao: "top"
-},
+    texto: [
+      { palavra: "Ele", tempo: 200 },
+      { palavra: "pegou", tempo: 300 },
+      { palavra: "um", tempo: 200 },
+      { palavra: "graveto", tempo: 400 },
+      { palavra: "comprido", tempo: 400 }
+    ],
 
+    posicao: "top"
+  },
 
-{
-  tempo: 10.5,
-  texto: [
-{ "palavra": "e,", "tempo": 300 },
-  { "palavra": "com", "tempo": 200 },
-  { "palavra": "o", "tempo": 200 },
-  { "palavra": "coração", "tempo": 200 },
-  { "palavra": "batendo", "tempo": 200 },
-  { "palavra": "forte,", "tempo": 300 },
- ],
-  posicao: "top"
-},
+  {
+    tempo: 16.5,
 
+    texto: [
+      { palavra: "e,", tempo: 300 },
+      { palavra: "com", tempo: 200 },
+      { palavra: "o", tempo: 200 },
+      { palavra: "coração", tempo: 400 },
+      { palavra: "batendo", tempo: 400 },
+      { palavra: "forte,", tempo: 500 }
+    ],
 
-{
-  tempo: 10.5,
-  texto: [
-{ "palavra": "aproximou-se", "tempo": 200 },
-  { "palavra": "da", "tempo": 200 },
-  { "palavra": "pequena", "tempo": 200 },
-  { "palavra": "fresta", "tempo": 200 },
-  { "palavra": "na", "tempo": 200 },
-  { "palavra": "madeira.", "tempo": 300 }
- ],
-  posicao: "top"
-},
+    posicao: "top"
+  },
 
+  {
+    tempo: 19.5,
 
+    texto: [
+      { palavra: "aproximou-se", tempo: 500 },
+      { palavra: "da", tempo: 200 },
+      { palavra: "pequena", tempo: 400 },
+      { palavra: "fresta", tempo: 400 },
+      { palavra: "na", tempo: 200 },
+      { palavra: "madeira.", tempo: 500 }
+    ],
 
-{
-  tempo: 20.5,
+    posicao: "top"
+    },
 
-  texto: [
+    { tempo: 24.0, texto: "" }
 
-   { palavra: "pensou", tempo: 500 },
+  ]
 
-  { palavra: "ele,", tempo: 500 },
-
-  { palavra: "sentindo", tempo: 600 },
-
-  { palavra: "a", tempo: 200 },
-
-  { palavra: "curiosidade", tempo: 600 },
-
-  { palavra: "formigar", tempo: 700 },
-
-  { palavra: "mais", tempo: 200 },
-
-  { palavra: "do", tempo: 200 },
-
-  { palavra: "que", tempo: 200 },
-
-  { palavra: "as", tempo: 200 },
-
-  { palavra: "próprias", tempo: 500 },
-
-  { palavra: "abelhas.", tempo: 600 }
-
-
- ],
-
-  posicao: "top"
-},
-
-    { tempo: 26.5, texto: "" }
-
-  ],
-}; 
-  
+};
 
 
 
