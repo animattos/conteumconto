@@ -302,24 +302,24 @@ const scriptsDasHistorias = {
 
  3: [
     {
-  tempo: 5.5,
+  tempo: 4.5,
 
   texto: [
 
-  { palavra: "Mesmo", tempo: 300 },
-        { palavra: "lembrando", tempo: 400 },
+  { palavra: "Mesmo", tempo: 400 },
+        { palavra: "lembrando", tempo: 500 },
         { palavra: "dos", tempo: 200 },
         { palavra: "avisos", tempo: 300 },
         { palavra: "do", tempo: 200 },
-        { palavra: "vovô", tempo: 300 },
-        { palavra: "sobre", tempo: 300 },
-        { palavra: "respeitar", tempo: 400 },
+        { palavra: "vovô", tempo: 600 },
+        { palavra: "sobre", tempo: 500 },
+        { palavra: "respeitar", tempo: 600 },
         { palavra: "o", tempo: 200 },
-        { palavra: "espaço", tempo: 300 },
+        { palavra: "espaço", tempo: 400 },
         { palavra: "das", tempo: 200 },
-        { palavra: "moradoras", tempo: 500 },
+        { palavra: "moradoras", tempo: 600 },
         { palavra: "da", tempo: 200 },
-        { palavra: "colmeia,", tempo: 500 }
+        { palavra: "colmeia,", tempo: 600 }
 
   ],
 
@@ -327,19 +327,19 @@ const scriptsDasHistorias = {
 },
 
 {
-  tempo: 12.0,
+  tempo: 11.0,
 
   texto: [
 
   
 
-  { palavra: "o", tempo: 200 },
-        { palavra: "menino", tempo: 300 },
-        { palavra: "decidiu", tempo: 400 },
+  { palavra: "o", tempo: 300 },
+        { palavra: "menino", tempo: 400 },
+        { palavra: "decidiu", tempo: 500 },
         { palavra: "dar", tempo: 200 },
-        { palavra: "apenas", tempo: 300 },
+        { palavra: "apenas", tempo: 500 },
         { palavra: "uma", tempo: 200 },
-        { palavra: "espiadinha.", tempo: 500 }
+        { palavra: "espiadinha.", tempo: 700 }
 
 
  ],
@@ -348,15 +348,15 @@ const scriptsDasHistorias = {
 },
 
 {
-  tempo: 15.0,
+  tempo: 14.5,
 
   texto: [
 
   { palavra: "Ele", tempo: 200 },
-        { palavra: "pegou", tempo: 300 },
+        { palavra: "pegou", tempo: 400 },
         { palavra: "um", tempo: 200 },
-        { palavra: "graveto", tempo: 400 },
-        { palavra: "comprido", tempo: 400 }
+        { palavra: "graveto", tempo: 500 },
+        { palavra: "comprido", tempo: 600 }
 
  ],
 
@@ -365,7 +365,7 @@ const scriptsDasHistorias = {
 
 
 {
-  tempo: 17.0,
+  tempo: 16.5,
 
   texto: [
 
