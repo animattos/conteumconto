@@ -405,6 +405,220 @@ const scriptsDasHistorias = {
 
   ],
 
+
+
+/* .................................PÁGINA_04...................................... */
+
+ 4: [
+    {
+  tempo: 5.5,
+
+  texto: [
+
+        { palavra: "Com", tempo: 300 },
+        { palavra: "um", tempo: 300 },
+        { palavra: "movimento", tempo: 600 },
+        { palavra: "rápido,", tempo: 700 }
+
+  ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 7.0,
+
+  texto: [
+
+  
+
+        { palavra: "Léo", tempo: 500 },
+        { palavra: "cutucou", tempo: 600 },
+        { palavra: "a", tempo: 200 },
+        { palavra: "entrada", tempo: 400 },
+        { palavra: "da", tempo: 200 },
+        { palavra: "colmeia,", tempo: 600 }
+
+
+ ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 10.0,
+
+  texto: [
+
+        { palavra: "esperando", tempo: 400 },
+        { palavra: "ver", tempo: 200 },
+        { palavra: "montanhas", tempo: 500 },
+        { palavra: "de", tempo: 200 },
+        { palavra: "ouro", tempo: 300 },
+        { palavra: "doce", tempo: 300 },
+        { palavra: "saindo", tempo: 400 },
+        { palavra: "de", tempo: 300 },
+        { palavra: "lá.", tempo: 300 }
+
+ ],
+
+  posicao: "top"
+},
+
+
+{
+  tempo: 13.0,
+
+  texto: [
+
+       { palavra: "Ele", tempo: 300 },
+        { palavra: "achava", tempo: 450 },
+        { palavra: "que", tempo: 200 },
+        { palavra: "as", tempo: 200 },
+        { palavra: "abelhas", tempo: 450 },
+        { palavra: "eram", tempo: 350 },
+        { palavra: "apenas", tempo: 400 },
+        { palavra: "guardiãs", tempo: 550 },
+        { palavra: "egoístas", tempo: 600 },
+        { palavra: "de", tempo: 200 },
+        { palavra: "um", tempo: 200 },
+        { palavra: "tesouro", tempo: 500 },
+        { palavra: "que", tempo: 200 },
+        { palavra: "ele", tempo: 300 },
+        { palavra: "queria", tempo: 400 },
+        { palavra: "conhecer.", tempo: 650 }
+
+ ],
+
+  posicao: "top"
+},
+
+
+
+{
+  tempo: 19.0,
+
+  
+
+  posicao: "top"
+},
+
+    { tempo: 22.0, texto: "" }
+
+  ],
+
+
+
+  /* .................................PÁGINA_05...................................... */
+
+ 5: [
+    {
+  tempo: 5.0,
+
+  texto: [
+
+        { palavra: "Em", tempo: 200 },
+        { palavra: "um", tempo: 200 },
+        { palavra: "piscar", tempo: 300 },
+        { palavra: "de", tempo: 200 },
+        { palavra: "olhos,", tempo: 600 }
+
+  ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 6.6,
+
+  texto: [
+
+  
+
+        { palavra: "o", tempo: 200 },
+        { palavra: "zumbido", tempo: 400 },
+        { palavra: "suave", tempo: 400 },
+        { palavra: "transformou-se", tempo: 700 },
+        { palavra: "em", tempo: 200 },
+        { palavra: "um", tempo: 200 },
+        { palavra: "trovão", tempo: 300 },
+        { palavra: "minúsculo", tempo: 800 },
+        { palavra: "e", tempo: 400 },
+        { palavra: "furioso", tempo: 500 }
+
+
+ ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 11.5,
+
+  texto: [
+
+        { palavra: "que", tempo: 200 },
+        { palavra: "saiu", tempo: 400 },
+        { palavra: "de", tempo: 200 },
+        { palavra: "dentro", tempo: 400 },
+        { palavra: "da", tempo: 200 },
+        { palavra: "caixa.", tempo: 600 }
+
+ ],
+
+  posicao: "top"
+},
+
+
+{
+  tempo: 14.0,
+
+  texto: [
+
+       { palavra: "Milhares", tempo: 700 },
+        { palavra: "de", tempo: 200 },
+        { palavra: "asinhas", tempo: 600 },
+        { palavra: "bateram", tempo: 700 },
+        { palavra: "juntas,", tempo: 800 }
+
+ ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 17.0,
+
+ texto: [
+
+        { palavra: "criando", tempo: 400 },
+        { palavra: "uma", tempo: 300 },
+        { palavra: "nuvem", tempo: 400 },
+        { palavra: "dourada", tempo: 400 },
+        { palavra: "que", tempo: 200 },
+        { palavra: "avançou", tempo: 400 },
+        { palavra: "rapidamente", tempo: 700 },
+        { palavra: "em", tempo: 200 },
+        { palavra: "direção", tempo: 400 },
+        { palavra: "ao", tempo: 200 },
+        { palavra: "menino.", tempo: 400 }
+
+ ],
+
+  posicao: "top"
+},
+
+{
+  tempo: 21.0, 
+
+  posicao: "top"
+},
+
+    { tempo: 25.0, texto: "" }
+
+  ],
+
+
 /* .................................FUNÇÕES...................................... */
 };
 
