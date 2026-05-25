@@ -197,13 +197,13 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   
-  <script>
+<script>
     const carousel = document.getElementById("carousel");
     const phoneContainer = document.getElementById("phoneContainer");
     const slides = document.querySelectorAll(".slide");
     let startY = 0;
     let isDragging = false;
-    let currentIndex = 0;
+    let currentIndex = 0; 
     const playBtn = document.getElementById("playButton");
     const btnIcon = document.getElementById("btnIcon");
     let isPlaying = false;
@@ -214,6 +214,15 @@
         btnIcon.src = isAudioPlaying ? "images/stop-icon.png" : "images/play-icon.png";
         playBtn.classList.remove("animate");
       }, 150);
+    }
+
+    function iniciarSincronizacao(audioElement, index) {
+      const paginaHistorica = index + 1; 
+      const displayTexto = document.getElementById(`legenda${index}`);
+      
+      if (displayTexto && typeof gerenciarLegendas === "function") {
+        gerenciarLegendas(audioElement, displayTexto, paginaHistorica);
+      }
     }
 
     function showSlide(index) {
@@ -230,29 +239,28 @@
         }
       });
 
+      // Atualiza o índice imediatamente no momento da transição
+      currentIndex = index;
+
       setTimeout(() => {
-        const currentAudio = slides[index].querySelector("audio");
+        const currentAudio = slides[currentIndex].querySelector("audio");
         if (currentAudio) {
           currentAudio.play().then(() => {
             isPlaying = true;
             updateButtonIcon(true);
-            iniciarSincronizacao(currentAudio, index);
+            iniciarSincronizacao(currentAudio, currentIndex);
           }).catch(() => {});
         }
       }, 1000);
-
-      currentIndex = index;
     }
 
-    // --- SISTEMA DE ARRASTO REAJUSTADO PARA O CONTAINER DO TELEMÓVEL ---
-    // Touch (Celulares)
+    // --- SISTEMA DE ARRASTO REAJUSTADO ---
     phoneContainer.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; });
     phoneContainer.addEventListener("touchend", (e) => {
       let endY = e.changedTouches[0].clientY;
       analisarArrasto(startY, endY);
     });
 
-    // Mouse (Computadores)
     phoneContainer.addEventListener("mousedown", (e) => {
       startY = e.clientY;
       isDragging = true;
@@ -284,6 +292,7 @@
         currentAudio.play().then(() => {
           isPlaying = true;
           updateButtonIcon(true);
+          iniciarSincronizacao(currentAudio, currentIndex);
         }).catch(() => {});
       }
     });
@@ -313,33 +322,64 @@
       }
     });
 
-    // Função de Download
+    // --- FUNÇÃO DE DOWNLOAD ATUALIZADA COM TRAVA NA CAPA ---
     async function baixarImagem() {
+      // TRAVA DA PRIMEIRA PÁGINA (Abertura / Capa)
+      // Se for a primeira tela (índice 0), a função para aqui e não faz nada.
+      if (currentIndex === 0) {
+        console.log("O download está desativado na página de abertura.");
+        return; 
+      }
+
       const sound = document.getElementById('downloadSound');
       if (sound) { sound.play().catch(() => {}); }
 
       const numeroArquivo = (currentIndex + 1).toString().padStart(2, '0');
-      const caminhoImagem = `images/color${numeroArquivo}.jpeg`;
+      const caminhoImagem = `images/color${numeroArquivo}.jpg`;
 
       try {
         const response = await fetch(caminhoImagem);
+        
+        if (!response.ok) {
+          throw new Error("Tentando formato .jpeg");
+        }
+        
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `arte_para_colorir_${numeroArquivo}.jpeg`;
+        link.download = `arte_para_colorir_${numeroArquivo}.jpg`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
       } catch (erro) {
-        console.log("Erro ao baixar imagem, tentando via captura de tela...", erro);
-        html2canvas(slides[currentIndex]).then(canvas => {
-          const link = document.createElement('a');
-          link.download = `pagina_atual_${numeroArquivo}.png`;
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        });
+        const caminhoAlternativo = `images/color${numeroArquivo}.jpeg`;
+        
+        fetch(caminhoAlternativo)
+          .then(res => {
+            if (!res.ok) throw new Error();
+            return res.blob();
+          })
+          .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `arte_para_colorir_${numeroArquivo}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+          })
+          .catch(() => {
+            console.log("Erro ao baixar imagem direta, usando captura de tela de emergência...");
+            html2canvas(slides[currentIndex], { useCORS: true }).then(canvas => {
+              const link = document.createElement('a');
+              link.download = `pagina_atual_${numeroArquivo}.jpg`;
+              link.href = canvas.toDataURL('image/jpeg');
+              link.click();
+            });
+          });
       }
     }
 
