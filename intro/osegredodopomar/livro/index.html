@@ -322,10 +322,9 @@
       }
     });
 
-    // --- FUNÇÃO DE DOWNLOAD ATUALIZADA COM TRAVA NA CAPA ---
+    // --- FUNÇÃO DE DOWNLOAD ATUALIZADA (SÓ FUNCIONA DA PÁGINA 2 EM DIANTE) ---
     async function baixarImagem() {
-      // TRAVA DA PRIMEIRA PÁGINA (Abertura / Capa)
-      // Se for a primeira tela (índice 0), a função para aqui e não faz nada.
+      // Se for a primeira tela (índice 0), ignora o clique e sai da função sem parar nada
       if (currentIndex === 0) {
         console.log("O download está desativado na página de abertura.");
         return; 
@@ -383,11 +382,17 @@
       }
     }
 
-    // Desbloqueio de áudio
+    // --- CORREÇÃO DO DESBLOQUEIO DE ÁUDIO ---
     document.addEventListener("DOMContentLoaded", () => {
       function desbloquearTodosAudios() {
         document.querySelectorAll("audio").forEach(a => {
-          a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
+          // Só executa o truque do play/pause nos áudios que NÃO estiverem tocando no momento
+          if (a.paused) {
+            a.play().then(() => { 
+              a.pause(); 
+              a.currentTime = 0; 
+            }).catch(() => {});
+          }
         });
         document.removeEventListener("click", desbloquearTodosAudios);
         document.removeEventListener("touchstart", desbloquearTodosAudios);
